@@ -16,12 +16,16 @@ const config: Config = {
           "bg-color":"#111117",
           "color-text-accent": "#b0b7cb",
           "color-text": "#71799b",
+          "header-bg": "rgba(28,29,36,0.6)"
           },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      margin:{
+          '16':"16px"
+      }
     },
   },
   plugins: [],

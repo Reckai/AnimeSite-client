@@ -26,7 +26,7 @@ const AnimeCard = ({title,poster, slug, description}: AnimeCard) => {
             <div>
                 <h1 className='dark:text-color-text-accent'>{title}</h1>
                 <p className='dark:text-color-text'>{
-                    description?.map((genre) => genre.russian).join(', ')
+                    description?.slice(0, 2).map((genre: Genre) => genre.russian).join(', ')
                 }</p>
             </div>
         </Link>
