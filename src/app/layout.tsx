@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+
 import "./globals.css";
-import Header from "@/app/Components/Header/Header";
+
 import PageWrapper from "./middleware";
 
 const inter = Inter({ subsets: ["latin"] });

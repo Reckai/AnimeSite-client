@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n    }\n  }\n  ": types.OneAnimeDocument,
+    "\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n    }\n  }\n  ": types.OneAnimeDocument,
     "\n  query AllAnimes {\n    allAnimes {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      slug\n      studios {\n        id\n        name\n      }\n      poster {\n        id\n        originalUrl\n        previewUrl\n      }\n    }\n  }\n  ": types.AllAnimesDocument,
 };
 
@@ -34,7 +34,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n    }\n  }\n  "): (typeof documents)["\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n    }\n  }\n  "];
+export function gql(source: "\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n    }\n  }\n  "): (typeof documents)["\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n    }\n  }\n  "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

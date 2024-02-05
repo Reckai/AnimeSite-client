@@ -16,7 +16,10 @@ const config: Config = {
           "bg-color":"#111117",
           "color-text-accent": "#b0b7cb",
           "color-text": "#71799b",
-          "header-bg": "rgba(28,29,36,0.6)"
+          "header": "rgba(28,29,36,0.6)",
+          'secondary':"#20202a",
+          "form-color": "#2e2f3a",
+          "opacity-secondary":" rgba(32,32,42)",
           },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
