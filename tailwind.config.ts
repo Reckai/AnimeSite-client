@@ -18,6 +18,7 @@ const config: Config = {
           "color-text": "#71799b",
           "header": "rgba(28,29,36,0.6)",
           'secondary':"#20202a",
+          "primary": "#5b58fb",
           "form-color": "#2e2f3a",
           "opacity-secondary":" rgba(32,32,42)",
           },

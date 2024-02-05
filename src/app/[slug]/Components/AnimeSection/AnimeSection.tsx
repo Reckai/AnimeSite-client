@@ -23,8 +23,6 @@ const AnimeSection = ({name, poster }: AnimeSectionProps) => {
             <div className='flex'>
             <AnimeWatchButton/> 
             </div>
-            
-            
            </article>
           </aside>
         
