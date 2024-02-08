@@ -14,6 +14,7 @@ const config: Config = {
           "gradient-color-via":"#ec38bc",
           "gradient-color-via-2":"#7303c0",
           "bg-color":"#111117",
+          "default-bg":"#26304b",
           "color-text-accent": "#b0b7cb",
           "color-text": "#71799b",
           "header": "rgba(28,29,36,0.6)",

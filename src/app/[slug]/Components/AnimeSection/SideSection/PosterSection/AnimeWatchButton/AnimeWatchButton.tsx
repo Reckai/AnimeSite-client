@@ -16,15 +16,15 @@ const AnimeWatchButton = () => {
   }
   const deleteHandler = () => {
     changeStatus(DropDownButtonInitialText)
+    setIsVisible(false)
   }
 
   const AnimeStatusRef = React.useRef<HTMLDivElement>(null); 
  useClickOutside(AnimeStatusRef, ()=> setIsVisible(false));
-
-  return (
+ return (
     <>
-        <button onClick={()=> setIsVisible(!isVisible)} className={` ${selectedStatus? 'bg-primary text-white': ''} rounded-md 
-         bg-secondary text-color-text h-10 w-full  cursor-pointer hover:bg-secondary/80`}  >
+        <button onClick={()=> setIsVisible(!isVisible)} className={` ${selectedStatus? 'bg-primary  text-white': 'bg-secondary hover:bg-secondary/80 hover:text-white transition duration-300'} rounded-md 
+          text-color-text h-10 w-full  cursor-pointer `}  >
          <span className='px-2 '>
           {
            status

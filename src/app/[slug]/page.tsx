@@ -33,7 +33,6 @@ export default function Page({ params }: { params: { slug: string } }) {
     // variables are also typed!
     { variables: { slug: params.slug } }
   );
-  console.log(data?.anime?.poster[0])
   const ImageAlt ='Anime Image'
     return <div>
       <div className= "top-0 left-0 absolute h-[512px] w-full after:w-full after:top-0 after:left-0 after:absolute after:bg-bg-color/80  after:h-[512px] after:content-[' '] ">
@@ -44,7 +43,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       </div>
 
   
-  <AnimeSection name={data?.anime.licenseNameRu} poster={data?.anime?.poster[0]} />
+  <AnimeSection title={data?.anime.name as string} description={data?.anime.description as string} genres={data?.anime.genres} RuTitle={data?.anime.licenseNameRu as string}  poster={data?.anime?.poster[0]} />
   
       </div>
   }
