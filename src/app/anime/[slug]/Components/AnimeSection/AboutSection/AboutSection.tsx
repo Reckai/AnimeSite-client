@@ -1,17 +1,18 @@
 import React from 'react'
-import {Anime} from '@/__generated__/graphql';
+import {Anime, AnimeListStatusDistribution} from '@/__generated__/graphql';
 import { AboutAnimeHeader, AboutAnimeHeaderProps } from './Header/AboutAnimeHeader';
 import Button from './GenreButton/Button';
 import InfoButton from './AnimeInListInfograph/InfoButton/InfoButton';
-import AnimeListInfograph from './AnimeInListInfograph/AnimeListInfograph';
+import AnimeListInfograph, { AnimeListInfographProps } from './AnimeInListInfograph/AnimeListInfograph';
 
-export type AboutAnimeProps = AboutAnimeHeaderProps & {
+export type AboutAnimeProps = AboutAnimeHeaderProps & AnimeListInfographProps & {
     description: Anime['description'];
     genres: Anime['genres'];
 
 }
 
-const AboutSection = ({title, RuTitle, description, genres}: AboutAnimeProps) => {
+const AboutSection = ({title, RuTitle, description, genres , animeListInfo}: AboutAnimeProps) => {
+ console.log(animeListInfo)
   return (
     <div className='mt-8'>
         <AboutAnimeHeader  title={title} RuTitle={RuTitle} />
@@ -28,7 +29,9 @@ const AboutSection = ({title, RuTitle, description, genres}: AboutAnimeProps) =>
           }
         </article>
         <article>
-        <AnimeListInfograph />
+       {
+           animeListInfo?.length ?  <AnimeListInfograph animeListInfo={animeListInfo} /> : null
+       }
         </article>
 
     </div>

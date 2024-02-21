@@ -6,9 +6,13 @@
   color: #fff;
 }
 
-
 body {
+  --success: "#06715a";
+  --warning: "#f60";
+  --info: "#02a9ff";
+  --primary: "#5b58fb";
+  --error: "#d03a52";
   
-  background: #111117
+  
+  background: #111117;  
 }
-

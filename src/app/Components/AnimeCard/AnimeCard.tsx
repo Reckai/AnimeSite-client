@@ -14,7 +14,7 @@ type AnimeCard = {
 
 const AnimeCard = ({title,poster, slug, description}: AnimeCard) => {
     return (
-        <Link href={`/${slug}`} className='flex flex-col md:w-calc(25%-20px) sm:w-50%  lg:w-calc(16%-20px) m-b-2 mx-2.5   '>
+        <Link href={`/anime/${slug}`} className='flex flex-col md:w-calc(25%-20px) sm:w-50%  lg:w-calc(16%-20px) m-b-2 mx-2.5   '>
            <Image
                 width={500}
                 height={500}

@@ -8,14 +8,15 @@ interface AnimeSectionProps extends AboutAnimeProps {
     poster: Poster | undefined ;
 }
 
-const AnimeSection = ({title, RuTitle, genres, description,  poster }: AnimeSectionProps) => {
+const AnimeSection = ({title, RuTitle, genres, description,  poster, animeListInfo }: AnimeSectionProps) => {
+   
     return(
         <section className='relative z-10 pt-32 '>
          <div className='mx-16 flex'>
           <aside className='mr-10 flex-none w-64'>
           <PosterSection name={title} url={poster?.originalUrl} />
           </aside>
-          <AboutSection  title={title} RuTitle={RuTitle} genres={genres} description={description} />
+          <AboutSection  title={title} RuTitle={RuTitle} animeListInfo={animeListInfo} genres={genres} description={description} />
          </div>
         </section>
     )
