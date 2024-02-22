@@ -2,8 +2,8 @@
 import { gql } from "@/__generated__/gql";
 import { useQuery } from "@apollo/client";
 import AnimeSection from "@/app/anime/[slug]/Components/AnimeSection/AnimeSection";
-import NotFound from "./Components/NotFound/NotFound";
-import Loading from "./Components/Loading/Loading";
+import NotFound from "@/app/Components/NotFound/NotFound";
+import Loading from "@/app/Components/Loading/Loading";
 
 const GET_ANIME = gql(
   `
