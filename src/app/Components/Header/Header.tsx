@@ -1,9 +1,16 @@
+'use client'
 import React from 'react';
 import Link from "next/link";
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_USER_DATA, REFRESH_TOKEN } from '@/app/api/routes/Mutations/Mutations';
+import Button from '../Button/Button';
 type HeaderProp ={
     styles?: string
 }
 const Header = ({styles}: HeaderProp) => {
+    
+    
+
     return (<header
             className={`header   items-center  absolute left-0 top-0 z-20 ${styles ? styles : "bg-header"}  w-full p-4 text-2xl h-14 w-100% text-black dark:text-white
  `}>
@@ -16,11 +23,7 @@ const Header = ({styles}: HeaderProp) => {
                 </h1>
             </nav>
             <nav>
-                <Link href='/auth'>
-                    <p>
-                        Вход
-                    </p>
-                </Link>
+                
             </nav>
         </div>
     </header>);

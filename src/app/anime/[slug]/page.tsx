@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import AnimeSection from "@/app/anime/[slug]/Components/AnimeSection/AnimeSection";
 import NotFound from "@/app/Components/NotFound/NotFound";
 import Loading from "@/app/Components/Loading/Loading";
+import Button from "@/app/Components/Button/Button";
 
 const GET_ANIME = gql(
   `
@@ -40,6 +41,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const ImageAlt = "Anime Image";
 
+
   {
     if (loading) {
       return <Loading></Loading>
@@ -64,6 +66,9 @@ export default function Page({ params }: { params: { slug: string } }) {
             RuTitle={data?.anime.licenseNameRu as string}
             poster={data?.anime?.poster[0]}
           />
+
+
+          
         </div>
       );
     }
