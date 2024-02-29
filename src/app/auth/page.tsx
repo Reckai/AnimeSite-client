@@ -6,9 +6,10 @@ import Images from '@/../public/goku-vegeta-shenron-android-18-bulma-dragon-ball
 import Button from "@/app/Components/Button/Button";
 import { useMutation } from '@apollo/client/react/hooks/useMutation';
 import { LOGIN_USER, SIGNUP_USER } from '../api/routes/Mutations/Mutations';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { Sign } from 'crypto';
 import { AuthPayload, Mutation, SignUpMutation, UserLoginInput } from '@/__generated__/graphql';
+import { AuthContext } from '../context/authcontext/authContext';
 
 type Inputs = {
     Login: string
@@ -23,17 +24,35 @@ type Inputs = {
 const Page: React.FC = () => {
    const router = useRouter()
    const [SingInOrSingUpFlag, SetSingInOrSingUpFlag] = React.useState<boolean>(true);
-    
+   const authContext = React.useContext(AuthContext)
 const [SignUp, { data: mutationResult }] = useMutation(SIGNUP_USER,{
     onCompleted: (mutationResult) => {
-        console.log('data',data)
-        
-        localStorage.setItem('accessToken', mutationResult.loginUser.token )
-        localStorage.setItem('refreshToken', mutationResult.loginUser.RefreshToken)
+        localStorage.setItem('accessToken', mutationResult.signupUser.token as string )
+        localStorage.setItem('refreshToken', mutationResult.signupUser.token as string)
+        authContext.isAuthenticated = true
+        authContext.user = {
+            id: mutationResult.signupUser.user?.id as string,
+            name: mutationResult.signupUser.user?.name as string,
+            avatar: null
+        }
         router.push('/')
+
     },   
 });
-const [LogIn, { data }] = useMutation<Mutation>(LOGIN_USER,);
+const [LogIn, { data }] = useMutation<Mutation>(LOGIN_USER, {
+    onCompleted: (data) => {
+        localStorage.setItem('accessToken', data?.loginUser.token as string )
+        localStorage.setItem('refreshToken', data?.loginUser.RefreshToken as string)
+
+        authContext.isAuthenticated = true
+        authContext.user ={
+            id: data?.loginUser.user?.id as string,
+            name: data?.loginUser.user?.name as string,
+            avatar: null
+        }
+        router.push('/')  
+    }
+});
    
    
     
@@ -44,23 +63,22 @@ const [LogIn, { data }] = useMutation<Mutation>(LOGIN_USER,);
     const onSubmit: SubmitHandler<Inputs> = useCallback(async(values) =>{
 
         if(SingInOrSingUpFlag){
-            console.log('1',values)
-         const loginData =   await LogIn({variables: {args: {email: values.Login, password: values.password}}})
-            console.log('loginData',loginData)
-            localStorage.setItem('accessToken', loginData?.data?.loginUser.token as string )
-            localStorage.setItem('refreshToken', loginData?.data?.loginUser.RefreshToken as string)
-            router.push('/')       
+         await LogIn({variables: {args: {email: values.Login, password: values.password}}})
+                
         }else{
-            console.log('2',values)
-           const signUpData = await SignUp({variables: {args: {email: values.Login, password: values.password}}})
-           console.log('signUpData',signUpData)
-           router.push('/')
+   await SignUp({variables: {args: {email: values.Login, password: values.password}}})
+      
         }
-    },[SingInOrSingUpFlag, SignUp, LogIn, router])
-    if(data){
-       
-    }
-  
+    },[SingInOrSingUpFlag, SignUp, LogIn])
+
+
+
+    React.useEffect(() => {
+        if(authContext.isAuthenticated){
+            redirect('/')
+        }
+    }, [authContext.isAuthenticated, router])
+    
     return (<section className={' flex mt-24 px-3.5 justify-center'}>
         <div className={'flex  items-center justify-between max-w-6xl mx-7'}>
             <div className={'bg-color-el-bg flex flex-col mt-2 px-6 py-5 max-w-[460px]'}>

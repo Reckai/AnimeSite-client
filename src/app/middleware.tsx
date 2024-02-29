@@ -4,8 +4,10 @@ import { setContext } from '@apollo/client/link/context';
 import 'dotenv/config'
 import { GraphQLError } from 'graphql/error/GraphQLError';
 import { REFRESH_TOKEN } from './api/routes/Mutations/Mutations';
-import { Mutation, MutationRefreshTokenArgs, RefreshTokenPayload } from '@/__generated__/graphql';
+import { Mutation, MutationRefreshTokenArgs } from '@/__generated__/graphql';
 import { onError } from "@apollo/client/link/error";
+import { AuthContext } from './context/authcontext/authContext';
+
 
 
 const httpLink = createHttpLink({
@@ -29,7 +31,7 @@ function returnTokenDependingOnOperation(operation: GraphQLRequest) {
 
 const authLink = setContext((operation, { headers }) => {
   let token = returnTokenDependingOnOperation(operation);
-
+  console.log('token', token)
   return {
     headers: {
       ...headers,
@@ -121,9 +123,14 @@ const errorLink = onError(
   }>) => {
 
     return (
+      <AuthContext.Provider value={{
+        isAuthenticated: false,
+        user:null
+      }} >
         <ApolloProvider client={client}>
             {children}
         </ApolloProvider>
+        </AuthContext.Provider>
     )
   }
 

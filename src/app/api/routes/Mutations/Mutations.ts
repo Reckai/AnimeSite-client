@@ -6,6 +6,7 @@ mutation SignUp($args: UserLoginInput!) {
     RefreshToken
     user {
       id
+      name
     }
   }
 }`)
@@ -16,6 +17,7 @@ mutation LoginUser($args: UserLoginInput!) {
     RefreshToken
     user {
       id
+      name
     }
   }
 }`)
@@ -36,3 +38,8 @@ mutation RefreshToken($token: String!) {
     RefreshToken
   }
 }`)
+
+export const LOGOUT = gql(`mutation logout {
+  logout
+}
+`)
