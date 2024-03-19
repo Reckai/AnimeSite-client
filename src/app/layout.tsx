@@ -1,17 +1,18 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 
-import "./globals.css";
+import './globals.css';
 
-import PageWrapper from "./middleware";
+import React from 'react';
+import { ApolloWrapper } from '../_providers/apollo-wrapper';
+import SessionWrapper from '@/_providers/SessionWrapper';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Anime Page",
-  description: "made by @Reckai",
+  title: 'Anime Page',
+  description: 'made by @Reckai',
 };
-
 
 export default function RootLayout({
   children,
@@ -21,10 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        
-      <PageWrapper>
-        {children}
-        </PageWrapper>
+
+        <ApolloWrapper>
+          <SessionWrapper>
+            {children}
+          </SessionWrapper>
+        </ApolloWrapper>
       </body>
     </html>
   );

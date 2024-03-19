@@ -6,7 +6,7 @@ const  AnimePageLayout = ({
     children: React.ReactNode
 }) => {
     return (
-        <section className={'flex flex-col min-h-screen'} >
+        <section className={'flex flex-col h-screen items-center justify-center '} >
             {/* Include shared UI here e.g. a header or sidebar */}
             <Header />
             {children}

@@ -6,8 +6,13 @@ const nextConfig = {
             protocol: 'https',
             hostname: 'desu.shikimori.one',
             port: '',
-           
+
           },
+            {
+                protocol: 'https',
+                hostname: 'cdn.discordapp.com',
+                port: '',
+            }
         ],
       },
 };
