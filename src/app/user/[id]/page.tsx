@@ -1,8 +1,11 @@
 import React from 'react';
+import {Input} from "@/app/shared/Input/input";
 
 function Page(props) {
     return (
-        <div></div>
+        <div>
+            <Input />
+        </div>
     );
 }
 
