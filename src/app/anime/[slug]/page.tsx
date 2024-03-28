@@ -1,10 +1,9 @@
 "use client";
-import { gql } from "@/__generated__/gql";
-import { useQuery } from "@apollo/client";
+
+import { gql, useQuery } from "@apollo/client";
 import AnimeSection from "@/app/anime/[slug]/Components/AnimeSection/AnimeSection";
 import NotFound from "@/app/Components/NotFound/NotFound";
 import Loading from "@/app/Components/Loading/Loading";
-import Button from "@/app/Components/Button/Button";
 
 const GET_ANIME = gql(
   `
@@ -24,6 +23,9 @@ const GET_ANIME = gql(
         id
         previewUrl
       }
+      animeLists {
+      status
+      }
       userWatchListStatusDistributions {
         status
         count
@@ -39,18 +41,15 @@ export default function Page({ params }: { params: { slug: string } }) {
     { variables: { slug: params.slug } }
   );
 
-  const ImageAlt = "Anime Image";
-
-
   {
     if (loading) {
-      return <Loading></Loading>
+      return <Loading />;
     }
   }
 
   {
     if (!loading && !data?.anime) {
-      return <NotFound/>
+      return <NotFound />;
     }
   }
 
@@ -59,16 +58,17 @@ export default function Page({ params }: { params: { slug: string } }) {
       return (
         <div>
           <AnimeSection
+            id={data?.anime.id}
             title={data?.anime.name as string}
             animeListInfo={data?.anime.userWatchListStatusDistributions}
+            status={
+              !data?.anime.animeLists ? "" : data?.anime.animeLists[0].status
+            }
             description={data?.anime.description as string}
             genres={data?.anime.genres}
             RuTitle={data?.anime.licenseNameRu as string}
             poster={data?.anime?.poster[0]}
           />
-
-
-          
         </div>
       );
     }

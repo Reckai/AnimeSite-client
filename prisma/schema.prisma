@@ -12,7 +12,9 @@ model User {
   email         String      @unique
   name          String?
   image         String?
+  role          Role        @default(USER)
   password      String?
+  accessToken   String?
   emailVerified DateTime?
   createdAt     DateTime    @default(now())
   Comment       Comment[]
@@ -113,12 +115,6 @@ model Poster {
   originalUrl String
   previewUrl  String
   Anime       Anime[]
-}
-
-model RefreshTokens {
-  role   Role
-  token  String @unique
-  userId String
 }
 
 enum Role {

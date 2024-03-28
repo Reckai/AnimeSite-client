@@ -2,7 +2,6 @@
 import React from 'react';
 import Header from '@/app/Components/Header/Header';
 import MainContent from "@/app/_components/MainContent/MainContent";
-import {signOut} from "next-auth/react";
 
 export default function Home() {
 

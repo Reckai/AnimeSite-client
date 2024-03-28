@@ -13,8 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n\n\nquery AllAnimes {\n  allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}": types.AllAnimesDocument,
-    "\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n      userWatchListStatusDistributions {\n        status\n        count\n      }\n    }\n  }\n  ": types.OneAnimeDocument,
+    "\n query AllAnimes {\n allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}": types.AllAnimesDocument,
+    "\nmutation Mutation($status: AnimeStatus!, $userId: String!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, userId: $userId, animeId: $animeId)\n}": types.MutationDocument,
+    "\nquery Anime($slug: String!) {\n  anime(slug: $slug) {\n   \n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      animeLists {\n      status\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n      userWatchListStatusDistributions {\n        status\n        count\n      }\n  }\n}\n  ": types.AnimeDocument,
 };
 
 /**
@@ -34,11 +35,15 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n\n\nquery AllAnimes {\n  allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}"): (typeof documents)["\n\n\nquery AllAnimes {\n  allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}"];
+export function gql(source: "\n query AllAnimes {\n allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}"): (typeof documents)["\n query AllAnimes {\n allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n      userWatchListStatusDistributions {\n        status\n        count\n      }\n    }\n  }\n  "): (typeof documents)["\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n      userWatchListStatusDistributions {\n        status\n        count\n      }\n    }\n  }\n  "];
+export function gql(source: "\nmutation Mutation($status: AnimeStatus!, $userId: String!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, userId: $userId, animeId: $animeId)\n}"): (typeof documents)["\nmutation Mutation($status: AnimeStatus!, $userId: String!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, userId: $userId, animeId: $animeId)\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nquery Anime($slug: String!) {\n  anime(slug: $slug) {\n   \n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      animeLists {\n      status\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n      userWatchListStatusDistributions {\n        status\n        count\n      }\n  }\n}\n  "): (typeof documents)["\nquery Anime($slug: String!) {\n  anime(slug: $slug) {\n   \n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      animeLists {\n      status\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n      userWatchListStatusDistributions {\n        status\n        count\n      }\n  }\n}\n  "];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

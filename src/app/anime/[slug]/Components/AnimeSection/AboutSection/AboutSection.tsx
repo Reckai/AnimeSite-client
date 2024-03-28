@@ -1,5 +1,5 @@
-import React from 'react'
-import {Anime, AnimeListStatusDistribution} from '@/__generated__/graphql';
+import React from 'react';
+import { Anime, AnimeListStatusDistribution } from '@/__generated__/graphql';
 import { AboutAnimeHeader, AboutAnimeHeaderProps } from './Header/AboutAnimeHeader';
 import Button from './GenreButton/Button';
 import InfoButton from './AnimeInListInfograph/InfoButton/InfoButton';
@@ -8,34 +8,34 @@ import AnimeListInfograph, { AnimeListInfographProps } from './AnimeInListInfogr
 export type AboutAnimeProps = AboutAnimeHeaderProps & AnimeListInfographProps & {
     description: Anime['description'];
     genres: Anime['genres'];
-
+    
 }
 
-const AboutSection = ({title, RuTitle, description, genres , animeListInfo}: AboutAnimeProps) => {
- console.log(animeListInfo)
+function AboutSection({
+  title, RuTitle, description, genres, animeListInfo,
+}: AboutAnimeProps) {
+  console.log(animeListInfo);
   return (
-    <div className='mt-8'>
-        <AboutAnimeHeader  title={title} RuTitle={RuTitle} />
-        <div className=' flex mt-4  mb-4 gap-1'>
-       {
-        genres?.map((genre) => {
-            return <Button key={genre.id} text={genre.russian} href={`/genre/${genre.name}`} />
-        })
+    <div className="mt-8">
+      <AboutAnimeHeader title={title} RuTitle={RuTitle} />
+      <div className=" flex mt-4  mb-4 gap-1">
+        {
+        genres?.map((genre) => <Button key={genre.id} text={genre.russian} href={`/genre/${genre.name}`} />)
        }
-        </div>
-        <article className='py-3 mb-3 leading-snug text-color-text break-words'>
-          {
+      </div>
+      <article className="py-3 mb-3 leading-snug text-color-text break-words">
+        {
             description
           }
-        </article>
-        <article>
-       {
-           animeListInfo?.length ?  <AnimeListInfograph animeListInfo={animeListInfo} /> : null
+      </article>
+      <article>
+        {
+           animeListInfo?.length ? <AnimeListInfograph animeListInfo={animeListInfo} /> : null
        }
-        </article>
+      </article>
 
     </div>
-  )
+  );
 }
 
-export default AboutSection
+export default AboutSection;

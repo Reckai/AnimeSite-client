@@ -6,7 +6,7 @@ import { signOut, useSession } from 'next-auth/react';
 
 import Button from '@/app/Components/Button/Button';
 import { Avatar, AvatarImage } from '@/app/shared/Avatar/AvaterComponent';
-import DropDownMenu from "@/app/shared/DropDownMenu/DropDownMenu";
+import DropDownMenu from "@/app/Components/Header/_components/DropDownMenu/DropDownMenu";
 
 type HeaderProp ={
     styles?: string | undefined;
