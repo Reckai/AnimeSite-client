@@ -1,37 +1,40 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import React from "react";
+import Header from "@/app/Components/Header/Header";
 
-import './globals.css';
+import Provider from "@/_providers/providers";
+import GraphQLProvider from "@/_providers/UrqlProvider/GraphQLProvider";
+import { cookies } from "next/headers";
+import SessionWrapper from "@/_providers/SessionWrapper";
 
-import React from 'react';
-import { cookies } from 'next/headers';
-import { ApolloWrapper } from '../_providers/apollo-wrapper';
-import SessionWrapper from '@/_providers/SessionWrapper';
-
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Anime Page',
-  description: 'made by @Reckai',
+  title: "Anime Page",
+  description: "made by @Reckai",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookie = cookies();
-  const token = cookie.get('access_token');
-
+  const token = cookies().get("access-token")?.value || "";
   return (
-    <html lang="en">
-      <body className={inter.className}>
-
-        <ApolloWrapper cookie={token?.value ? token.value : ''}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.className} text-black dark:text-white bg-[#f6f6f6]  dark:bg-bg-color`}
+      >
+        <GraphQLProvider token={token}>
           <SessionWrapper>
-            {children}
+            <Provider>
+              <Header />
+              {children}
+            </Provider>
           </SessionWrapper>
-        </ApolloWrapper>
+        </GraphQLProvider>
       </body>
     </html>
   );

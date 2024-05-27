@@ -1,0 +1,22 @@
+'use client'
+
+import { createContext } from "react"
+
+export interface session {
+    id: string
+    email: string
+createAt: string
+name: string
+}
+
+export interface SessionContextProps {
+    session:session | undefined
+    setSession: (session:session | null)=>void
+
+}
+
+
+export const SessionContext = createContext<SessionContextProps>({
+    session: undefined,
+    setSession:()=>{},
+})

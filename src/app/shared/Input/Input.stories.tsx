@@ -21,5 +21,9 @@ type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
-  args: { type: 'text',},
+  args: { type: 'text' },
+};
+export const DarkTemplate: Story = {
+  args: { type: 'text', className: 'dark' },
+
 };

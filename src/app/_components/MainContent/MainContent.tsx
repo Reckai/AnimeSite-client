@@ -1,17 +1,16 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
-import AnimeCard from '@/app/Components/AnimeCard/AnimeCard';
-import {GET_ALL_ANIMES} from '@/app/_components/MainContent/Query';
+import React from "react";
+import { GET_ALL_ANIMES, SIGN_IN } from "@/app/_components/MainContent/Query";
+import AnimeCard from "@/app/Components/AnimeCard/AnimeCard";
+import { useQuery } from "@urql/next";
 
 function MainContent() {
-  const { data } = useSuspenseQuery(GET_ALL_ANIMES);
+  const [result] = useQuery({ query: GET_ALL_ANIMES });
+  console.log(result);
   return (
-    <div
-      className=" mt-24 grid md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-6 gap-4"
-    >
-      {data?.allAnimes.map((anime) => (
+    <div className=" grid md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+      {result.data?.allAnimes.map((anime) => (
         <AnimeCard
           id={anime.id}
           slug={anime.slug}
@@ -22,7 +21,6 @@ function MainContent() {
         />
       ))}
     </div>
-
   );
 }
 

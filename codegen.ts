@@ -1,19 +1,14 @@
-import { CodegenConfig } from '@graphql-codegen/cli';
-
+import { CodegenConfig } from '@graphql-codegen/cli'
+ 
 const config: CodegenConfig = {
-  schema: process.env.GRAPHQL_SCHEMA || 'http://localhost:4000/graphql',
-  // this assumes that all your source files are in a top-level `src/` directory - you might need to adjust this to your file structure
-  documents: ['src/app/**/*.{ts,tsx}'],
+  schema: 'http://localhost:4000/graphql',
+  documents: ['src/components/**/*.tsx', 'src/app/**/*.ts', 'src/**/*.{ts,tsx}'],
+  ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    './src/__generated__/': {
-      preset: 'client',
-      plugins: [],
-      presetConfig: {
-        gqlTagName: 'gql',
-      }
+    './src/gql/': {
+      preset: 'client'
     }
-  },
-  ignoreNoDocuments: true,
-};
-
-export default config;
+  }
+}
+ 
+export default config
