@@ -1,13 +1,13 @@
 import React, { Suspense } from "react";
+import { Poster } from "@/gql/graphql";
+import AboutSection, {
+  AboutAnimeSectionProps,
+} from "./_components/AboutSection/AboutSection";
+import { useGetAnime } from "./hooks/useGetAnime";
 import {
   PosterSection,
   PosterSectionProps,
-} from "./SideSection/PosterSection/PosterSection";
-import AboutSection, {
-  AboutAnimeSectionProps,
-} from "./AboutSection/AboutSection";
-import { Poster } from "@/gql/graphql";
-import { useGetAnime } from "./hooks/useGetAnime";
+} from "./_components/SideSection/PosterSection/PosterSection";
 import NotFound from "@/app/_Components/NotFound/NotFound";
 
 export interface AnimeSectionProps extends AboutAnimeSectionProps {
