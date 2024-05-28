@@ -4,7 +4,9 @@ import { FormContainer } from "./components/FormContainer/FormContainer";
 
 const AuthPage = () => (
   <Providers stage={{ defaultStage: "signIn" }}>
-    <FormContainer />
+    <div className="flex   items-center justify-center">
+      <FormContainer />
+    </div>
   </Providers>
 );
 
