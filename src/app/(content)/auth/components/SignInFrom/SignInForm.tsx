@@ -17,28 +17,8 @@ import { PasswordInput } from "@/app/shared/PasswordInput/password-input";
 import { Button } from "@/app/shared/Button/Button";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/app/context/SessionContext/useSession";
-import { flushSync } from "react-dom";
-
 const SignInForm = () => {
   const { form, functions, state } = useSignInForm();
-  const router = useRouter();
-  const { setSession } = useSession();
-  const [loginUserResponse, loginUser] = useMutation(loginUserMutation);
-  const onSubmitFunction = (data: UserLoginInput) => {
-    loginUser({ args: data }).then((result) => {
-      if (result.data?.loginUser) {
-        const session = {
-          id: result.data.loginUser.user.id as string,
-          name: result.data.loginUser.user.name as string,
-          createAt: result.data.loginUser.user.createdAt as string,
-          email: result.data.loginUser.user.email as string,
-        };
-        flushSync(() => setSession(session));
-        router.push("/");
-      }
-    });
-    console.log(loginUserResponse);
-  };
 
   return (
     <div>
@@ -52,10 +32,7 @@ const SignInForm = () => {
       </div>
       <div>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmitFunction)}
-            className="space-y-4"
-          >
+          <form onSubmit={functions.onSubmit} className="space-y-4">
             <FormField
               control={form.control}
               name="email"

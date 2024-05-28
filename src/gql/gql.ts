@@ -16,6 +16,7 @@ const documents = {
     "\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $userId: String!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, userId: $userId, animeId: $animeId)\n}": types.ChangeAnimeStatusMutationDocument,
     "\n  query OneAnime($slug: String!) {\n    anime(slug: $slug) {\n      id\n      name\n      licenseNameRu\n      description\n      genres {\n        id\n        name\n        russian\n      }\n      poster {\n        originalUrl\n        id\n        previewUrl\n      }\n      animeLists {\n        status\n      }\n      userWatchListStatusDistributions {\n        status\n        count\n      }\n    }\n  }\n": types.OneAnimeDocument,
     "\n\nmutation Mutation($args: UserLoginInput!) {\nloginUser(args: $args) {\n  user {\n    id\n      email\n      name\n      image\n      role\n      createdAt\n  }\n}\n}": types.MutationDocument,
+    "\n  mutation SignupUser($password: String!, $email: String!) {\n    signupUser(password: $password, email: $email) {\n      user {\n        id\n      }\n    }\n  }\n": types.SignupUserDocument,
     "\n query AllAnimes {\n allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}": types.AllAnimesDocument,
     "\nmutation signInMutation($args: UserLoginInput!) {\n  loginUser(args: $args) {\n    user {\n      id\n    }\n  }\n}\n": types.SignInMutationDocument,
     "\n  query Me {\n    me {\n      id\n      email\n      name\n      image\n      role\n      createdAt\n    }\n  }\n": types.MeDocument,
@@ -47,6 +48,10 @@ export function graphql(source: "\n  query OneAnime($slug: String!) {\n    anime
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\nmutation Mutation($args: UserLoginInput!) {\nloginUser(args: $args) {\n  user {\n    id\n      email\n      name\n      image\n      role\n      createdAt\n  }\n}\n}"): (typeof documents)["\n\nmutation Mutation($args: UserLoginInput!) {\nloginUser(args: $args) {\n  user {\n    id\n      email\n      name\n      image\n      role\n      createdAt\n  }\n}\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation SignupUser($password: String!, $email: String!) {\n    signupUser(password: $password, email: $email) {\n      user {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation SignupUser($password: String!, $email: String!) {\n    signupUser(password: $password, email: $email) {\n      user {\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
