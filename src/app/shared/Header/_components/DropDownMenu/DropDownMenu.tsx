@@ -10,11 +10,11 @@ import {
 import { VscAccount } from "react-icons/vsc";
 import { CiHeart, CiLogout, CiSettings } from "react-icons/ci";
 import { useRouter } from "next/navigation";
-import DropDownItem from "@/app/Components/Header/_components/DropDownItem/DropDownItem";
+import DropDownItem from "@/app/shared/Header/_components/DropDownItem/DropDownItem";
 import {
   Avatar,
   AvatarImage,
-} from "@/app/Components/Header/_components/Avatar/AvaterComponent";
+} from "@/app/shared/Header/_components/Avatar/AvaterComponent";
 import { useSession } from "@/app/context/SessionContext/useSession";
 import { Logout } from "./logout";
 import { flushSync } from "react-dom";

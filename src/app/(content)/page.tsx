@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import MainContent from "@/app/_components/MainContent/MainContent";
+import MainContent from "@/app/_Components/MainContent/MainContent";
 import Loading from "@/app/(content)/_components/Loading";
 
 export default function Home() {

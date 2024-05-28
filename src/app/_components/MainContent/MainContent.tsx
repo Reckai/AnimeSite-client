@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { GET_ALL_ANIMES, SIGN_IN } from "@/app/_components/MainContent/Query";
-import AnimeCard from "@/app/Components/AnimeCard/AnimeCard";
+import { GET_ALL_ANIMES, SIGN_IN } from "@/app/_Components/MainContent/Query";
+import AnimeCard from "@/app/_Components/MainContent/AnimeCard/AnimeCard";
 import { useQuery } from "@urql/next";
 
 function MainContent() {
   const [result] = useQuery({ query: GET_ALL_ANIMES });
-  console.log(result);
+
+  console.log(result.fetching);
   return (
     <div className=" grid md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-6 gap-4">
       {result.data?.allAnimes.map((anime) => (

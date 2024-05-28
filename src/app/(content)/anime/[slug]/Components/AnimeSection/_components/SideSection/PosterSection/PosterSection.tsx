@@ -3,7 +3,7 @@ import Image from "next/image";
 import AnimeWatchButton from "./AnimeWatchButton/AnimeWatchButton";
 import { useSession } from "@/app/context/SessionContext/useSession";
 
-type PosterSectionProps = {
+export type PosterSectionProps = {
   url: string | undefined;
   name: string | undefined;
   id: string;

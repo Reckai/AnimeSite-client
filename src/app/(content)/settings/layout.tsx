@@ -1,7 +1,7 @@
 import React from "react";
 import { IoArrowUndoOutline } from "react-icons/io5";
 import Link from "next/link";
-import { Button } from "@/app/Components/Button/Button";
+import { Button } from "@/app/shared/Button/Button";
 import { cn } from "@/app/utils";
 
 function SettingsPageLayout({ children }: { children: React.ReactNode }) {

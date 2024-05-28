@@ -3,7 +3,7 @@ import { FaDiscord } from "react-icons/fa";
 import Link from "next/link";
 import CardHeader from "@/app/shared/CardHeader/CardHeader";
 import CardFooter from "../CardFooter/CardFooter";
-import { Button } from "@/app/Components/Button/Button";
+import { Button } from "@/app/shared/Button/Button";
 
 interface CardWrapperProps {
   children: React.ReactNode;

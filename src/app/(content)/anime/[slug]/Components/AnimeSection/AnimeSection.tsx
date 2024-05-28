@@ -1,44 +1,53 @@
-import React from "react";
-import { Poster } from "@/__generated__/graphql";
-import { PosterSection } from "./SideSection/PosterSection/PosterSection";
-import AboutSection, { AboutAnimeProps } from "./AboutSection/AboutSection";
+import React, { Suspense } from "react";
+import {
+  PosterSection,
+  PosterSectionProps,
+} from "./SideSection/PosterSection/PosterSection";
+import AboutSection, {
+  AboutAnimeSectionProps,
+} from "./AboutSection/AboutSection";
+import { Poster } from "@/gql/graphql";
+import { useGetAnime } from "./hooks/useGetAnime";
+import NotFound from "@/app/_Components/NotFound/NotFound";
 
-interface AnimeSectionProps extends AboutAnimeProps {
+export interface AnimeSectionProps extends AboutAnimeSectionProps {
   poster: Poster | undefined;
   id: string;
   status: string;
 }
 
-const AnimeSection = ({
-  title,
-  RuTitle,
-  genres,
-  description,
-  poster,
-  animeListInfo,
-  id,
-  status,
-}: AnimeSectionProps) => {
+const AnimeSection = ({ slug }: { slug: string }) => {
+  const { result, error } = useGetAnime(slug);
+  const posterSectionProps: PosterSectionProps = {
+    name: result?.title,
+    url: result?.poster?.originalUrl,
+    id: result?.id,
+    status: result?.status,
+  } as PosterSectionProps;
+  const aboutAnimeSectionProps: AboutAnimeSectionProps = {
+    title: result?.title,
+    RuTitle: result?.RuTitle,
+    animeListInfo: result?.animeListInfo,
+    genres: result?.genres,
+    description: result?.description,
+  } as AboutAnimeSectionProps;
+
   return (
-    <section className="relative z-10">
-      <div className="mx-16 flex">
-        <aside className="mr-10 flex-none w-64">
-          <PosterSection
-            name={title}
-            url={poster?.originalUrl}
-            id={id}
-            status={status}
-          />
-        </aside>
-        <AboutSection
-          title={title}
-          RuTitle={RuTitle}
-          animeListInfo={animeListInfo}
-          genres={genres}
-          description={description}
-        />
-      </div>
-    </section>
+    <>
+      {error ? (
+        <NotFound />
+      ) : (
+        <section className="relative z-10">
+          <div className="mx-16 flex">
+            <aside className="mr-10 flex-none w-64">
+              <PosterSection {...posterSectionProps} />
+            </aside>
+
+            <AboutSection {...aboutAnimeSectionProps} />
+          </div>
+        </section>
+      )}
+    </>
   );
 };
 
