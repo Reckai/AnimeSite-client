@@ -27,7 +27,7 @@ export default function GraphQLProvider({
         return {
           credentials: "include",
           headers: {
-            authorization: `Bearer ${token}`,
+            authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxODEzM2YzZi0wMTVlLTRjOTYtYTFlOC02NmE3ZTY1Yzk5NDgiLCJpYXQiOjE3MTY4OTgwMzMsImV4cCI6MTcxOTQ5MDAzM30.V-gNipbRpLqZ_G_AnhNGfwYg6OcwdplmX4JfXtSet1s`,
           },
         };
       },

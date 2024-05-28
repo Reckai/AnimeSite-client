@@ -30,7 +30,7 @@ const GET_ANIME = graphql(`
 `);
 
 export const useGetAnime = (slug: string) => {
-    const [result] = useQuery({
+    const [result, executeQuery] = useQuery({
         query: GET_ANIME,
         variables: {slug},
       });

@@ -4,7 +4,7 @@ import "./globals.css";
 import React from "react";
 import Header from "@/app/shared/Header/Header";
 
-import Provider from "@/_providers/providers";
+import Provider from "@/app/_providers/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 

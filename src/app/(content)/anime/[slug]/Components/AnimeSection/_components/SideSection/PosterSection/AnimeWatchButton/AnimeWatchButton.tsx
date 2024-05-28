@@ -9,6 +9,7 @@ import { AnimeStatus } from "@/gql/graphql";
 import { useMutation } from "@urql/next";
 import { useSession } from "@/app/context/SessionContext/useSession";
 import { useStatus } from "./hooks/useStatus";
+import { useRouter } from "next/navigation";
 
 type DropDownPropertyType = {
   name: string;
@@ -37,15 +38,19 @@ function AnimeWatchButton({
   const [changeStatusMutationResult, changeStatusMutation] =
     useMutation(CHANGE_ANIME_STATUS);
 
-  console.log(changeStatusMutationResult);
+  console.log(changeStatusMutationResult.fetching);
+
   const ClickStatusHandler = (property: DropDownPropertyType) => {
-    changeStatus(property.statusProperty);
+    setIsVisible(false);
     changeStatusMutation({
       status: property.statusProperty,
       userId: session?.id as string,
       animeId,
+    }).then(() => {
+      if (changeStatusMutationResult.data?.changeStatusOfAnime) {
+        changeStatus(property.statusProperty);
+      }
     });
-    setIsVisible(false);
   };
   const deleteHandler = () => {
     changeStatus(undefined);
@@ -58,6 +63,7 @@ function AnimeWatchButton({
   return (
     <>
       <button
+        disabled={changeStatusMutationResult.fetching}
         onClick={() => setIsVisible(!isVisible)}
         className={` ${
           isSelectedStatus
@@ -70,13 +76,16 @@ function AnimeWatchButton({
       </button>
 
       {isVisible && (
-        <div className="absolute p-2  translate-x-4 max-w-96 -translate-y-20 top-auto left-0 bottom-0 right-auto   rounded-md bg-white dark:bg-opacity-secondary  text-color-text flex flex-col cursor-pointer items-center justify-center ">
+        <div
+          className={`absolute p-2   translate-x-4 max-w-96 -translate-y-20 top-auto left-0 bottom-0 right-auto   rounded-md bg-white dark:bg-opacity-secondary  text-color-text flex flex-col cursor-pointer items-center justify-center `}
+        >
           <div
             ref={AnimeStatusRef}
             className=" flex flex-col py-2 w-full  dark:bg-opacity-secondary "
           >
             {DropDownButtonProperty.map((property, index) => (
               <DropDownButton
+                disabled={changeStatusMutationResult.fetching}
                 clickHandler={() => ClickStatusHandler(property)}
                 key={index}
                 text={property.name}
@@ -86,6 +95,7 @@ function AnimeWatchButton({
             {isSelectedStatus && (
               <div className="border-t-[1px] pt-[2px] mt-[2px] border-color-text ">
                 <DropDownButton
+                  disabled={changeStatusMutationResult.fetching}
                   clickHandler={deleteHandler}
                   text="Удалить из списка"
                 />

@@ -1,6 +1,6 @@
 
 import { authExchange } from "@urql/exchange-auth";
-import { cacheExchange, createClient, fetchExchange, gql } from "@urql/next";
+import { cacheExchange, createClient, fetchExchange, gql, ssrExchange } from "@urql/next";
 import { cookies } from "next/headers";
 import { registerUrql } from "@urql/next/rsc";
 import { graphql } from "@/gql/gql";
@@ -12,6 +12,7 @@ const makeClient = () => {
       url: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/graphql",
       exchanges: [
         cacheExchange,
+        ssrExchange({ isClient: typeof window !== "undefined" }),
         fetchExchange
       ],
       fetchOptions: () => {
@@ -23,6 +24,7 @@ const makeClient = () => {
           
         };
       },
+      
     });
   };
   export const { getClient } = registerUrql(makeClient);
