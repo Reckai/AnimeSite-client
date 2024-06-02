@@ -1,7 +1,7 @@
 import React from 'react'
 import InfoButton from './InfoButton/InfoButton'
 import ProgressBar from './LineGraph/LineGraph'
-import {  AnimeListStatusDistribution } from '@/__generated__/graphql'
+import {AnimeListStatusDistribution} from "@/gql/graphql";
 
 
 export type AnimeListInfographProps ={

@@ -18,6 +18,7 @@ export interface AnimeSectionProps extends AboutAnimeSectionProps {
 
 const AnimeSection = ({ slug }: { slug: string }) => {
   const { result, error } = useGetAnime(slug);
+
   const posterSectionProps: PosterSectionProps = {
     name: result?.title,
     url: result?.poster?.originalUrl,

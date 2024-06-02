@@ -11,7 +11,7 @@ name: string
 
 export interface SessionContextProps {
     session:session | undefined
-    setSession: (session:session | null)=>void
+    setSession: (session:session | undefined)=>void
 
 }
 

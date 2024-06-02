@@ -23,7 +23,6 @@ function AboutSection({
   genres,
   animeListInfo,
 }: AboutAnimeSectionProps) {
-  console.log(animeListInfo);
   return (
     <div className="mt-8">
       <AboutAnimeHeader title={title} RuTitle={RuTitle} />

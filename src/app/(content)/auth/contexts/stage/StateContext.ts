@@ -1,7 +1,7 @@
 'use client';
 import React, { createContext } from "react";
 
-export type Stage = "signIn" 
+export type Stage = "signIn" | "signUp" ;
 
 // | "signUp" | "confirmation";
 export interface StageContextProps {

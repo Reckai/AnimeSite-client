@@ -1,7 +1,6 @@
 import React from "react";
 import { getClient } from "./UrqlProvider/getClient";
 import { graphql } from "@/gql";
-import { session } from "@/app/context/SessionContext/SessionContext";
 import {
   SessionProvider,
   SessionProviderProps,
@@ -23,11 +22,11 @@ export const profileQuery = graphql(`
 
 async function SessionWrapper({ children }: React.PropsWithChildren) {
   const token = cookies().get("access-token")?.value || "";
-
-  const session: Omit<SessionProviderProps, "children"> = {
+ const session: Omit<SessionProviderProps, "children"> = {
     defaultSession: undefined,
   };
-  if (token) {
+ console.log('token', !!token)
+  if (!!token) {
     const profileQueryResult = await getClient().query(
       profileQuery,
       {},
@@ -37,6 +36,7 @@ async function SessionWrapper({ children }: React.PropsWithChildren) {
       }
     );
     const sessionResult = profileQueryResult.data?.me;
+    console.log('session', sessionResult)
     if (sessionResult) {
       session.defaultSession = {
         id: sessionResult.id as string,

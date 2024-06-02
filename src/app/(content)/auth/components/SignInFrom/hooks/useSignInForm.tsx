@@ -8,6 +8,7 @@ import { useMutation } from "@urql/next";
 import { flushSync } from "react-dom";
 import { useSession } from "@/app/context/SessionContext/useSession";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 interface SignInForm {
   email: string;
   password: string;
@@ -15,6 +16,7 @@ interface SignInForm {
 
 export const useSignInForm = () => {
   const { setSession } = useSession();
+  const { setStage } = useStage();
   const router = useRouter();
   const signInForm = useForm<SignInForm>({
     resolver: zodResolver(signInLoginSchema),
@@ -23,8 +25,15 @@ export const useSignInForm = () => {
   //TODO: Implement onSubmit
   const [loginUserResponse, loginUser] = useMutation(loginUserMutation);
   const onSubmit = signInForm.handleSubmit(async (data) => {
-    console.log(data);
     loginUser({ args: data }).then((result) => {
+      if (result.error) {
+        console.log(
+          result.error.graphQLErrors[0].message.replace("[GraphQL] ", "")
+        );
+        toast.error(
+          result.error.graphQLErrors[0].message.replace("[GraphQL] ", "")
+        );
+      }
       if (result.data?.loginUser) {
         const session = {
           id: result.data.loginUser.user.id as string,
@@ -37,7 +46,7 @@ export const useSignInForm = () => {
       }
     });
   });
-  const goToSignUp = () => console.log("goToSignUp");
+  const goToSignUp = () => setStage("signUp");
 
   return {
     state: {

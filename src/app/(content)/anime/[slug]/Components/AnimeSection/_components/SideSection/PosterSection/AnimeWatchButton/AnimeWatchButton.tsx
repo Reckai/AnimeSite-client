@@ -38,7 +38,6 @@ function AnimeWatchButton({
   const [changeStatusMutationResult, changeStatusMutation] =
     useMutation(CHANGE_ANIME_STATUS);
 
-  console.log(changeStatusMutationResult.fetching);
 
   const ClickStatusHandler = (property: DropDownPropertyType) => {
     setIsVisible(false);
@@ -46,8 +45,8 @@ function AnimeWatchButton({
       status: property.statusProperty,
       userId: session?.id as string,
       animeId,
-    }).then(() => {
-      if (changeStatusMutationResult.data?.changeStatusOfAnime) {
+    }).then((res) => {
+      if (res .data?.changeStatusOfAnime) {
         changeStatus(property.statusProperty);
       }
     });
