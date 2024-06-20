@@ -12,7 +12,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
   defaultSession,
   children,
 }) => {
-  const [session, setSession] = useState<session | null>(defaultSession!);
+  const [session, setSession] = useState<session | undefined>(defaultSession!);
   const value = useMemo(() => ({ session, setSession }), [session]);
   return (
     <SessionContext.Provider value={value}>{children}</SessionContext.Provider>

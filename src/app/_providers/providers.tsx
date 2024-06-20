@@ -1,14 +1,14 @@
 import React from "react";
 import { ThemeProvider } from "./ThemeProvider";
-import GraphQLProvider from "./UrqlProvider/GraphQLProvider";
 import SessionWrapper from "./SessionWrapper";
 import { cookies } from "next/headers";
+import GraphQLProvider from "./UrqlProvider/GraphQLProvider";
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
   const token = cookies().get("access-token")?.value || "";
 
   return (
-    <GraphQLProvider token={token}>
+    <GraphQLProvider>
       <SessionWrapper>
         <ThemeProvider
           attribute="class"

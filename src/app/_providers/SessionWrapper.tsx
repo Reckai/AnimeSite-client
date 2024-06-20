@@ -22,21 +22,20 @@ export const profileQuery = graphql(`
 
 async function SessionWrapper({ children }: React.PropsWithChildren) {
   const token = cookies().get("access-token")?.value || "";
- const session: Omit<SessionProviderProps, "children"> = {
+  const session: Omit<SessionProviderProps, "children"> = {
     defaultSession: undefined,
   };
- console.log('token', !!token)
+  console.log("token", !!token);
   if (!!token) {
-    const profileQueryResult = await getClient().query(
-      profileQuery,
-      {},
-      {
-        requestPolicy: "cache-first",
-        suspense: true,
-      }
-    );
-    const sessionResult = profileQueryResult.data?.me;
-    console.log('session', sessionResult)
+    const profileQueryResult = await getClient()
+      .request(profileQuery, {})
+      .catch((e) => {
+        console.error(e);
+        return undefined;
+      });
+
+    const sessionResult = profileQueryResult?.me;
+    console.log("session", sessionResult);
     if (sessionResult) {
       session.defaultSession = {
         id: sessionResult.id as string,

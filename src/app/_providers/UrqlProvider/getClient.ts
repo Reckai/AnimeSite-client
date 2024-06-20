@@ -1,30 +1,12 @@
-
-import { authExchange } from "@urql/exchange-auth";
-import { cacheExchange, createClient, fetchExchange, gql, ssrExchange } from "@urql/next";
-import { cookies } from "next/headers";
-import { registerUrql } from "@urql/next/rsc";
-import { graphql } from "@/gql/gql";
+import { GraphQLClient } from 'graphql-request';
+import { cookies } from 'next/headers';
 
 
-
-const makeClient = () => {
-    return createClient({
-      url: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/graphql",
-      exchanges: [
-        cacheExchange,
-        ssrExchange({ isClient: typeof window !== "undefined" }),
-        fetchExchange
-      ],
-      fetchOptions: () => {
-        return {         
-          credentials: "include",
-          headers: {
-            authorization: `Bearer ${cookies().get("access-token")?.value || ""}`,
-          },
-          
-        };
-      },
-      
+export const getClient = () => {
+  const token = cookies().get('access-token')?.value
+    return new GraphQLClient(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000', {
+      headers:{
+      authorization: `Bearer ${token}`
+      }
     });
   };
-  export const { getClient } = registerUrql(makeClient);
