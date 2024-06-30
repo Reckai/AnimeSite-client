@@ -1,14 +1,17 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { signInLoginSchema } from "../constants/signInSchema";
-import { loginUserMutation } from "./useLoginUserMutation";
+import {
+  loginUserMutation,
+  useLoginUserMutation,
+} from "./useLoginUserMutation";
 import { useStage } from "../../../contexts/stage/useStage";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@urql/next";
-import { flushSync } from "react-dom";
+
 import { useSession } from "@/app/context/SessionContext/useSession";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { revalidate } from "@/lib/gqlClient";
 interface SignInForm {
   email: string;
   password: string;
@@ -21,36 +24,35 @@ export const useSignInForm = () => {
   const signInForm = useForm<SignInForm>({
     resolver: zodResolver(signInLoginSchema),
   });
-  const email = signInForm.watch("email");
   //TODO: Implement onSubmit
-  const [loginUserResponse, loginUser] = useMutation(loginUserMutation);
+  const loginMutation = useLoginUserMutation();
   const onSubmit = signInForm.handleSubmit(async (data) => {
-    loginUser({ args: data }).then((result) => {
-      if (result.error) {
-        console.log(
-          result.error.graphQLErrors[0].message.replace("[GraphQL] ", "")
-        );
-        toast.error(
-          result.error.graphQLErrors[0].message.replace("[GraphQL] ", "")
-        );
-      }
-      if (result.data?.loginUser) {
-        const session = {
-          id: result.data.loginUser.user.id as string,
-          name: result.data.loginUser.user.name as string,
-          createAt: result.data.loginUser.user.createdAt as string,
-          email: result.data.loginUser.user.email as string,
-        };
-        flushSync(() => setSession(session));
-        router.push("/");
-      }
-    });
+    const loginUserResponse = await loginMutation.mutateAsync(data);
+
+    if (loginUserResponse) {
+      const sessionData = loginUserResponse.loginUser;
+      const session = {
+        id: sessionData.user.id as string,
+        name: sessionData.user.name as string,
+        createAt: sessionData.user.createdAt as string,
+        email: sessionData.user.email as string,
+      };
+      setSession(session);
+      revalidate("/");
+      router.refresh();
+      router.push("/");
+    }
+    if (loginMutation.error) {
+      const error = loginMutation.error;
+      console.error(error.message.replace("GraphQL Request Error: ", ""));
+      toast.error(error.message.replace("GraphQL Request Error: ", ""));
+    }
   });
   const goToSignUp = () => setStage("signUp");
 
   return {
     state: {
-      loading: loginUserResponse.fetching,
+      loading: loginMutation.isPending,
     },
     form: signInForm,
     functions: {

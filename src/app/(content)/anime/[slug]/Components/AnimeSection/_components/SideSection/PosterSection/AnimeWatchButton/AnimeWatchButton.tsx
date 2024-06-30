@@ -6,7 +6,7 @@ import DropDownButton from "./Components/DropDownButton";
 import useClickOutside from "@/utils/hooks/useClickOutside";
 import { CHANGE_ANIME_STATUS } from "./Mutation";
 import { AnimeStatus } from "@/gql/graphql";
-import { useMutation } from "@urql/next";
+// import { useMutation } from "@urql/next";
 import { useSession } from "@/app/context/SessionContext/useSession";
 import { useStatus } from "./hooks/useStatus";
 import { useRouter } from "next/navigation";
@@ -35,21 +35,20 @@ function AnimeWatchButton({
   const { status, changeStatus, isSelectedStatus } = useStatus(
     animeStatus as AnimeStatus
   );
-  const [changeStatusMutationResult, changeStatusMutation] =
-    useMutation(CHANGE_ANIME_STATUS);
-
+  //   const [changeStatusMutationResult, changeStatusMutation] =
+  //     useMutation(CHANGE_ANIME_STATUS);
 
   const ClickStatusHandler = (property: DropDownPropertyType) => {
     setIsVisible(false);
-    changeStatusMutation({
-      status: property.statusProperty,
-      userId: session?.id as string,
-      animeId,
-    }).then((res) => {
-      if (res .data?.changeStatusOfAnime) {
-        changeStatus(property.statusProperty);
-      }
-    });
+    // changeStatusMutation({
+    //   status: property.statusProperty,
+    //   userId: session?.id as string,
+    //   animeId,
+    // }).then((res) => {
+    //   if (res.data?.changeStatusOfAnime) {
+    //     changeStatus(property.statusProperty);
+    //   }
+    // });
   };
   const deleteHandler = () => {
     changeStatus(undefined);
@@ -62,13 +61,13 @@ function AnimeWatchButton({
   return (
     <>
       <button
-        disabled={changeStatusMutationResult.fetching}
+        disabled={false}
         onClick={() => setIsVisible(!isVisible)}
         className={` ${
           isSelectedStatus
             ? "bg-primary  text-white"
             : "dark:bg-secondary bg-gray-400/30 dark:hover:bg-secondary/80 hover:bg-gray-400/60 text-bg-color  dark:hover:text-white transition duration-300"
-        } rounded-md 
+        } rounded-md
           text-color-text h-10 w-full  cursor-pointer `}
       >
         <span className="px-2 ">{status}</span>
@@ -84,7 +83,7 @@ function AnimeWatchButton({
           >
             {DropDownButtonProperty.map((property, index) => (
               <DropDownButton
-                disabled={changeStatusMutationResult.fetching}
+                disabled={false}
                 clickHandler={() => ClickStatusHandler(property)}
                 key={index}
                 text={property.name}
@@ -94,7 +93,7 @@ function AnimeWatchButton({
             {isSelectedStatus && (
               <div className="border-t-[1px] pt-[2px] mt-[2px] border-color-text ">
                 <DropDownButton
-                  disabled={changeStatusMutationResult.fetching}
+                  disabled={false}
                   clickHandler={deleteHandler}
                   text="Удалить из списка"
                 />

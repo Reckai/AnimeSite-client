@@ -1,52 +1,52 @@
+'use client'
+
 import { graphql } from "@/gql/gql";
-import { useQuery } from "@urql/next";
-import {AnimeSectionProps} from '../AnimeSection'
-const GET_ANIME = graphql(`
-  query OneAnime($slug: String!) {
-    anime(slug: $slug) {
-      id
-      name
-      licenseNameRu
-      description
-      genres {
-        id
-        name
-        russian
-      }
-      poster {
-        originalUrl
-        id
-        previewUrl
-      }
-      animeLists {
-        status
-      }
-      userWatchListStatusDistributions {
-        status
-        count
-      }
-    }
+import {  useSuspenseQuery } from "@tanstack/react-query";
+
+import { getClientWithoutAuthorization } from "@/lib/gqlClientWithoutAuthorization";
+import { GET_ANIME } from "../../../Query";
+import { OneAnimeQuery } from "@/gql/graphql";
+import { useGraphQLClient } from "@/app/context/GraphQLContext/useGraphQLCLient";
+
+function transformAnimeData(animeData: OneAnimeQuery) {
+  return {
+    id: animeData?.anime.id,
+    title: animeData?.anime.name,
+    animeListInfo: animeData?.anime.userWatchListStatusDistributions,
+    description: animeData?.anime.description,
+    genres: animeData?.anime.genres,
+    RuTitle: animeData?.anime.licenseNameRu,
+    poster: animeData?.anime.poster[0],
+  } ;
+}
+
+export function useGetAnime(slug: string) {
+  const { client } = useGraphQLClient();
+  const query = useSuspenseQuery({
+    queryKey: [`anime-${slug}`],
+    queryFn: async () => {
+      return client?.request(GET_ANIME, { slug });
+      
+    },
+    
+  });
+
+  if (query.error) {
+    throw query.error;
   }
-`);
-
-export const useGetAnime = (slug: string) => {
-    const [result, executeQuery] = useQuery({
-        query: GET_ANIME,
-        variables: {slug},
-      });
-  const animeData = result.data?.anime;
-  const AnimeSectionProps: AnimeSectionProps = {
-    id: animeData?.id,
-    title: animeData?.name,
-    animeListInfo: animeData?.userWatchListStatusDistributions,
-    status: !animeData?.animeLists?.length
-      ? ""
-      : animeData.animeLists[0].status,
-    description: animeData?.description,
-    genres: animeData?.genres,
-    RuTitle: animeData?.licenseNameRu,
-    poster: animeData?.poster[0],
-  } as AnimeSectionProps;
-
-    return {result: result.data && AnimeSectionProps, error: result.error};
+ const data = transformAnimeData(query.data!);
+ console.log(query.data)
+  return {posterProps: {
+    name: data.title,
+   url: data.poster.originalUrl,
+   id: data.id
+  },
+  AboutSectionProps:{
+    title: data.title,
+    RuTitle: data.RuTitle,
+    animeListInfo: data.animeListInfo,
+    genres: data.genres,
+    description: data.description
+  }
+};
 }

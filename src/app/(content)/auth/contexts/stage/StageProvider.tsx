@@ -1,22 +1,22 @@
-// "use client";
-// import React from "react";
-// import type { Stage } from "./StateContext";
-// import { StageContext } from "./StateContext";
+"use client";
+import React from "react";
+import type { Stage } from "./StateContext";
+import { StageContext } from "./StateContext";
 
-// export interface StageProviderProps {
-//   defaultStage?: Stage;
-//   children: React.ReactNode;
-// }
+export interface StageProviderProps {
+  defaultStage?: Stage;
+  children: React.ReactNode;
+}
 
-// export const StageProvider: React.FC<StageProviderProps> = ({
-//   children,
-//   defaultStage = "signIn",
-// }) => {
-//   const [stage, setStage] = React.useState<Stage>(defaultStage);
+export const StageProvider: React.FC<StageProviderProps> = ({
+  children,
+  defaultStage = "signIn",
+}) => {
+  const [stage, setStage] = React.useState<Stage>(defaultStage);
 
-//   const value = React.useMemo(() => ({ stage, setStage }), [stage]);
+  const value = React.useMemo(() => ({ stage, setStage }), [stage]);
 
-//   return (
-//     <StageContext.Provider value={value}>{children}</StageContext.Provider>
-//   );
-// };
+  return (
+    <StageContext.Provider value={value}>{children}</StageContext.Provider>
+  );
+};

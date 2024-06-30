@@ -1,11 +1,12 @@
 import React from "react";
-import { getClient } from "./UrqlProvider/getClient";
 import { graphql } from "@/gql";
 import {
   SessionProvider,
   SessionProviderProps,
 } from "@/app/context/SessionContext/SessionProvider";
 import { cookies } from "next/headers";
+import { getClientWithAuthorization } from "@/lib/gqlClient";
+import { isServer } from "@tanstack/react-query";
 
 export const profileQuery = graphql(`
   query Me {
@@ -21,14 +22,15 @@ export const profileQuery = graphql(`
 `);
 
 async function SessionWrapper({ children }: React.PropsWithChildren) {
+  console.log(isServer, "SERVER");
   const token = cookies().get("access-token")?.value || "";
   const session: Omit<SessionProviderProps, "children"> = {
     defaultSession: undefined,
   };
   console.log("token", !!token);
   if (!!token) {
-    const profileQueryResult = await getClient()
-      .request(profileQuery, {})
+    const profileQueryResult = await getClientWithAuthorization()
+      .request(profileQuery)
       .catch((e) => {
         console.error(e);
         return undefined;
@@ -48,5 +50,4 @@ async function SessionWrapper({ children }: React.PropsWithChildren) {
 
   return <SessionProvider {...session}>{children}</SessionProvider>;
 }
-
 export default SessionWrapper;

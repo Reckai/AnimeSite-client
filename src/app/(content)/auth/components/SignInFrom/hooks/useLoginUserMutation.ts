@@ -1,6 +1,8 @@
-
+'use client'
 import { graphql } from "@/gql";
 import { UserLoginInput } from "@/gql/graphql";
+import { getClientWithoutAuthorization } from "@/lib/gqlClientWithoutAuthorization";
+import { useMutation } from "@tanstack/react-query";
 
 export const loginUserMutation =graphql(`
 
@@ -18,6 +20,13 @@ loginUser(args: $args) {
 }`)
 
 
-const useloginUserMutation = (varables: UserLoginInput) =>{
-  
+export const useLoginUserMutation = () =>{
+ return useMutation({
+    mutationFn: (data: UserLoginInput) => {
+
+      return getClientWithoutAuthorization().request(loginUserMutation, {
+        args: data,
+      });
+    },
+  });
 } 

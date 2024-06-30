@@ -1,10 +1,11 @@
+'use client'
 import { useForm } from "react-hook-form";
 import { useStage } from "../../../contexts/stage/useStage";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "../constants/signUpSchema";
 import { graphql } from "@/gql";
-import { useMutation } from "@urql/next";
 import { toast } from "sonner";
+import {useMutation} from "@tanstack/react-query";
 
 interface SignUpForm {
   email: string;
@@ -26,13 +27,18 @@ export const useSignUpForm = () => {
     resolver: zodResolver(signUpSchema),
   });
 
-  const [signUpMutationResult, signUpMutation] = useMutation(SignUpMutation);
+  const mutation = useMutation({
+    mutationFn: async(data)=>{
+
+      return setTimeout(()=> 's','200')
+    }
+  });
 
   const goToSignIn = () => setStage("signIn");
   const onSubmit = signUpForm.handleSubmit(async (data) => {
     const { passwordConfirmation, ...values } = signUpForm.getValues();
     console.log(values, "values");
-    await signUpMutation({ ...values });
+    await mutation.mutate({ ...values });
     toast.success("User created successfully, check your email to verify.");
     goToSignIn();
   });
@@ -41,7 +47,7 @@ export const useSignUpForm = () => {
 
   return {
     state: {
-      isLoading: signUpMutationResult.fetching,
+      isLoading: mutation.isPending,
       isPasswordEqueal,
     },
     form: signUpForm,

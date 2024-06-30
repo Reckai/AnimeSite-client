@@ -11,7 +11,6 @@ import { Label } from "@/app/shared/Label/Label";
 import { Input } from "@/app/shared/Input/input";
 import { PasswordInput } from "@/app/shared/PasswordInput/password-input";
 import { Button } from "@/app/shared/Button/Button";
-import { Toaster } from "sonner";
 const SignInForm = () => {
   const { form, functions, state } = useSignInForm();
 
@@ -71,7 +70,7 @@ const SignInForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" disabled={state.loading} className="w-full">
               SignIn
             </Button>
           </form>
