@@ -4,6 +4,7 @@ import { AwesomeGraphQLClient } from "awesome-graphql-client";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { print } from "graphql/language/printer";
 import { GraphQLClientProvider } from "@/app/context/GraphQLContext/GraphQLClientProvider";
+
 function GraphQLProvider({
   token,
   children,
@@ -21,6 +22,7 @@ function GraphQLProvider({
       },
     },
   });
+
   return (
     <GraphQLClientProvider defaultClient={client}>
       {children}

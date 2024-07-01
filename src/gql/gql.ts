@@ -13,7 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $userId: String!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, userId: $userId, animeId: $animeId)\n}": types.ChangeAnimeStatusMutationDocument,
+    "\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, animeId: $animeId)\n}": types.ChangeAnimeStatusMutationDocument,
+    "\n  mutation deleteAnimeFromWatchingList($animeId: String!) {\n    deleteAnimeStatus(animeId: $animeId)\n}": types.DeleteAnimeFromWatchingListDocument,
     "\n     query OneAnime($slug: String!) {\n      anime(slug: $slug) {\n        id\n        name\n        licenseNameRu\n        description\n        genres {\n          id\n          name\n          russian\n        }\n        poster {\n          originalUrl\n          id\n          previewUrl\n        }\n        \n        userWatchListStatusDistributions {\n          status\n          count\n        }\n        animeLists {\n          id\n          status\n        }\n        studios {\n          id\n          name\n        }\n      }\n    }\n\n  ": types.OneAnimeDocument,
     "\n\nmutation Mutation($args: UserLoginInput!) {\nloginUser(args: $args) {\n  user {\n    id\n      email\n      name\n      image\n      role\n      createdAt\n  }\n}\n}": types.MutationDocument,
     "\n  mutation SignupUser($password: String!, $email: String!) {\n    signupUser(password: $password, email: $email)\n  }\n": types.SignupUserDocument,
@@ -40,7 +41,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $userId: String!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, userId: $userId, animeId: $animeId)\n}"): (typeof documents)["\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $userId: String!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, userId: $userId, animeId: $animeId)\n}"];
+export function graphql(source: "\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, animeId: $animeId)\n}"): (typeof documents)["\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, animeId: $animeId)\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation deleteAnimeFromWatchingList($animeId: String!) {\n    deleteAnimeStatus(animeId: $animeId)\n}"): (typeof documents)["\n  mutation deleteAnimeFromWatchingList($animeId: String!) {\n    deleteAnimeStatus(animeId: $animeId)\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

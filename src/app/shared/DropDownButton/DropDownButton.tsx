@@ -18,7 +18,7 @@ function DropDownButton({
       disabled={disabled}
       onClick={clickHandler}
       className={cn(
-        "p-2 items-center    hover:bg-slate-500/20 dark:hover:text-white hover:rounded-md dark:hover:bg-form-color",
+        "p-2 items-center hover:bg-slate-500/20 dark:hover:text-white hover:rounded-md dark:hover:bg-form-color",
         className
       )}
     >

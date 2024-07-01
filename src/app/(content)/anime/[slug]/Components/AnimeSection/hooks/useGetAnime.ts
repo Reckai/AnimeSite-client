@@ -4,9 +4,10 @@ import { graphql } from "@/gql/gql";
 import {  useSuspenseQuery } from "@tanstack/react-query";
 
 import { getClientWithoutAuthorization } from "@/lib/gqlClientWithoutAuthorization";
-import { GET_ANIME } from "../../../Query";
+
 import { OneAnimeQuery } from "@/gql/graphql";
 import { useGraphQLClient } from "@/app/context/GraphQLContext/useGraphQLCLient";
+import { GET_ANIME } from "../../../Query";
 
 function transformAnimeData(animeData: OneAnimeQuery) {
   return {
@@ -25,7 +26,7 @@ export function useGetAnime(slug: string) {
   const query = useSuspenseQuery({
     queryKey: [`anime-${slug}`],
     queryFn: async () => {
-      return client?.request(GET_ANIME, { slug });
+      return client.request(GET_ANIME, { slug });
       
     },
     
@@ -35,7 +36,7 @@ export function useGetAnime(slug: string) {
     throw query.error;
   }
  const data = transformAnimeData(query.data!);
- console.log(query.data)
+
   return {posterProps: {
     name: data.title,
    url: data.poster.originalUrl,

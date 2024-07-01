@@ -1,20 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
-import DropDownButton from "./Components/DropDownButton";
-import useClickOutside from "@/utils/hooks/useClickOutside";
-import { CHANGE_ANIME_STATUS } from "./Mutation";
-import { AnimeStatus } from "@/gql/graphql";
-// import { useMutation } from "@urql/next";
-import { useSession } from "@/app/context/SessionContext/useSession";
+import {
+  Anime,
+  AnimeStatus,
+  ChangeAnimeStatusMutationMutation,
+} from "@/gql/graphql";
 import { useStatus } from "./hooks/useStatus";
-import { useRouter } from "next/navigation";
+import {
+  FloatingFocusManager,
+  autoUpdate,
+  useClick,
+  useDismiss,
+  useInteractions,
+  useRole,
+} from "@floating-ui/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useGraphQLClient } from "@/app/context/GraphQLContext/useGraphQLCLient";
+import { Button } from "@/app/shared/Button/Button";
+import { useFloating, shift, flip, offset } from "@floating-ui/react";
 
-type DropDownPropertyType = {
+import FloatingContent from "./_components/DropDownComponent/DropDownComponent";
+import { CHANGE_ANIME_STATUS, DELETE_ANIME_STATUS } from "./Mutation";
+
+export type DropDownPropertyType = {
   name: string;
   statusProperty: AnimeStatus;
 };
+
+type AnimeStatusProps = {
+  slug: Anime["slug"];
+  animeId: string;
+  initialStatus: string | undefined;
+};
+
 export const DropDownButtonProperty: DropDownPropertyType[] = [
   { name: "Запланировано", statusProperty: AnimeStatus.Planned },
   { name: "Просмотрено", statusProperty: AnimeStatus.Completed },
@@ -23,87 +43,105 @@ export const DropDownButtonProperty: DropDownPropertyType[] = [
   { name: "Смотрю", statusProperty: AnimeStatus.Watching },
 ];
 
-function AnimeWatchButton({
+const AnimeWatchButton: React.FC<AnimeStatusProps> = ({
   animeId,
-  animeStatus,
-}: {
-  animeId: string;
-  animeStatus: string;
-}) {
-  const { session } = useSession();
-  const [isVisible, setIsVisible] = React.useState(false);
+  initialStatus,
+  slug,
+}) => {
+  const { client } = useGraphQLClient();
+  const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    middleware: [
+      offset(10),
+      flip({
+        mainAxis: true,
+      }),
+      shift(),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
+  const dismiss = useDismiss(context);
+  const click = useClick(context);
+  const role = useRole(context);
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    dismiss,
+    role,
+  ]);
   const { status, changeStatus, isSelectedStatus } = useStatus(
-    animeStatus as AnimeStatus
+    initialStatus as AnimeStatus
   );
-  //   const [changeStatusMutationResult, changeStatusMutation] =
-  //     useMutation(CHANGE_ANIME_STATUS);
 
-  const ClickStatusHandler = (property: DropDownPropertyType) => {
-    setIsVisible(false);
-    // changeStatusMutation({
-    //   status: property.statusProperty,
-    //   userId: session?.id as string,
-    //   animeId,
-    // }).then((res) => {
-    //   if (res.data?.changeStatusOfAnime) {
-    //     changeStatus(property.statusProperty);
-    //   }
-    // });
+  const changeStatusAndCloseFloatingMenu = (status?: AnimeStatus) => {
+    changeStatus(status);
+    setIsOpen(false);
   };
-  const deleteHandler = () => {
-    changeStatus(undefined);
-    setIsVisible(false);
+  const changeStatusMutation = useMutation({
+    mutationKey: [`changeStatus-${slug}`],
+    mutationFn: (status: AnimeStatus) =>
+      client.request(CHANGE_ANIME_STATUS, {
+        status,
+        animeId,
+      }),
+    onSuccess: (response: ChangeAnimeStatusMutationMutation) => {
+      changeStatusAndCloseFloatingMenu(response.changeStatusOfAnime);
+      return queryClient.invalidateQueries({
+        queryKey: [`anime-${slug}`],
+      });
+    },
+  });
+  const deleteStatusMutation = useMutation({
+    mutationKey: [`deleteAnimeStatus-${slug}`],
+    mutationFn: () =>
+      client.request(DELETE_ANIME_STATUS, {
+        animeId,
+      }),
+    onSuccess: () => {
+      changeStatusAndCloseFloatingMenu();
+      return queryClient.invalidateQueries({
+        queryKey: [`anime-${slug}`],
+      });
+    },
+  });
+  const statusClickHandler = (property: DropDownPropertyType) => {
+    if (property.name !== status) {
+      try {
+        changeStatusMutation.mutateAsync(property.statusProperty);
+      } catch (e) {
+        console.error(e);
+      }
+    }
   };
-
-  const AnimeStatusRef = React.useRef<HTMLDivElement>(null);
-  useClickOutside(AnimeStatusRef, () => setIsVisible(false));
-
+  const deleteStatusHandler = () => {
+    deleteStatusMutation.mutate();
+  };
   return (
     <>
-      <button
-        disabled={false}
-        onClick={() => setIsVisible(!isVisible)}
-        className={` ${
-          isSelectedStatus
-            ? "bg-primary  text-white"
-            : "dark:bg-secondary bg-gray-400/30 dark:hover:bg-secondary/80 hover:bg-gray-400/60 text-bg-color  dark:hover:text-white transition duration-300"
-        } rounded-md
-          text-color-text h-10 w-full  cursor-pointer `}
-      >
-        <span className="px-2 ">{status}</span>
-      </button>
-
-      {isVisible && (
-        <div
-          className={`absolute p-2   translate-x-4 max-w-96 -translate-y-20 top-auto left-0 bottom-0 right-auto   rounded-md bg-white dark:bg-opacity-secondary  text-color-text flex flex-col cursor-pointer items-center justify-center `}
+      <div ref={refs.setReference} {...getReferenceProps()}>
+        <Button
+          variant={isSelectedStatus ? "default" : "thirdly"}
+          className="w-full"
         >
-          <div
-            ref={AnimeStatusRef}
-            className=" flex flex-col py-2 w-full  dark:bg-opacity-secondary "
-          >
-            {DropDownButtonProperty.map((property, index) => (
-              <DropDownButton
-                disabled={false}
-                clickHandler={() => ClickStatusHandler(property)}
-                key={index}
-                text={property.name}
-              />
-            ))}
-
-            {isSelectedStatus && (
-              <div className="border-t-[1px] pt-[2px] mt-[2px] border-color-text ">
-                <DropDownButton
-                  disabled={false}
-                  clickHandler={deleteHandler}
-                  text="Удалить из списка"
-                />
-              </div>
-            )}
-          </div>
-        </div>
+          {status}
+        </Button>
+      </div>
+      {isOpen && (
+        <FloatingFocusManager context={context} modal={false}>
+          <FloatingContent
+            setFloatingRef={refs.setFloating}
+            dropDownButtonProperties={DropDownButtonProperty}
+            onStatusClick={(property) => statusClickHandler(property)}
+            onDelete={() => deleteStatusHandler()}
+            isSelectedStatus
+            floatingStyles={floatingStyles}
+            getFloatingProps={getFloatingProps}
+          />
+        </FloatingFocusManager>
       )}
     </>
   );
-}
-
+};
 export default AnimeWatchButton;

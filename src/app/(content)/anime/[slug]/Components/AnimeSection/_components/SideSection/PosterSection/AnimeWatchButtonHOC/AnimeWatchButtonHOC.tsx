@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import AnimeWatchButton from "../AnimeWatchButton/AnimeWatchButton";
 import { useGraphQLClient } from "@/app/context/GraphQLContext/useGraphQLCLient";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { GET_ANIME } from "@/app/(content)/anime/[slug]/Query";
 
 const AnimeWatchButtonHOC = ({ id, slug }: { id: string; slug: string }) => {
@@ -13,12 +13,15 @@ const AnimeWatchButtonHOC = ({ id, slug }: { id: string; slug: string }) => {
   });
 
   return (
-    <Suspense fallback={<div>asdasd</div>}>
-      <AnimeWatchButton
-        animeId={id}
-        animeStatus={status.data?.anime?.animeLists![0].status!}
-      />
-    </Suspense>
+    <div className="w-full">
+      <Suspense fallback={<div>asdasd</div>}>
+        <AnimeWatchButton
+          animeId={id}
+          slug={slug}
+          initialStatus={status.data.anime.animeLists?.[0]?.status || undefined}
+        />
+      </Suspense>
+    </div>
   );
 };
 
