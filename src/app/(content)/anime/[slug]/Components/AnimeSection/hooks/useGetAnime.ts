@@ -23,11 +23,11 @@ function transformAnimeData(animeData: OneAnimeQuery) {
 
 export function useGetAnime(slug: string) {
   const { client } = useGraphQLClient();
+
   const query = useSuspenseQuery({
     queryKey: [`anime-${slug}`],
     queryFn: async () => {
       return client.request(GET_ANIME, { slug });
-      
     },
     
   });

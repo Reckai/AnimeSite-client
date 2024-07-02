@@ -1,23 +1,16 @@
-'use client'
+"use client";
 import { useForm } from "react-hook-form";
 import { useStage } from "../../../contexts/stage/useStage";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "../constants/signUpSchema";
-import { graphql } from "@/gql";
 import { toast } from "sonner";
-import {useMutation} from "@tanstack/react-query";
+import { useSignUpMutation } from "./useSignUpMutation";
 
 interface SignUpForm {
   email: string;
   password: string;
   passwordConfirmation: string;
 }
-
-const SignUpMutation = graphql(`
-  mutation SignupUser($password: String!, $email: String!) {
-    signupUser(password: $password, email: $email)
-  }
-`);
 
 export const useSignUpForm = () => {
   const { setStage } = useStage();
@@ -27,18 +20,13 @@ export const useSignUpForm = () => {
     resolver: zodResolver(signUpSchema),
   });
 
-  const mutation = useMutation({
-    mutationFn: async(data)=>{
-
-      return setTimeout(()=> 's','200')
-    }
-  });
+  const signIpUserMutation = useSignUpMutation();
 
   const goToSignIn = () => setStage("signIn");
   const onSubmit = signUpForm.handleSubmit(async (data) => {
     const { passwordConfirmation, ...values } = signUpForm.getValues();
-    console.log(values, "values");
-    await mutation.mutate({ ...values });
+
+    await signIpUserMutation.mutate({ ...values });
     toast.success("User created successfully, check your email to verify.");
     goToSignIn();
   });
@@ -47,7 +35,7 @@ export const useSignUpForm = () => {
 
   return {
     state: {
-      isLoading: mutation.isPending,
+      isLoading: signIpUserMutation.isPending,
       isPasswordEqueal,
     },
     form: signUpForm,

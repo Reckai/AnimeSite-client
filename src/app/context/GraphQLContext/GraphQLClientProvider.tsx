@@ -17,15 +17,11 @@ export const GraphQLClientProvider: React.FC<GraphQlClientProviderProps> = ({
   defaultClient,
   children,
 }) => {
-  const [client, setClient] =
-    useState<ClientContextProps["client"]>(defaultClient);
-
   const value = useMemo(
     () => ({
-      client,
-      setClient,
+      client: defaultClient,
     }),
-    [client]
+    [defaultClient]
   );
 
   return (

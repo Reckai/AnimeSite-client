@@ -18,7 +18,7 @@ function GraphQLProvider({
     fetchOptions: {
       headers: {
         credentials: "include",
-        authorization: `Bearer ${token}`,
+        Authorization: token ? `Bearer ${token}` : "",
       },
     },
   });

@@ -1,16 +1,8 @@
-import { graphql } from "@/gql";
-import { useMutation } from "@urql/next";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-const VERIFY_EMAIL_MUTATION = graphql(`
-  mutation VerifyEmailByToken($token: String!) {
-    VerifyEmailByToken(token: $token) {
-      message
-      success
-    }
-  }
-`);
+import { useVerifyEmailMutation } from "./useVerifyEmailMutation";
+
 const SIGN_IN = "/auth";
 export const useConfirmationForm = () => {
   const router = useRouter();
@@ -18,23 +10,21 @@ export const useConfirmationForm = () => {
   const token = searchParams.get("token");
   const [Message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
-  const [verifyEmailMutationResult, verifyEmailMutation] = useMutation(
-    VERIFY_EMAIL_MUTATION
-  );
 
+  const verifyEmailMutation = useVerifyEmailMutation();
   const verifyEmail = async () => {
     if (!token) return;
-    const result = await verifyEmailMutation({ token });
+    const verifyMutationResponse = await verifyEmailMutation.mutateAsync(token);
 
-    if (result.data) {
-      setMessage(result.data.VerifyEmailByToken.message);
-      setSuccess(result.data.VerifyEmailByToken.success);
+    if (verifyMutationResponse) {
+      setMessage(verifyMutationResponse.VerifyEmailByToken.message);
+      setSuccess(verifyMutationResponse.VerifyEmailByToken.success);
       setTimeout(() => {
         router.push(SIGN_IN);
       }, 3000);
     }
-    if (result.error) {
-      toast.error(result.error.message.replace("[GraphQL] ", ""));
+    if (verifyEmailMutation.error) {
+      toast.error(verifyEmailMutation.error.message.replace("[GraphQL] ", ""));
       setSuccess(false);
     }
   };
@@ -43,7 +33,7 @@ export const useConfirmationForm = () => {
     state: {
       Message,
       success,
-      isLoading: verifyEmailMutationResult.fetching,
+      isLoading: verifyEmailMutation.isPending,
     },
     functions: {
       verifyEmail,
