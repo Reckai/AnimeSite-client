@@ -1,13 +1,14 @@
-
 import React from "react";
 import Providers from "./providers";
-import {FormContainer} from "@/app/(content)/auth/components/FormContainer/FormContainer";
+import OAuthContainer from "./components/oAuth/oAuthContainer/oAuthContainer"; // Corrected import name
+import { FormContainer } from "@/app/(content)/auth/components/FormContainer/FormContainer";
 const AuthPage = () => (
-  <Providers stage={{ defaultStage: "signIn" }}>
-    <div className="flex   items-center justify-center">
+  <div className="flex flex-col  items-center justify-center">
+    <Providers stage={{ defaultStage: "signIn" }}>
       <FormContainer />
-    </div>
-  </Providers>
+    </Providers>
+    <OAuthContainer />
+  </div>
 );
 
 export default AuthPage;

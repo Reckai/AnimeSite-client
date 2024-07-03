@@ -18,6 +18,7 @@ import {
 import { useSession } from "@/app/context/SessionContext/useSession";
 import { Logout } from "./logout";
 import { flushSync } from "react-dom";
+import { googleLogout } from "@react-oauth/google";
 
 function DropDownMenu({ img }: { img: string | null | undefined }) {
   const router = useRouter();
@@ -33,6 +34,7 @@ function DropDownMenu({ img }: { img: string | null | undefined }) {
   const { isMounted, styles } = useTransitionStyles(context);
   const OnLogOutClick = () => {
     Logout().then(() => {
+      googleLogout();
       flushSync(() => setSession(undefined));
       router.refresh();
     });

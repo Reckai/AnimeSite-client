@@ -5,20 +5,25 @@ import { getCookie } from "@/lib/gqlClient";
 import GraphQLProvider from "./GraphQLProvider/GraphQlProvider";
 import QueryProvider from "./QueryProvider";
 import { cookies } from "next/headers";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 const Provider = async ({ children }: { children: React.ReactNode }) => {
   const token = cookies().get("access-token")?.value || "";
   return (
     <SessionWrapper>
       <GraphQLProvider token={token}>
         <QueryProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            disableTransitionOnChange
+          <GoogleOAuthProvider
+            clientId={process.env.GOOGLE_OAUTH_CLIENT_ID as unknown as string}
           >
-            {" "}
-            {children}
-          </ThemeProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              disableTransitionOnChange
+            >
+              {" "}
+              {children}
+            </ThemeProvider>
+          </GoogleOAuthProvider>
         </QueryProvider>
       </GraphQLProvider>
     </SessionWrapper>

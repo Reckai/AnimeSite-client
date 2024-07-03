@@ -6,7 +6,8 @@ export interface session {
     id: string
     email: string
 createAt: string
-name: string
+name: string,
+image?: string,
 }
 
 export interface SessionContextProps {

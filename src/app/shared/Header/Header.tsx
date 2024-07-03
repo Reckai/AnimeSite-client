@@ -32,6 +32,7 @@ function Header({ styles = "" }: HeaderProp) {
           {session ? (
             <DropDownMenu
               img={
+                session?.image ||
                 "https://i.pinimg.com/564x/fb/fb/38/fbfb389b651935e0f02c45680737f8a7.jpg"
               }
             />
