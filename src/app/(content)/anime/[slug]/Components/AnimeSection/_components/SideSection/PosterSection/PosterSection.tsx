@@ -17,6 +17,7 @@ export function PosterSection({ url, name, id, slug }: PosterSectionProps) {
       <div className='mb-4 rounded-lg bg-default-bg   w-auto h-fit before:contents-["s"] items-center justify-center flex  before:mt-[138%]'>
         {url ? (
           <Image
+            placeholder="empty"
             className="rounded-md"
             alt={name ? "ds" : "sad"}
             src={url}

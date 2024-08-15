@@ -20,7 +20,7 @@ const documents = {
     "\n    mutation SignupUser($password: String!, $email: String!) {\n      signupUser(password: $password, email: $email)\n    }\n  ": types.SignupUserDocument,
     "mutation LoginWiaGoogle($token: String!) {\n    loginWiaGoogle(token: $token) {\n      id\n      email\n      name\n      createdAt\n      image\n    }\n  }": types.LoginWiaGoogleDocument,
     "\n    mutation VerifyEmailByToken($token: String!) {\n      VerifyEmailByToken(token: $token) {\n        message\n        success\n      }\n    }\n  ": types.VerifyEmailByTokenDocument,
-    "\n query AllAnimes {\n allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}": types.AllAnimesDocument,
+    "\n query Items($limit: Float!, $page: Float!) {\n  allAnimes(limit: $limit, page: $page) {\n    items {\n      id\n      name\n      licenseNameRu\n      slug\n      poster {\n        id\n        originalUrl\n        previewUrl\n      }\n      genres {\n        id\n        russian\n        name\n      }\n    }\n    totalCount\n    hasNextPage\n  }\n}\n": types.ItemsDocument,
     "\nmutation signInMutation($args: UserLoginInput!) {\n  loginUser(args: $args) {\n    user {\n      id\n    }\n  }\n}\n": types.SignInMutationDocument,
     "\n  query Me {\n    me {\n      id\n      email\n      name\n      image\n      role\n      createdAt\n    }\n  }\n": types.MeDocument,
 };
@@ -70,7 +70,7 @@ export function graphql(source: "\n    mutation VerifyEmailByToken($token: Strin
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n query AllAnimes {\n allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}"): (typeof documents)["\n query AllAnimes {\n allAnimes {\n    id\n    name\n    licenseNameRu\n    description\n    genres {\n      id\n      name\n      russian\n    }\n    slug\n    poster {\n      id\n      originalUrl\n      previewUrl\n    }\n  }\n}"];
+export function graphql(source: "\n query Items($limit: Float!, $page: Float!) {\n  allAnimes(limit: $limit, page: $page) {\n    items {\n      id\n      name\n      licenseNameRu\n      slug\n      poster {\n        id\n        originalUrl\n        previewUrl\n      }\n      genres {\n        id\n        russian\n        name\n      }\n    }\n    totalCount\n    hasNextPage\n  }\n}\n"): (typeof documents)["\n query Items($limit: Float!, $page: Float!) {\n  allAnimes(limit: $limit, page: $page) {\n    items {\n      id\n      name\n      licenseNameRu\n      slug\n      poster {\n        id\n        originalUrl\n        previewUrl\n      }\n      genres {\n        id\n        russian\n        name\n      }\n    }\n    totalCount\n    hasNextPage\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

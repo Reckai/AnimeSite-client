@@ -1,9 +1,9 @@
 import React from "react";
 import { ThemeProvider } from "./ThemeProvider";
 import SessionWrapper from "./SessionWrapper";
-import { getCookie } from "@/lib/gqlClient";
 import GraphQLProvider from "./GraphQLProvider/GraphQlProvider";
 import QueryProvider from "./QueryProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { cookies } from "next/headers";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 const Provider = async ({ children }: { children: React.ReactNode }) => {
@@ -12,6 +12,7 @@ const Provider = async ({ children }: { children: React.ReactNode }) => {
     <SessionWrapper>
       <GraphQLProvider token={token}>
         <QueryProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
           <GoogleOAuthProvider
             clientId={process.env.GOOGLE_OAUTH_CLIENT_ID as unknown as string}
           >

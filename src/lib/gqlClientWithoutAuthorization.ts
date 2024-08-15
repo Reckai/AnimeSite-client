@@ -11,7 +11,7 @@ export const getClientWithoutAuthorization = ()=> {
       fetchOptions:{
         credentials: 'include',
       headers: {
-        
+        'credentials': 'include',
       }
       }  
     })

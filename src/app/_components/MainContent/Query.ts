@@ -2,25 +2,29 @@ import { graphql } from "@/gql";
 
 
 export const GET_ALL_ANIMES = graphql(`
- query AllAnimes {
- allAnimes {
-    id
-    name
-    licenseNameRu
-    description
-    genres {
+ query Items($limit: Float!, $page: Float!) {
+  allAnimes(limit: $limit, page: $page) {
+    items {
       id
       name
-      russian
+      licenseNameRu
+      slug
+      poster {
+        id
+        originalUrl
+        previewUrl
+      }
+      genres {
+        id
+        russian
+        name
+      }
     }
-    slug
-    poster {
-      id
-      originalUrl
-      previewUrl
-    }
+    totalCount
+    hasNextPage
   }
-}`);
+}
+`);
 
 
 export const SIGN_IN = graphql(`

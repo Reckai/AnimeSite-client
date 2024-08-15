@@ -6,15 +6,16 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import request from "graphql-request";
 import { GET_ALL_ANIMES } from "@/app/_Components/MainContent/Query";
+import { getClientWithoutAuthorization } from "@/lib/gqlClientWithoutAuthorization";
+import { fetchAnimes } from "../_Components/MainContent/action";
 
 export default async function Home() {
   const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ["animes"],
-    queryFn: async () => request("http://localhost:4000", GET_ALL_ANIMES),
+    queryFn: fetchAnimes,
+    initialPageParam: 1,
   });
 
   return (
