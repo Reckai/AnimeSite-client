@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} text-black dark:text-white bg-[#f6f6f6]  dark:bg-bg-color`}
+        className={`${inter.className} text-black font-[62.5%] dark:text-white bg-[#f6f6f6]  dark:bg-bg-color`}
       >
         <Provider>
           <Header />

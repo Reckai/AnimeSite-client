@@ -1,10 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import {
-  ClientContextProps,
-  GraphQLClientContext,
-} from "./GraphQlClientContext";
+import { useMemo } from "react";
+import { GraphQLClientContext } from "./GraphQlClientContext";
 import { AwesomeGraphQLClient } from "awesome-graphql-client";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 

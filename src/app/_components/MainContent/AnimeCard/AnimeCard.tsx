@@ -10,32 +10,35 @@ type AnimeCard = {
   poster: Poster;
   slug: string;
 };
-
 const AnimeCard = ({ title, poster, slug, description }: AnimeCard) => {
   return (
-    <Link
-      href={`/anime/${slug}`}
-      className="flex flex-col md:w-calc(25%-20px) sm:w-50%  lg:w-calc(16%-20px) m-b-2 mx-2.5   "
-    >
-      <Image
-        width={500}
-        height={500}
-        src={poster.originalUrl}
-        alt="Picture of the author"
-        className={"rounded-lg"}
-      />
-
-      <div>
-        <h1 className="dark:text-color-text-accent">{title}</h1>
-        <p className="dark:text-color-text">
+    <article className="flex flex-col mx-auto mb-4 w-[calc(25%-16px)] sm:w-[calc(25%-16px)] md:w-[calc(20%-16px)] lg:max-w-[calc(16.6%-20px)] m-b-2 ">
+      <Link className="flex flex-col h-full" href={`/anime/${slug}`}>
+        <div className=" rounded-lg bg-default-bg  relative w-full pb-[150%]">
+          {" "}
+          {/* Adjust percentage for desired aspect ratio */}
+          <Image
+            loading="lazy"
+            fill
+            placeholder="blur"
+            blurDataURL={poster.originalUrl}
+            src={poster.originalUrl}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt={title}
+            className="rounded-lg object-cover"
+          />
+        </div>
+        <h1 className="dark:text-color-text-accent font-normal overflow-hidden text-ellipsis text-sm mt-2">
+          {title}
+        </h1>
+        <p className="dark:text-color-text overflow-hidden text-xs text-ellipsis">
           {description
             ?.slice(0, 2)
             .map((genre: Genre) => genre.russian)
             .join(", ")}
         </p>
-      </div>
-    </Link>
+      </Link>
+    </article>
   );
 };
-
 export default AnimeCard;

@@ -2,8 +2,8 @@ import { graphql } from "@/gql";
 
 
 export const GET_ALL_ANIMES = graphql(`
- query Items($limit: Float!, $page: Float!) {
-  allAnimes(limit: $limit, page: $page) {
+ query Items( $page: Float!) {
+  allAnimes( page: $page) {
     items {
       id
       name

@@ -1,45 +1,25 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { GET_ALL_ANIMES, SIGN_IN } from "@/app/_Components/MainContent/Query";
 import AnimeCard from "@/app/_Components/MainContent/AnimeCard/AnimeCard";
-import {
-  useInfiniteQuery,
-  useSuspenseInfiniteQuery,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
-import request from "graphql-request";
-import { useGraphQLClient } from "@/app/context/GraphQLContext/useGraphQLCLient";
-import { pages } from "next/dist/build/templates/app-page";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { fetchAnimes } from "./action";
 
 function MainContent() {
   const observerTarget = useRef<HTMLDivElement>(null);
-  const { client } = useGraphQLClient();
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    status,
-  } = useSuspenseInfiniteQuery({
-    queryKey: ["animes"],
-    queryFn: ({ pageParam }) => fetchAnimes({ pageParam }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.hasNextPage ? allPages.length + 1 : null;
-    },
-    staleTime: 60000, // 1 minute
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  });
-  // const { data, isFetching } = useSuspenseQuery({
-  //   queryKey: ["animes"],
-  //   queryFn: async () =>
-  //     request("http://localhost:4000", GET_ALL_ANIMES, { limit: 1, page: 1 }),
-  // });
-  // console.log(data);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSuspenseInfiniteQuery({
+      queryKey: ["animes"],
+      queryFn: ({ pageParam }) => fetchAnimes({ pageParam }),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.hasNextPage ? allPages.length + 1 : null;
+      },
+      staleTime: 60000, // 1 minute
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    });
+
   console.log("component rendered");
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -69,22 +49,27 @@ function MainContent() {
     //     />
     //   ))}
     // </div>
-    <div className=" grid md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-      {data?.pages.map((page, i) => (
-        <React.Fragment key={i}>
-          {page.items.map((anime) => (
-            <AnimeCard
-              id={anime.id}
-              slug={anime.slug}
-              description={anime.genres}
-              poster={anime.poster[0]}
-              title={anime.licenseNameRu}
-              key={anime.id}
-            />
-          ))}
-        </React.Fragment>
-      ))}
-      {isFetchingNextPage && <div>Loading...</div>}
+    <div>
+      <div className="flex flex-wrap ">
+        {data?.pages.map((page, i) => (
+          <React.Fragment key={i}>
+            {page.items.map((anime) => (
+              <AnimeCard
+                id={anime.id}
+                slug={anime.slug}
+                description={anime.genres}
+                poster={anime.poster[0]}
+                title={anime.licenseNameRu}
+                key={anime.id}
+              />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {isFetchingNextPage && (
+        <div className="rounded-full bg-white animate-pulse w-6 h-6"></div>
+      )}
       <div ref={observerTarget} style={{ height: "20px" }} />
     </div>
   );

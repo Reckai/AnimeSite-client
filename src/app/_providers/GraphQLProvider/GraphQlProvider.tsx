@@ -16,9 +16,9 @@ function GraphQLProvider({
     endpoint: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
     formatQuery: (query: TypedDocumentNode) => print(query),
     fetchOptions: {
+      credentials: "include" as RequestCredentials,
       headers: {
-        credentials: "include",
-        authorization: token ? `Bearer ${token}` : "",
+        // Другие заголовки...
       },
     },
   });
