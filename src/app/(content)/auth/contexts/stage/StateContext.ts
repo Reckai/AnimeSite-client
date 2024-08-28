@@ -1,15 +1,15 @@
 'use client';
-import React, { createContext } from "react";
+import React, { createContext } from 'react';
 
-export type Stage = "signIn" | "signUp" ;
+export type Stage = 'signIn' | 'signUp';
 
 // | "signUp" | "confirmation";
 export interface StageContextProps {
-    stage: Stage;
-    setStage: (stage: Stage)=> void;
+	stage: Stage;
+	setStage: (stage: Stage) => void;
 }
 
 export const StageContext = createContext<StageContextProps>({
-    stage: "signIn",
-    setStage:()=>{}
-})
+	stage: 'signIn',
+	setStage: () => {}
+});

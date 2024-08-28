@@ -1,15 +1,13 @@
 import React from 'react';
-import Banner from '@/app/(account)/account/_components/Banner';
+import Banner from '@/app/(account)/_components/Banner';
 
-function AccountLayout({ children }:{children:React.ReactNode}) {
-  return (
-    <div className="bg-gray-400">
-      <Banner />
-      {
-                children
-            }
-    </div>
-  );
+function AccountLayout({ children }: { children: React.ReactNode }) {
+	return (
+		<div>
+			<Banner />
+			{children}
+		</div>
+	);
 }
 
 export default AccountLayout;

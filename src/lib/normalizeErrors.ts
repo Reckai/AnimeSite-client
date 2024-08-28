@@ -1,4 +1,3 @@
 export const NormalizeErrorString = (error: string) => {
-    const match = RegExp('/s/')
-
-}
+	const match = RegExp('/s/');
+};

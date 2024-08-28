@@ -13,16 +13,17 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, animeId: $animeId)\n}": types.ChangeAnimeStatusMutationDocument,
-    "\n  mutation deleteAnimeFromWatchingList($animeId: String!) {\n    deleteAnimeStatus(animeId: $animeId)\n}": types.DeleteAnimeFromWatchingListDocument,
-    "\n     query OneAnime($slug: String!) {\n      anime(slug: $slug) {\n        id\n        name\n        licenseNameRu\n        description\n        genres {\n          id\n          name\n          russian\n        }\n        poster {\n          originalUrl\n          id\n          previewUrl\n        }\n        \n        userWatchListStatusDistributions {\n          status\n          count\n        }\n        animeLists {\n          id\n          status\n        }\n        studios {\n          id\n          name\n        }\n      }\n    }\n\n  ": types.OneAnimeDocument,
-    "\n\nmutation Mutation($args: UserLoginInput!) {\nloginUser(args: $args) {\n  user {\n    id\n      email\n      name\n      image\n      role\n      createdAt\n  }\n}\n}": types.MutationDocument,
-    "\n    mutation SignupUser($password: String!, $email: String!) {\n      signupUser(password: $password, email: $email)\n    }\n  ": types.SignupUserDocument,
-    "mutation LoginWiaGoogle($token: String!) {\n    loginWiaGoogle(token: $token) {\n      id\n      email\n      name\n      createdAt\n      image\n    }\n  }": types.LoginWiaGoogleDocument,
-    "\n    mutation VerifyEmailByToken($token: String!) {\n      VerifyEmailByToken(token: $token) {\n        message\n        success\n      }\n    }\n  ": types.VerifyEmailByTokenDocument,
-    "\n query Items( $page: Float!) {\n  allAnimes( page: $page) {\n    items {\n      id\n      name\n      licenseNameRu\n      slug\n      poster {\n        id\n        originalUrl\n        previewUrl\n      }\n      genres {\n        id\n        russian\n        name\n      }\n    }\n    totalCount\n    hasNextPage\n  }\n}\n": types.ItemsDocument,
-    "\nmutation signInMutation($args: UserLoginInput!) {\n  loginUser(args: $args) {\n    user {\n      id\n    }\n  }\n}\n": types.SignInMutationDocument,
-    "\n  query Me {\n    me {\n      id\n      email\n      name\n      image\n      role\n      createdAt\n    }\n  }\n": types.MeDocument,
+    "\n\tquery User {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\timage\n\t\t\temailVerified\n\t\t\tcreatedAt\n\t\t}\n\t}\n": types.UserDocument,
+    "\n\tmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n\t\tchangeStatusOfAnime(status: $status, animeId: $animeId)\n\t}\n": types.ChangeAnimeStatusMutationDocument,
+    "\n\tmutation deleteAnimeFromWatchingList($animeId: String!) {\n\t\tdeleteAnimeStatus(animeId: $animeId)\n\t}\n": types.DeleteAnimeFromWatchingListDocument,
+    "\n\tquery OneAnime($slug: String!) {\n\t\tanime(slug: $slug) {\n\t\t\tid\n\t\t\tname\n\t\t\tlicenseNameRu\n\t\t\tdescription\n\t\t\tgenres {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\trussian\n\t\t\t}\n\t\t\tposter {\n\t\t\t\toriginalUrl\n\t\t\t\tid\n\t\t\t\tpreviewUrl\n\t\t\t}\n\n\t\t\tuserWatchListStatusDistributions {\n\t\t\t\tstatus\n\t\t\t\tcount\n\t\t\t}\n\t\t\tanimeLists {\n\t\t\t\tid\n\t\t\t\tstatus\n\t\t\t}\n\t\t\tstudios {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t}\n\t\t}\n\t}\n": types.OneAnimeDocument,
+    "\n\tmutation Mutation($args: UserLoginInput!) {\n\t\tloginUser(args: $args) {\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\temail\n\t\t\t\tname\n\t\t\t\timage\n\t\t\t\trole\n\t\t\t\tcreatedAt\n\t\t\t}\n\t\t}\n\t}\n": types.MutationDocument,
+    "\n\tmutation SignupUser($password: String!, $email: String!) {\n\t\tsignupUser(password: $password, email: $email)\n\t}\n": types.SignupUserDocument,
+    "\n\tmutation LoginWiaGoogle($token: String!) {\n\t\tloginWiaGoogle(token: $token) {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\tcreatedAt\n\t\t\timage\n\t\t}\n\t}\n": types.LoginWiaGoogleDocument,
+    "\n\tmutation VerifyEmailByToken($token: String!) {\n\t\tVerifyEmailByToken(token: $token) {\n\t\t\tmessage\n\t\t\tsuccess\n\t\t}\n\t}\n": types.VerifyEmailByTokenDocument,
+    "\n\tquery Items($page: Float!) {\n\t\tallAnimes(page: $page) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tlicenseNameRu\n\t\t\t\tslug\n\t\t\t\tposter {\n\t\t\t\t\tid\n\t\t\t\t\toriginalUrl\n\t\t\t\t\tpreviewUrl\n\t\t\t\t}\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t\ttotalCount\n\t\t\thasNextPage\n\t\t}\n\t}\n": types.ItemsDocument,
+    "\n\tmutation signInMutation($args: UserLoginInput!) {\n\t\tloginUser(args: $args) {\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t}\n\t\t}\n\t}\n": types.SignInMutationDocument,
+    "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\timage\n\t\t\trole\n\t\t\tcreatedAt\n\t\t}\n\t}\n": types.MeDocument,
 };
 
 /**
@@ -42,43 +43,47 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, animeId: $animeId)\n}"): (typeof documents)["\nmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n  changeStatusOfAnime(status: $status, animeId: $animeId)\n}"];
+export function graphql(source: "\n\tquery User {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\timage\n\t\t\temailVerified\n\t\t\tcreatedAt\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery User {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\timage\n\t\t\temailVerified\n\t\t\tcreatedAt\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation deleteAnimeFromWatchingList($animeId: String!) {\n    deleteAnimeStatus(animeId: $animeId)\n}"): (typeof documents)["\n  mutation deleteAnimeFromWatchingList($animeId: String!) {\n    deleteAnimeStatus(animeId: $animeId)\n}"];
+export function graphql(source: "\n\tmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n\t\tchangeStatusOfAnime(status: $status, animeId: $animeId)\n\t}\n"): (typeof documents)["\n\tmutation changeAnimeStatusMutation($status: AnimeStatus!, $animeId: String!) {\n\t\tchangeStatusOfAnime(status: $status, animeId: $animeId)\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n     query OneAnime($slug: String!) {\n      anime(slug: $slug) {\n        id\n        name\n        licenseNameRu\n        description\n        genres {\n          id\n          name\n          russian\n        }\n        poster {\n          originalUrl\n          id\n          previewUrl\n        }\n        \n        userWatchListStatusDistributions {\n          status\n          count\n        }\n        animeLists {\n          id\n          status\n        }\n        studios {\n          id\n          name\n        }\n      }\n    }\n\n  "): (typeof documents)["\n     query OneAnime($slug: String!) {\n      anime(slug: $slug) {\n        id\n        name\n        licenseNameRu\n        description\n        genres {\n          id\n          name\n          russian\n        }\n        poster {\n          originalUrl\n          id\n          previewUrl\n        }\n        \n        userWatchListStatusDistributions {\n          status\n          count\n        }\n        animeLists {\n          id\n          status\n        }\n        studios {\n          id\n          name\n        }\n      }\n    }\n\n  "];
+export function graphql(source: "\n\tmutation deleteAnimeFromWatchingList($animeId: String!) {\n\t\tdeleteAnimeStatus(animeId: $animeId)\n\t}\n"): (typeof documents)["\n\tmutation deleteAnimeFromWatchingList($animeId: String!) {\n\t\tdeleteAnimeStatus(animeId: $animeId)\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\nmutation Mutation($args: UserLoginInput!) {\nloginUser(args: $args) {\n  user {\n    id\n      email\n      name\n      image\n      role\n      createdAt\n  }\n}\n}"): (typeof documents)["\n\nmutation Mutation($args: UserLoginInput!) {\nloginUser(args: $args) {\n  user {\n    id\n      email\n      name\n      image\n      role\n      createdAt\n  }\n}\n}"];
+export function graphql(source: "\n\tquery OneAnime($slug: String!) {\n\t\tanime(slug: $slug) {\n\t\t\tid\n\t\t\tname\n\t\t\tlicenseNameRu\n\t\t\tdescription\n\t\t\tgenres {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\trussian\n\t\t\t}\n\t\t\tposter {\n\t\t\t\toriginalUrl\n\t\t\t\tid\n\t\t\t\tpreviewUrl\n\t\t\t}\n\n\t\t\tuserWatchListStatusDistributions {\n\t\t\t\tstatus\n\t\t\t\tcount\n\t\t\t}\n\t\t\tanimeLists {\n\t\t\t\tid\n\t\t\t\tstatus\n\t\t\t}\n\t\t\tstudios {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery OneAnime($slug: String!) {\n\t\tanime(slug: $slug) {\n\t\t\tid\n\t\t\tname\n\t\t\tlicenseNameRu\n\t\t\tdescription\n\t\t\tgenres {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\trussian\n\t\t\t}\n\t\t\tposter {\n\t\t\t\toriginalUrl\n\t\t\t\tid\n\t\t\t\tpreviewUrl\n\t\t\t}\n\n\t\t\tuserWatchListStatusDistributions {\n\t\t\t\tstatus\n\t\t\t\tcount\n\t\t\t}\n\t\t\tanimeLists {\n\t\t\t\tid\n\t\t\t\tstatus\n\t\t\t}\n\t\t\tstudios {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t}\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation SignupUser($password: String!, $email: String!) {\n      signupUser(password: $password, email: $email)\n    }\n  "): (typeof documents)["\n    mutation SignupUser($password: String!, $email: String!) {\n      signupUser(password: $password, email: $email)\n    }\n  "];
+export function graphql(source: "\n\tmutation Mutation($args: UserLoginInput!) {\n\t\tloginUser(args: $args) {\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\temail\n\t\t\t\tname\n\t\t\t\timage\n\t\t\t\trole\n\t\t\t\tcreatedAt\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation Mutation($args: UserLoginInput!) {\n\t\tloginUser(args: $args) {\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t\temail\n\t\t\t\tname\n\t\t\t\timage\n\t\t\t\trole\n\t\t\t\tcreatedAt\n\t\t\t}\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "mutation LoginWiaGoogle($token: String!) {\n    loginWiaGoogle(token: $token) {\n      id\n      email\n      name\n      createdAt\n      image\n    }\n  }"): (typeof documents)["mutation LoginWiaGoogle($token: String!) {\n    loginWiaGoogle(token: $token) {\n      id\n      email\n      name\n      createdAt\n      image\n    }\n  }"];
+export function graphql(source: "\n\tmutation SignupUser($password: String!, $email: String!) {\n\t\tsignupUser(password: $password, email: $email)\n\t}\n"): (typeof documents)["\n\tmutation SignupUser($password: String!, $email: String!) {\n\t\tsignupUser(password: $password, email: $email)\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    mutation VerifyEmailByToken($token: String!) {\n      VerifyEmailByToken(token: $token) {\n        message\n        success\n      }\n    }\n  "): (typeof documents)["\n    mutation VerifyEmailByToken($token: String!) {\n      VerifyEmailByToken(token: $token) {\n        message\n        success\n      }\n    }\n  "];
+export function graphql(source: "\n\tmutation LoginWiaGoogle($token: String!) {\n\t\tloginWiaGoogle(token: $token) {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\tcreatedAt\n\t\t\timage\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation LoginWiaGoogle($token: String!) {\n\t\tloginWiaGoogle(token: $token) {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\tcreatedAt\n\t\t\timage\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n query Items( $page: Float!) {\n  allAnimes( page: $page) {\n    items {\n      id\n      name\n      licenseNameRu\n      slug\n      poster {\n        id\n        originalUrl\n        previewUrl\n      }\n      genres {\n        id\n        russian\n        name\n      }\n    }\n    totalCount\n    hasNextPage\n  }\n}\n"): (typeof documents)["\n query Items( $page: Float!) {\n  allAnimes( page: $page) {\n    items {\n      id\n      name\n      licenseNameRu\n      slug\n      poster {\n        id\n        originalUrl\n        previewUrl\n      }\n      genres {\n        id\n        russian\n        name\n      }\n    }\n    totalCount\n    hasNextPage\n  }\n}\n"];
+export function graphql(source: "\n\tmutation VerifyEmailByToken($token: String!) {\n\t\tVerifyEmailByToken(token: $token) {\n\t\t\tmessage\n\t\t\tsuccess\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation VerifyEmailByToken($token: String!) {\n\t\tVerifyEmailByToken(token: $token) {\n\t\t\tmessage\n\t\t\tsuccess\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nmutation signInMutation($args: UserLoginInput!) {\n  loginUser(args: $args) {\n    user {\n      id\n    }\n  }\n}\n"): (typeof documents)["\nmutation signInMutation($args: UserLoginInput!) {\n  loginUser(args: $args) {\n    user {\n      id\n    }\n  }\n}\n"];
+export function graphql(source: "\n\tquery Items($page: Float!) {\n\t\tallAnimes(page: $page) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tlicenseNameRu\n\t\t\t\tslug\n\t\t\t\tposter {\n\t\t\t\t\tid\n\t\t\t\t\toriginalUrl\n\t\t\t\t\tpreviewUrl\n\t\t\t\t}\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t\ttotalCount\n\t\t\thasNextPage\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery Items($page: Float!) {\n\t\tallAnimes(page: $page) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tlicenseNameRu\n\t\t\t\tslug\n\t\t\t\tposter {\n\t\t\t\t\tid\n\t\t\t\t\toriginalUrl\n\t\t\t\t\tpreviewUrl\n\t\t\t\t}\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t\ttotalCount\n\t\t\thasNextPage\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Me {\n    me {\n      id\n      email\n      name\n      image\n      role\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query Me {\n    me {\n      id\n      email\n      name\n      image\n      role\n      createdAt\n    }\n  }\n"];
+export function graphql(source: "\n\tmutation signInMutation($args: UserLoginInput!) {\n\t\tloginUser(args: $args) {\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation signInMutation($args: UserLoginInput!) {\n\t\tloginUser(args: $args) {\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\timage\n\t\t\trole\n\t\t\tcreatedAt\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery Me {\n\t\tme {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\timage\n\t\t\trole\n\t\t\tcreatedAt\n\t\t}\n\t}\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

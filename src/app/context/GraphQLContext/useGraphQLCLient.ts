@@ -1,4 +1,4 @@
-import React from "react";
-import { GraphQLClientContext } from "./GraphQlClientContext";
+import React from 'react';
+import { GraphQLClientContext } from './GraphQlClientContext';
 
-export const useGraphQLClient = () => React.useContext(GraphQLClientContext)
+export const useGraphQLClient = () => React.useContext(GraphQLClientContext);

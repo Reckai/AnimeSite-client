@@ -1,20 +1,15 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import { SessionContext, session } from "./SessionContext";
+import { useMemo, useState } from 'react';
+import { SessionContext, session } from './SessionContext';
 
 export interface SessionProviderProps {
-  defaultSession?: session;
-  children: React.ReactNode;
+	defaultSession?: session;
+	children: React.ReactNode;
 }
 
-export const SessionProvider: React.FC<SessionProviderProps> = ({
-  defaultSession,
-  children,
-}) => {
-  const [session, setSession] = useState<session | undefined>(defaultSession!);
-  const value = useMemo(() => ({ session, setSession }), [session]);
-  return (
-    <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
-  );
+export const SessionProvider: React.FC<SessionProviderProps> = ({ defaultSession, children }) => {
+	const [session, setSession] = useState<session | undefined>(defaultSession!);
+	const value = useMemo(() => ({ session, setSession }), [session]);
+	return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 };

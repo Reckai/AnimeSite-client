@@ -1,13 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 const DetailedInfoSection = () => {
-  return (
-    <div className='py-2 px-3 flex flex-col'>
-     <ul>
-        
-     </ul>
-    </div>
-  )
-}
+	return (
+		<div className="flex flex-col px-3 py-2">
+			<ul></ul>
+		</div>
+	);
+};
 
-export default DetailedInfoSection
+export default DetailedInfoSection;
