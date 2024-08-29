@@ -30,6 +30,24 @@ export const GET_ANIME = graphql(`
 				id
 				name
 			}
-		}
+    
+  }
 	}
 `);
+
+
+export const GET_COMMENTS = graphql(`
+query animeComments($slug: String!){
+	anime(slug: $slug){
+	comments{
+		id
+		message
+		createdAt
+		parentId
+		viewerCanDelete
+		viewerCanUpdate
+		animeId
+	}
+	}
+}
+`)

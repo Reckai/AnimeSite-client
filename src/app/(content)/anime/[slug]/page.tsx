@@ -9,6 +9,7 @@ import { GET_ANIME } from './Query';
 
 export default async function Page({ params }: { params: { slug: string } }) {
 	const queryClient = new QueryClient();
+
 	await queryClient.prefetchQuery({
 		queryKey: [`anime-${params.slug}`],
 		queryFn: () =>

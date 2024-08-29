@@ -28,12 +28,13 @@ export type AllAnimeResponse = {
 export type Anime = {
   __typename?: 'Anime';
   animeLists?: Maybe<Array<AnimeList>>;
-  description: Scalars['String']['output'];
+  comments?: Maybe<Array<Comment>>;
+  description?: Maybe<Scalars['String']['output']>;
   genres?: Maybe<Array<Genre>>;
   id: Scalars['ID']['output'];
-  licenseNameRu: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  poster: Array<Poster>;
+  licenseNameRu?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  poster?: Maybe<Array<Poster>>;
   slug: Scalars['String']['output'];
   studios?: Maybe<Array<Studio>>;
   userWatchListStatusDistributions: Array<AnimeListStatusDistribution>;
@@ -75,15 +76,18 @@ export type AuthPayload = {
 
 export type Comment = {
   __typename?: 'Comment';
-  author?: Maybe<Array<User>>;
-  content: Scalars['String']['output'];
-  createdAt: Scalars['String']['output'];
-  depth: Scalars['Float']['output'];
+  anime: Anime;
+  animeId: Scalars['String']['output'];
+  children: Array<Comment>;
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['ID']['output'];
+  likes: Array<Like>;
+  message: Scalars['String']['output'];
+  parent?: Maybe<Comment>;
   parentId?: Maybe<Scalars['String']['output']>;
-  replies?: Maybe<Array<Reply>>;
-  threadId?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['String']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
+  user: User;
+  userId: Scalars['String']['output'];
   viewerCanDelete: Scalars['Boolean']['output'];
   viewerCanUpdate: Scalars['Boolean']['output'];
 };
@@ -93,6 +97,13 @@ export type Genre = {
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   russian: Scalars['String']['output'];
+};
+
+export type Like = {
+  __typename?: 'Like';
+  commentId: Scalars['String']['output'];
+  user: User;
+  userId: Scalars['String']['output'];
 };
 
 export type Mutation = {
@@ -255,7 +266,14 @@ export type OneAnimeQueryVariables = Exact<{
 }>;
 
 
-export type OneAnimeQuery = { __typename?: 'Query', anime: { __typename?: 'Anime', id: string, name: string, licenseNameRu: string, description: string, genres?: Array<{ __typename?: 'Genre', id: string, name: string, russian: string }> | null, poster: Array<{ __typename?: 'Poster', originalUrl: string, id: string, previewUrl: string }>, userWatchListStatusDistributions: Array<{ __typename?: 'AnimeListStatusDistribution', status: AnimeStatus, count: number }>, animeLists?: Array<{ __typename?: 'AnimeList', id: string, status: AnimeStatus }> | null, studios?: Array<{ __typename?: 'Studio', id: string, name: string }> | null } };
+export type OneAnimeQuery = { __typename?: 'Query', anime: { __typename?: 'Anime', id: string, name?: string | null, licenseNameRu?: string | null, description?: string | null, genres?: Array<{ __typename?: 'Genre', id: string, name: string, russian: string }> | null, poster?: Array<{ __typename?: 'Poster', originalUrl: string, id: string, previewUrl: string }> | null, userWatchListStatusDistributions: Array<{ __typename?: 'AnimeListStatusDistribution', status: AnimeStatus, count: number }>, animeLists?: Array<{ __typename?: 'AnimeList', id: string, status: AnimeStatus }> | null, studios?: Array<{ __typename?: 'Studio', id: string, name: string }> | null } };
+
+export type AnimeCommentsQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type AnimeCommentsQuery = { __typename?: 'Query', anime: { __typename?: 'Anime', comments?: Array<{ __typename?: 'Comment', id: string, message: string, createdAt: any, parentId?: string | null, viewerCanDelete: boolean, viewerCanUpdate: boolean, animeId: string }> | null } };
 
 export type MutationMutationVariables = Exact<{
   args: UserLoginInput;
@@ -291,7 +309,7 @@ export type ItemsQueryVariables = Exact<{
 }>;
 
 
-export type ItemsQuery = { __typename?: 'Query', allAnimes: { __typename?: 'AllAnimeResponse', totalCount: number, hasNextPage: boolean, items: Array<{ __typename?: 'Anime', id: string, name: string, licenseNameRu: string, slug: string, poster: Array<{ __typename?: 'Poster', id: string, originalUrl: string, previewUrl: string }>, genres?: Array<{ __typename?: 'Genre', id: string, russian: string, name: string }> | null }> } };
+export type ItemsQuery = { __typename?: 'Query', allAnimes: { __typename?: 'AllAnimeResponse', totalCount: number, hasNextPage: boolean, items: Array<{ __typename?: 'Anime', id: string, name?: string | null, licenseNameRu?: string | null, slug: string, poster?: Array<{ __typename?: 'Poster', id: string, originalUrl: string, previewUrl: string }> | null, genres?: Array<{ __typename?: 'Genre', id: string, russian: string, name: string }> | null }> } };
 
 export type SignInMutationMutationVariables = Exact<{
   args: UserLoginInput;
@@ -310,6 +328,7 @@ export const UserDocument = {"kind":"Document","definitions":[{"kind":"Operation
 export const ChangeAnimeStatusMutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"changeAnimeStatusMutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AnimeStatus"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"animeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeStatusOfAnime"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}},{"kind":"Argument","name":{"kind":"Name","value":"animeId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"animeId"}}}]}]}}]} as unknown as DocumentNode<ChangeAnimeStatusMutationMutation, ChangeAnimeStatusMutationMutationVariables>;
 export const DeleteAnimeFromWatchingListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteAnimeFromWatchingList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"animeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteAnimeStatus"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"animeId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"animeId"}}}]}]}}]} as unknown as DocumentNode<DeleteAnimeFromWatchingListMutation, DeleteAnimeFromWatchingListMutationVariables>;
 export const OneAnimeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"OneAnime"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"anime"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"licenseNameRu"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"genres"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"russian"}}]}},{"kind":"Field","name":{"kind":"Name","value":"poster"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"originalUrl"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"previewUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userWatchListStatusDistributions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"animeLists"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"studios"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<OneAnimeQuery, OneAnimeQueryVariables>;
+export const AnimeCommentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"animeComments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"anime"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"viewerCanDelete"}},{"kind":"Field","name":{"kind":"Name","value":"viewerCanUpdate"}},{"kind":"Field","name":{"kind":"Name","value":"animeId"}}]}}]}}]}}]} as unknown as DocumentNode<AnimeCommentsQuery, AnimeCommentsQueryVariables>;
 export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"args"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserLoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"args"},"value":{"kind":"Variable","name":{"kind":"Name","value":"args"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
 export const SignupUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignupUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signupUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}]}}]} as unknown as DocumentNode<SignupUserMutation, SignupUserMutationVariables>;
 export const LoginWiaGoogleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LoginWiaGoogle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loginWiaGoogle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"token"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]} as unknown as DocumentNode<LoginWiaGoogleMutation, LoginWiaGoogleMutationVariables>;

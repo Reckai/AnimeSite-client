@@ -14,7 +14,7 @@ const AnimeSection = ({ slug }: { slug: string }) => {
 				<aside className="mr-10 w-64 flex-none">
 					<PosterSection {...posterProps} slug={slug} />
 				</aside>
-				<AboutSection {...AboutSectionProps} />
+				<AboutSection {...AboutSectionProps} slug={slug} />
 			</div>
 		</section>
 	);

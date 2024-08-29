@@ -6,7 +6,7 @@ import AnimeWatchButtonHOC from './AnimeWatchButtonHOC/AnimeWatchButtonHOC';
 
 export type PosterSectionProps = {
 	url: string | undefined;
-	name: string | undefined;
+	name: string | undefined | null;
 	id: string;
 	slug: string;
 };

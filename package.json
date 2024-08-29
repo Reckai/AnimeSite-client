@@ -24,6 +24,7 @@
 		"awesome-graphql-client": "^2.0.0",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.0",
+		"date-fns": "^3.6.0",
 		"dotenv": "^16.4.1",
 		"graphql": "^16.8.1",
 		"graphql-request": "^7.0.1",
