@@ -6,6 +6,7 @@ import Header from '@/app/_Components/Header/Header';
 
 import Provider from '@/app/_providers/providers';
 import { cn } from './utils';
+import { Footer } from './_Components/Footer/FooterCompoent';
 
 const fontSans = FontSans({
 	subsets: ['latin'],
@@ -38,6 +39,8 @@ export default async function RootLayout({
 					<Header />
 					{children}
 				</Provider>
+
+				<Footer />
 			</body>
 		</html>
 	);
