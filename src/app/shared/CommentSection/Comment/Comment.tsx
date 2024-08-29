@@ -1,46 +1,40 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import AvatarPlug from '@/app/shared/AvatarPlug/AvatarPlug';
-import { useCommentsByParentId } from '../helpers/useCommentsByParrentId';
-import Image from 'next/image';
+import { useState, useRef } from 'react';
+import { format, parseISO } from 'date-fns';
 import { Comment } from '@/gql/graphql';
 import { useSession } from '@/app/context/SessionContext/useSession';
-import { format, parseISO } from 'date-fns';
+import { cn } from '@/app/utils';
+import { Button } from '../../Button/Button';
+import CommentHeader from './_components/CommentHeader';
+
 interface CommentProps {
 	comment: Comment;
 	getCommentsByParentId: (parentId: string | null) => Comment[];
 }
 
-const dateFormat = new Intl.DateTimeFormat(undefined, {
-	dateStyle: 'medium',
-	timeStyle: 'short'
-});
-
-function CommentComponent({ comment, getCommentsByParentId }: CommentProps) {
-	const { session } = useSession();
-	const formattedDate = format(parseISO(comment.createdAt), 'dd MMM yyyy, HH:mm');
-	const childComments = getCommentsByParentId(comment.id);
-	console.log(childComments);
+function ChildComments({
+	childComments,
+	getCommentsByParentId,
+	isHidden,
+	onToggle
+}: {
+	childComments: Comment[];
+	getCommentsByParentId: (parentId: string | null) => Comment[];
+	isHidden: boolean;
+	onToggle: () => void;
+}) {
+	const childCommentsRef = useRef<HTMLDivElement>(null);
+	console.log(isHidden);
 	return (
-		<div className="mb-4">
-			<div className="mb-2 flex items-center">
-				{session?.image ? (
-					<Image
-						src={session.image}
-						width={32}
-						height={32}
-						alt={session.name}
-						className="mr-2 h-8 w-8 rounded-full"
-					/>
-				) : (
-					<AvatarPlug className="mr-2 h-8 w-8" name={session?.name || ''} />
-				)}
-				<span className="font-semibold">{session?.name}</span>
-				<span className="ml-2 text-sm text-gray-500">{formattedDate}</span>
-			</div>
-			<p className="mb-2 text-gray-700">{comment.message}</p>
-			{childComments.length > 0 && (
-				<div className="ml-8">
+		<>
+			<div ref={childCommentsRef} className={cn('ml-6 flex', isHidden && 'hidden')}>
+				<Button
+					variant="ghost"
+					size="icon"
+					aria-label="Collapse comments"
+					className="collapse-line"
+					onClick={onToggle}
+				/>
+				<div>
 					{childComments.map((childComment) => (
 						<CommentComponent
 							key={childComment.id}
@@ -49,9 +43,35 @@ function CommentComponent({ comment, getCommentsByParentId }: CommentProps) {
 						/>
 					))}
 				</div>
+			</div>
+			{isHidden && childComments.length > 0 && (
+				<Button variant="link" className="mt-1" onClick={onToggle}>
+					Show Replies ({childComments.length})
+				</Button>
 			)}
-		</div>
+		</>
 	);
 }
 
+export function CommentComponent({ comment, getCommentsByParentId }: CommentProps) {
+	const { session } = useSession();
+	const formattedDate = format(parseISO(comment.createdAt), 'dd MMM yyyy, HH:mm');
+	const childComments = getCommentsByParentId(comment.id);
+	const [areChildrenHidden, setAreChildrenHidden] = useState(true);
+
+	const toggleChildComments = () => setAreChildrenHidden(!areChildrenHidden);
+
+	return (
+		<article className="mb-4">
+			<CommentHeader date={formattedDate} name={session?.name} image={session?.image} />
+			<p className="mb-2 text-gray-700">{comment.message}</p>
+			<ChildComments
+				childComments={childComments}
+				getCommentsByParentId={getCommentsByParentId}
+				isHidden={areChildrenHidden}
+				onToggle={toggleChildComments}
+			/>
+		</article>
+	);
+}
 export default CommentComponent;

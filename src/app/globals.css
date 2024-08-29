@@ -4,3 +4,41 @@
 * {
 	transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.collapse-line {
+	border: none;
+	background: none;
+	padding: 0;
+	width: 15px;
+	margin-top: 0.5rem;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+	transform: translateX(-50%);
+}
+.comments-tree-collapse {
+	border-left: 2px solid transparent;
+	cursor: pointer;
+	display: none;
+	height: 100%;
+	left: -1px;
+	position: absolute;
+	top: 0;
+	width: 24px;
+}
+
+.collapse-line:hover::before,
+.collapse-line:focus-visible::before {
+	background-color: hsl(235, 100%, 60%);
+}
+
+.collapse-line::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	width: 1px;
+	background-color: hsl(235, 50%, 74%);
+	transition: background-color 100ms ease-in-out;
+}
