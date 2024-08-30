@@ -54,7 +54,7 @@ function AboutSection({
 			</article>
 			<section>
 				<Suspense fallback={<div>Loading...</div>}>
-					{Boolean(rootComments) ? (
+					{Boolean(rootComments.length) ? (
 						<div>
 							<h2>Comments</h2>
 							<div>
