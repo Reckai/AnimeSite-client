@@ -1,21 +1,19 @@
 import Image from 'next/image';
 import AvatarPlug from '../../../AvatarPlug/AvatarPlug';
-import { useSession } from '@/app/context/SessionContext/useSession';
 
-function CommentHeader({ date, name }: { date: string; name?: string; image?: string }) {
-	const { session } = useSession();
+function CommentHeader({ date, name, image }: { date: string; name?: string; image?: string }) {
 	return (
 		<div className="mb-2 flex items-center">
-			{session?.image ? (
+			{image ? (
 				<Image
-					src={session.image}
+					src={image}
 					width={32}
 					height={32}
-					alt={session.name}
+					alt={name || 'user avatar'}
 					className="mr-2 h-8 w-8 rounded-full"
 				/>
 			) : (
-				<AvatarPlug className="mr-2 h-8 w-8" name={session?.name || ''} />
+				<AvatarPlug className="mr-2 h-8 w-8" name={name || 'user'} />
 			)}
 			<span className="font-semibold text-color-text">{name}</span>
 			<span className="ml-2 text-sm text-gray-500">{date}</span>

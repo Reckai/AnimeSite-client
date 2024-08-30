@@ -54,7 +54,6 @@ function ChildComments({
 }
 
 export function CommentComponent({ comment, getCommentsByParentId }: CommentProps) {
-	const { session } = useSession();
 	const formattedDate = format(parseISO(comment.createdAt), 'dd MMM yyyy, HH:mm');
 	const childComments = getCommentsByParentId(comment.id);
 	const [areChildrenHidden, setAreChildrenHidden] = useState(true);
@@ -63,7 +62,11 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 
 	return (
 		<article className="mb-4">
-			<CommentHeader date={formattedDate} name={session?.name} image={session?.image} />
+			<CommentHeader
+				date={formattedDate}
+				name={comment.user?.name || ''}
+				image={comment.user?.image || undefined}
+			/>
 			<p className="mb-2 text-color-text-accent">{comment.message}</p>
 			<ChildComments
 				childComments={childComments}

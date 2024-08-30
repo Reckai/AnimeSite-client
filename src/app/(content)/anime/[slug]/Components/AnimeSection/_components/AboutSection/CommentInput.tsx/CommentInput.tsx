@@ -28,10 +28,9 @@ export function CommentInput({ animeId, slug }: CommentInputProps) {
 			createCommentMutation.mutate(comment);
 		}
 	};
-	const isCommentEmpty = !comment.trim();
 
 	return (
-		<div className="w-full space-y-2 md:w-1/2">
+		<div className="w-full space-y-2 sm:w-3/4 md:w-1/2">
 			<Textarea
 				placeholder="Написать комментарий"
 				value={comment}

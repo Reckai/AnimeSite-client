@@ -35,17 +35,20 @@ export const GET_ANIME = graphql(`
 `);
 
 export const GET_COMMENTS = graphql(`
-	query animeComments($slug: String!) {
-		anime(slug: $slug) {
-			comments {
-				id
-				message
-				createdAt
-				parentId
-				viewerCanDelete
-				viewerCanUpdate
-				animeId
-			}
-		}
+query GetCommentsByAnimeId( $orderBy: SortOrder, $animeId: String!) {
+  getCommentsByAnimeId( orderBy: $orderBy, animeId: $animeId) {
+	id
+	message
+	createdAt
+	parentId
+	viewerCanDelete
+	viewerCanUpdate
+	animeId
+    user {
+      id
+      name
+	  image
 	}
+	}
+}
 `);
