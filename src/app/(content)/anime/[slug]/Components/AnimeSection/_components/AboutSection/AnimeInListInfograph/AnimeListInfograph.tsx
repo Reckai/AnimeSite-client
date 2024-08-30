@@ -20,7 +20,7 @@ const AnimeListInfograph: React.FC<AnimeListInfographProps> = ({ animeListInfo }
 	});
 
 	return (
-		<div className="mx-3 mb-2 w-1/2">
+		<div className="mx-3 mb-2 w-full md:w-1/2">
 			<h3 className="mb-2">В списках у {AllUserCount} пользователей</h3>
 			<div className="flex flex-wrap items-center justify-between bg-white px-4 py-6 dark:bg-color-el-bg">
 				{sortedStatusList.map(({ count, status }) => {

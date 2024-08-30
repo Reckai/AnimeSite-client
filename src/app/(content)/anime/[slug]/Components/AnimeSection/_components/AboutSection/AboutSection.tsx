@@ -1,13 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { AboutAnimeHeader, AboutAnimeHeaderProps } from './Header/AboutAnimeHeader';
 import Button from './GenreButton/Button';
-
 import AnimeListInfograph, {
 	AnimeListInfographProps
 } from './AnimeInListInfograph/AnimeListInfograph';
 import { Anime } from '@/gql/graphql';
-import CommentList from '@/app/shared/CommentSection/CommentList/CommentList';
 import CommentSection from './CommentSection/CommentSection';
+import { Input } from '@/app/shared/Input/input';
+import { CommentInput } from './CommentInput.tsx/CommentInput';
 
 export type AboutAnimeSectionProps = AboutAnimeHeaderProps &
 	AnimeListInfographProps & {
@@ -38,9 +38,12 @@ function AboutSection({
 				{description}
 			</article>
 			<article>
-				{animeListInfo?.length ? <AnimeListInfograph animeListInfo={animeListInfo} /> : null}
+				{Boolean(animeListInfo?.length) ? (
+					<AnimeListInfograph animeListInfo={animeListInfo} />
+				) : null}
 			</article>
-			<section>
+			<section className="mt-10">
+				<CommentInput animeId={id} slug={slug} />
 				<CommentSection slug={slug} id={id} />
 			</section>
 		</div>

@@ -64,7 +64,7 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 	return (
 		<article className="mb-4">
 			<CommentHeader date={formattedDate} name={session?.name} image={session?.image} />
-			<p className="mb-2 text-gray-700">{comment.message}</p>
+			<p className="mb-2 text-color-text-accent">{comment.message}</p>
 			<ChildComments
 				childComments={childComments}
 				getCommentsByParentId={getCommentsByParentId}

@@ -17,7 +17,7 @@ function CommentHeader({ date, name }: { date: string; name?: string; image?: st
 			) : (
 				<AvatarPlug className="mr-2 h-8 w-8" name={session?.name || ''} />
 			)}
-			<span className="font-semibold">{name}</span>
+			<span className="font-semibold text-color-text">{name}</span>
 			<span className="ml-2 text-sm text-gray-500">{date}</span>
 		</div>
 	);

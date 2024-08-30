@@ -22,7 +22,7 @@ const CommentSection = ({ slug, id }: { slug: string; id: string }) => {
 				{Boolean(rootComments.length) ? (
 					<div>
 						<h2>Comments</h2>
-						<div>
+						<div className="mt-6 w-full md:w-1/2">
 							<CommentList comments={rootComments} getCommentsByParentId={getCommentsByParentId} />
 						</div>
 					</div>
