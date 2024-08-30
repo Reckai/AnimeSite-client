@@ -1,5 +1,4 @@
-import NotFound from '@/app/_Components/NotFound/NotFound';
-import AnimeLoading from './Components/AnimeSection/AnimeLoading';
+import AnimeLoading from './Components/AnimeSection/Loading';
 import AnimeSection from './Components/AnimeSection/AnimeSection';
 import { Suspense } from 'react';
 
