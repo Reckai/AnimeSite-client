@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Page(props): React.FC {
+function Page() {
 	return (
 		<>
 			<header>
@@ -9,5 +9,4 @@ function Page(props): React.FC {
 		</>
 	);
 }
-
 export default Page;

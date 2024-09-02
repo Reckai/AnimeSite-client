@@ -35,8 +35,8 @@ export const GET_ANIME = graphql(`
 `);
 
 export const GET_COMMENTS = graphql(`
-query GetCommentsByAnimeId( $orderBy: SortOrder, $animeId: String!) {
-  getCommentsByAnimeId( orderBy: $orderBy, animeId: $animeId) {
+query GetCommentsByAnimeId( $orderBy: SortOrder, $slug: String!) {
+  getCommentsByAnimeId( orderBy: $orderBy, slug: $slug) {
 	id
 	message
 	createdAt
@@ -48,6 +48,9 @@ query GetCommentsByAnimeId( $orderBy: SortOrder, $animeId: String!) {
       id
       name
 	  image
+	}
+	likes{
+	userId
 	}
 	}
 }

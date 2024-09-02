@@ -1,3 +1,4 @@
+'use client';
 import { GET_COMMENTS } from '@/app/(content)/anime/[slug]/Query';
 import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient';
 import { useCommentsByParentId } from '@/app/shared/CommentSection/helpers/useCommentsByParrentId';
@@ -6,16 +7,27 @@ import React, { Suspense } from 'react';
 import { Comment, SortDirection, SortField } from '@/gql/graphql';
 import CommentList from '@/app/shared/CommentSection/CommentList/CommentList';
 
-const CommentSection = ({ slug, id }: { slug: string; id: string }) => {
+const CommentSection = ({ slug }: { slug: string }) => {
 	const { client } = useGraphQLClient();
-	const { data } = useSuspenseQuery({
-		queryKey: [`anime-comments`, id],
-		queryFn: async () =>
-			client?.request(GET_COMMENTS, {
-				animeId: id,
-				orderBy: { field: SortField.CreatedAt, direction: SortDirection.Desc }
-			})
+	const { data, error } = useSuspenseQuery({
+		queryKey: [`anime-comments`, slug],
+		queryFn: async () => {
+			try {
+				return await client.request(GET_COMMENTS, {
+					slug,
+					orderBy: { field: SortField.CreatedAt, direction: SortDirection.Desc }
+				});
+			} catch (err) {
+				console.error('Error fetching comments:', err);
+				throw err;
+			}
+		}
 	});
+
+	if (error) {
+		console.error('Error in useSuspenseQuery:', error);
+		throw error; // This will trigger the nearest error boundary
+	}
 	const comments = data.getCommentsByAnimeId as Comment[];
 	const getCommentsByParentId = useCommentsByParentId(comments || []);
 	const rootComments = getCommentsByParentId(null);

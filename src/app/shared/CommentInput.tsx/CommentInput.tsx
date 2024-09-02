@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient';
 import { Button } from '@/app/shared/Button/Button';
 
-import { CREATE_COMMENT } from '../Mutation';
+import { CREATE_COMMENT } from '../../(content)/anime/[slug]/Components/AnimeSection/_components/AboutSection/Mutation';
 import { Textarea } from '@/app/shared/TextareaComponent/TextareaComponent';
 interface CommentInputProps {
 	animeId: string;
@@ -18,7 +18,7 @@ export function CommentInput({ animeId, slug }: CommentInputProps) {
 	const createCommentMutation = useMutation({
 		mutationFn: (message: string) => client.request(CREATE_COMMENT, { animeId, message }),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [`anime-comments`, animeId] });
+			queryClient.invalidateQueries({ queryKey: [`anime-comments`, slug] });
 			setComment('');
 		}
 	});

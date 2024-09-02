@@ -36,18 +36,6 @@ function MainContent() {
 	});
 
 	return (
-		// <div className=" grid md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-		//   {data?.allAnimes.items.map((anime) => (
-		//     <AnimeCard
-		//       id={anime.id}
-		//       slug={anime.slug}
-		//       description={anime.genres}
-		//       poster={anime.poster[0]}
-		//       title={anime.licenseNameRu}
-		//       key={anime.id}
-		//     />
-		//   ))}
-		// </div>
 		<>
 			<section className="flex w-full flex-wrap">
 				{data?.pages.map((page, i) => (
@@ -57,8 +45,8 @@ function MainContent() {
 								id={anime.id}
 								slug={anime.slug}
 								description={anime.genres}
-								poster={anime.poster[0]}
-								title={anime.licenseNameRu}
+								poster={anime.poster?.[0] || null}
+								title={anime.licenseNameRu || ''}
 								key={anime.id}
 							/>
 						))}

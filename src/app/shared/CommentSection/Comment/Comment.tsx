@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { format, parseISO } from 'date-fns';
 import { Comment } from '@/gql/graphql';
-import { useSession } from '@/app/context/SessionContext/useSession';
 import { cn } from '@/app/utils';
 import { Button } from '../../Button/Button';
 import CommentHeader from './_components/CommentHeader';
+import { useSession } from '@/app/context/SessionContext/useSession';
+import { CommentOption } from '../CommentOption/CommentOption';
+import CommentOptions from '../CommentOptions/CommentOptions';
 
 interface CommentProps {
 	comment: Comment;
@@ -57,23 +59,40 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 	const formattedDate = format(parseISO(comment.createdAt), 'dd MMM yyyy, HH:mm');
 	const childComments = getCommentsByParentId(comment.id);
 	const [areChildrenHidden, setAreChildrenHidden] = useState(true);
-
+	const { session } = useSession();
 	const toggleChildComments = () => setAreChildrenHidden(!areChildrenHidden);
-
+	console.log(Boolean(comment.likes), 'likes');
 	return (
 		<article className="mb-4">
-			<CommentHeader
-				date={formattedDate}
-				name={comment.user?.name || ''}
-				image={comment.user?.image || undefined}
-			/>
-			<p className="mb-2 text-color-text-accent">{comment.message}</p>
-			<ChildComments
-				childComments={childComments}
-				getCommentsByParentId={getCommentsByParentId}
-				isHidden={areChildrenHidden}
-				onToggle={toggleChildComments}
-			/>
+			<div>
+				<div>
+					<CommentHeader
+						date={formattedDate}
+						name={comment.user?.name || ''}
+						image={comment.user?.image || undefined}
+					/>
+					<p className="mb-2 text-color-text-accent">{comment.message}</p>
+				</div>
+				{session?.id && (
+					<CommentOptions
+						commentId={comment.id}
+						message={comment.message}
+						parentId={comment.id || null}
+					>
+						<CommentOptions.LikeOption likes={Boolean(comment.likes) ? comment.likes.length : 0} />
+						<CommentOptions.ReplyOption />
+						{session?.id === comment.user.id && <CommentOptions.EditOption />}
+					</CommentOptions>
+				)}
+			</div>
+			<div>
+				<ChildComments
+					childComments={childComments}
+					getCommentsByParentId={getCommentsByParentId}
+					isHidden={areChildrenHidden}
+					onToggle={toggleChildComments}
+				/>
+			</div>
 		</article>
 	);
 }

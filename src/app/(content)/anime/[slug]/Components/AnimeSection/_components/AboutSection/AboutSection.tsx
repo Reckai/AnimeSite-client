@@ -7,7 +7,7 @@ import AnimeListInfograph, {
 import { Anime } from '@/gql/graphql';
 import CommentSection from './CommentSection/CommentSection';
 import { Input } from '@/app/shared/Input/input';
-import { CommentInput } from './CommentInput.tsx/CommentInput';
+import { CommentInput } from '../../../../../../../shared/CommentInput.tsx/CommentInput';
 import { useSession } from '@/app/context/SessionContext/useSession';
 import Link from 'next/link';
 
@@ -55,13 +55,13 @@ function AboutSection({
 								className="m-0 h-9 p-0 text-primary underline-offset-4 hover:underline"
 								href="/auth"
 							>
-								Log in
+								Ввойдите
 							</Link>{' '}
-							to login to leave a comment
+							что бы оставить комментарий
 						</span>
 					)}
 				</div>
-				<CommentSection slug={slug} id={id} />
+				<CommentSection slug={slug} />
 			</section>
 		</div>
 	);

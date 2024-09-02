@@ -7,7 +7,7 @@ type AnimeCard = {
 	id: string;
 	title: string;
 	description: Maybe<Genre[]> | undefined;
-	poster: Poster;
+	poster: Poster | null;
 	slug: string;
 };
 const AnimeCard = ({ title, poster, slug, description }: AnimeCard) => {
@@ -19,8 +19,7 @@ const AnimeCard = ({ title, poster, slug, description }: AnimeCard) => {
 						loading="lazy"
 						fill
 						placeholder="blur"
-						blurDataURL={poster.originalUrl}
-						src={poster.originalUrl}
+						src={poster?.originalUrl || ''}
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						alt={title}
 						className="rounded-lg object-cover"
