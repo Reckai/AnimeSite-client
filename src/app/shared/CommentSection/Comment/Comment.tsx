@@ -7,6 +7,8 @@ import CommentHeader from './_components/CommentHeader';
 import { useSession } from '@/app/context/SessionContext/useSession';
 import { CommentOption } from '../CommentOption/CommentOption';
 import CommentOptions from '../CommentOptions/CommentOptions';
+import CommentForm from '../../CommentForm/CommentForm';
+import { useCreateComment } from '@/app/api/services/comments/createComment';
 
 interface CommentProps {
 	comment: Comment;
@@ -48,7 +50,7 @@ function ChildComments({
 			</div>
 			{isHidden && childComments.length > 0 && (
 				<Button variant="link" className="mt-1" onClick={onToggle}>
-					Show Replies ({childComments.length})
+					Show Replies
 				</Button>
 			)}
 		</>
@@ -61,7 +63,17 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 	const [areChildrenHidden, setAreChildrenHidden] = useState(true);
 	const { session } = useSession();
 	const toggleChildComments = () => setAreChildrenHidden(!areChildrenHidden);
-	console.log(Boolean(comment.likes), 'likes');
+	const [isReplying, setIsReplying] = useState(false);
+	const createChildrenCommentMutation = useCreateComment(comment.anime.slug);
+	const onCreateComment = async (message: string) => {
+		createChildrenCommentMutation
+			.mutateAsync({
+				message,
+				animeId: comment.animeId,
+				parentId: comment.id
+			})
+			.then(() => setIsReplying(false));
+	};
 	return (
 		<article className="mb-4">
 			<div>
@@ -80,9 +92,20 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 						parentId={comment.id || null}
 					>
 						<CommentOptions.LikeOption likes={Boolean(comment.likes) ? comment.likes.length : 0} />
-						<CommentOptions.ReplyOption />
+						<CommentOptions.ReplyOption onClick={() => setIsReplying((prev) => !prev)} />
 						{session?.id === comment.user.id && <CommentOptions.EditOption />}
 					</CommentOptions>
+				)}
+			</div>
+			<div>
+				{isReplying && (
+					<CommentForm
+						className="sm:w-full"
+						onSubmitFunction={onCreateComment}
+						loading={createChildrenCommentMutation.isPending}
+						error={createChildrenCommentMutation.error}
+						autofocus
+					/>
 				)}
 			</div>
 			<div>

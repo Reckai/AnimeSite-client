@@ -1,15 +1,13 @@
 'use client';
-import React, { useState } from 'react';
-import { CommentOptionsContext, useCommentContext } from './CommentOptionsProvider';
+import React from 'react';
+import { CommentOptionsContext } from './CommentOptionsProvider';
 import { cn } from '@/app/utils';
 import { CommentOption } from '../CommentOption/CommentOption';
-import { FaHeart, FaPencilAlt } from 'react-icons/fa';
-import { AiFillWechat } from 'react-icons/ai';
-import { useLikeComment } from '../api/services/LikeComment';
-import { useMutation } from '@tanstack/react-query';
-import { getClientWithAuthorization } from '@/lib/gqlClient';
-import { likeComment } from '../api/Mutations';
+import { FaPencilAlt } from 'react-icons/fa';
 import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient';
+import { LikeOption } from './Options/LikeOption';
+import { BiChat } from 'react-icons/bi';
+import { ReplyOption } from './Options/ReplyOption';
 
 interface CommentOptionsProps extends React.HTMLAttributes<HTMLUListElement> {
 	commentId: string;
@@ -34,26 +32,9 @@ const CommentOptions = ({
 		</CommentOptionsContext.Provider>
 	);
 };
-CommentOptions.LikeOption = function LikeOption({ likes }: { likes: number }) {
-	const { commentId } = useCommentContext();
-	const [likesCount, setLikes] = useState(likes);
+CommentOptions.LikeOption = LikeOption;
 
-	const { mutate } = useLikeComment({ functions: (data: number) => setLikes(data) });
-	return (
-		<CommentOption className="flex" onClick={() => mutate(commentId)}>
-			<FaHeart className="text-primary transition-colors hover:scale-110 hover:text-red-500" />
-			{likesCount}
-		</CommentOption>
-	);
-};
-
-CommentOptions.ReplyOption = function ReplyOption() {
-	return (
-		<CommentOption>
-			<AiFillWechat className="text-primary transition-colors hover:scale-110 hover:text-white" />
-		</CommentOption>
-	);
-};
+CommentOptions.ReplyOption = ReplyOption;
 
 CommentOptions.EditOption = function EditOption() {
 	return (

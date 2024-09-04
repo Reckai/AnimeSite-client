@@ -1,5 +1,5 @@
 'use client';
-import { PrefetchProfileData } from '@/api/preFetchProfile/prefetchProfieData';
+import { PrefetchProfileData } from '@/app/api/preFetchProfile/prefetchProfieData';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import Avatar from './Avatar';

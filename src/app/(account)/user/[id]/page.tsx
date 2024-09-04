@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from './_components/userAvatar/Avatar';
 import UserInfo from './_components/userInfo/UserInfo';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import { PrefetchProfileData } from '@/api/preFetchProfile/prefetchProfieData';
+import { PrefetchProfileData } from '@/app/api/preFetchProfile/prefetchProfieData';
 import AvatarComponent from './_components/userAvatar/AvatarComponent';
 
 async function Page() {

@@ -44,6 +44,9 @@ query GetCommentsByAnimeId( $orderBy: SortOrder, $slug: String!) {
 	viewerCanDelete
 	viewerCanUpdate
 	animeId
+	anime{
+		slug
+	}
     user {
       id
       name

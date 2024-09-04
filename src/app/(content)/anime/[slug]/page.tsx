@@ -1,11 +1,13 @@
-import AnimeLoading from './Components/AnimeSection/Loading';
 import AnimeSection from './Components/AnimeSection/AnimeSection';
-import { Suspense } from 'react';
 
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 import { getClientWithAuthorization } from '@/lib/gqlClient';
 import { GET_ANIME, GET_COMMENTS } from './Query';
 import { SortDirection, SortField } from '@/gql/graphql';
+
+// export async function generateStaticParams() {
+
+// }
 
 export default async function Page({ params }: { params: { slug: string } }) {
 	const queryClient = new QueryClient();

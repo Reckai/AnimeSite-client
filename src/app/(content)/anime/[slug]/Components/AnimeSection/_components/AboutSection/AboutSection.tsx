@@ -6,10 +6,11 @@ import AnimeListInfograph, {
 } from './AnimeInListInfograph/AnimeListInfograph';
 import { Anime } from '@/gql/graphql';
 import CommentSection from './CommentSection/CommentSection';
-import { Input } from '@/app/shared/Input/input';
-import { CommentInput } from '../../../../../../../shared/CommentInput.tsx/CommentInput';
+
 import { useSession } from '@/app/context/SessionContext/useSession';
 import Link from 'next/link';
+import CommentForm from '@/app/shared/CommentForm/CommentForm';
+import { useCreateComment } from '@/app/api/services/comments/createComment';
 
 export type AboutAnimeSectionProps = AboutAnimeHeaderProps &
 	AnimeListInfographProps & {
@@ -29,6 +30,10 @@ function AboutSection({
 	animeListInfo
 }: AboutAnimeSectionProps) {
 	const { session } = useSession();
+	const createCommentMutation = useCreateComment(slug);
+	const onCreateComment = async (message: string) => {
+		createCommentMutation.mutate({ message, animeId: id });
+	};
 	return (
 		<div className="mt-8">
 			<AboutAnimeHeader title={title} RuTitle={RuTitle} />
@@ -48,7 +53,12 @@ function AboutSection({
 			<section className="mt-10">
 				<div className="mb-10">
 					{session?.id ? (
-						<CommentInput animeId={id} slug={slug} />
+						<CommentForm
+							autofocus
+							loading={createCommentMutation.isPending}
+							error={createCommentMutation.error}
+							onSubmitFunction={onCreateComment}
+						/>
 					) : (
 						<span>
 							<Link

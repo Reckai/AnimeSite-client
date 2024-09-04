@@ -5,7 +5,7 @@ import React from 'react';
 import Image, { ImageProps } from 'next/image';
 import { cn } from '@/app/utils';
 import { useQuery } from '@tanstack/react-query';
-import { PrefetchProfileData } from '@/api/preFetchProfile/prefetchProfieData';
+import { PrefetchProfileData } from '@/app/api/preFetchProfile/prefetchProfieData';
 
 type AvatarProps = Omit<ImageProps, 'src'> & {
 	src?: string;
