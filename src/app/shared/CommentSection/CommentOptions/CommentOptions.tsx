@@ -8,6 +8,8 @@ import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient'
 import { LikeOption } from './Options/LikeOption';
 import { BiChat } from 'react-icons/bi';
 import { ReplyOption } from './Options/ReplyOption';
+import { EditOption } from './Options/EditOption';
+import { DeleteCommentOption } from './Options/DeleteCommentOption';
 
 interface CommentOptionsProps extends React.HTMLAttributes<HTMLUListElement> {
 	commentId: string;
@@ -36,14 +38,8 @@ CommentOptions.LikeOption = LikeOption;
 
 CommentOptions.ReplyOption = ReplyOption;
 
-CommentOptions.EditOption = function EditOption() {
-	return (
-		<CommentOption>
-			<FaPencilAlt className="text-primary transition-colors hover:scale-110 hover:text-yellow-500" />
-		</CommentOption>
-	);
-};
-
+CommentOptions.EditOption = EditOption;
+CommentOptions.DeleteCommentOption = DeleteCommentOption;
 CommentOptions.displayName = 'CommentOptions';
 
 export default CommentOptions;

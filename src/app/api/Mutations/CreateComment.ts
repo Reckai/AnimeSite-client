@@ -6,8 +6,8 @@ export const CREATE_COMMENT = graphql(`mutation CreateComment($animeId: String!,
                   message
                   createdAt
                   parentId
-                  viewerCanDelete
-                  viewerCanUpdate
+                  userCanDelete
+                  userCanUpdate
                   animeId
     }
   }`);

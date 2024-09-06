@@ -1,14 +1,14 @@
 import { useState, useRef } from 'react';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, setISODay } from 'date-fns';
 import { Comment } from '@/gql/graphql';
 import { cn } from '@/app/utils';
 import { Button } from '../../Button/Button';
 import CommentHeader from './_components/CommentHeader';
 import { useSession } from '@/app/context/SessionContext/useSession';
-import { CommentOption } from '../CommentOption/CommentOption';
 import CommentOptions from '../CommentOptions/CommentOptions';
 import CommentForm from '../../CommentForm/CommentForm';
 import { useCreateComment } from '@/app/api/services/comments/createComment';
+import { useUpdateComment } from '@/app/api/services/comments/updateComments';
 
 interface CommentProps {
 	comment: Comment;
@@ -61,9 +61,11 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 	const formattedDate = format(parseISO(comment.createdAt), 'dd MMM yyyy, HH:mm');
 	const childComments = getCommentsByParentId(comment.id);
 	const [areChildrenHidden, setAreChildrenHidden] = useState(true);
+	const [isReplying, setIsReplying] = useState(false);
+	const [isEditing, setIsEditing] = useState(false);
 	const { session } = useSession();
 	const toggleChildComments = () => setAreChildrenHidden(!areChildrenHidden);
-	const [isReplying, setIsReplying] = useState(false);
+
 	const createChildrenCommentMutation = useCreateComment(comment.anime.slug);
 	const onCreateComment = async (message: string) => {
 		createChildrenCommentMutation
@@ -74,6 +76,16 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 			})
 			.then(() => setIsReplying(false));
 	};
+	const updateCommentMutation = useUpdateComment(comment.anime.slug);
+	const onUpdateComment = async (message: string) => {
+		updateCommentMutation
+			.mutateAsync({
+				message,
+				commentId: comment.id
+			})
+			.then(() => setIsEditing(false));
+	};
+
 	return (
 		<article className="mb-4">
 			<div>
@@ -83,7 +95,17 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 						name={comment.user?.name || ''}
 						image={comment.user?.image || undefined}
 					/>
-					<p className="mb-2 text-color-text-accent">{comment.message}</p>
+					{isEditing ? (
+						<CommentForm
+							initialValue={comment.message}
+							autofocus
+							onSubmitFunction={onUpdateComment}
+							loading={updateCommentMutation.isPending}
+							error={updateCommentMutation.error}
+						/>
+					) : (
+						<p className="mb-2 text-color-text-accent">{comment.message}</p>
+					)}
 				</div>
 				{session?.id && (
 					<CommentOptions
@@ -91,9 +113,18 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 						message={comment.message}
 						parentId={comment.id || null}
 					>
-						<CommentOptions.LikeOption likes={Boolean(comment.likes) ? comment.likes.length : 0} />
+						<CommentOptions.LikeOption
+							isLiked={comment.isUserLikeComment}
+							likes={Boolean(comment.likes) ? comment.likes.length : 0}
+						/>
 						<CommentOptions.ReplyOption onClick={() => setIsReplying((prev) => !prev)} />
-						{session?.id === comment.user.id && <CommentOptions.EditOption />}
+						{comment.userCanUpdate && (
+							<CommentOptions.EditOption
+								clicked={isEditing}
+								onClick={() => setIsEditing((prev) => !prev)}
+							/>
+						)}
+						{comment.userCanDelete && <CommentOptions.DeleteCommentOption />}
 					</CommentOptions>
 				)}
 			</div>

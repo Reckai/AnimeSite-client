@@ -41,8 +41,9 @@ query GetCommentsByAnimeId( $orderBy: SortOrder, $slug: String!) {
 	message
 	createdAt
 	parentId
-	viewerCanDelete
-	viewerCanUpdate
+	userCanDelete
+    userCanUpdate
+	isUserLikeComment
 	animeId
 	anime{
 		slug
