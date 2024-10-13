@@ -46,9 +46,7 @@ function AboutSection({
 				{description}
 			</article>
 			<article>
-				{Boolean(animeListInfo?.length) ? (
-					<AnimeListInfograph animeListInfo={animeListInfo} />
-				) : null}
+				{animeListInfo?.length ? <AnimeListInfograph animeListInfo={animeListInfo} /> : null}
 			</article>
 			<section className="mt-10">
 				<div className="mb-10">

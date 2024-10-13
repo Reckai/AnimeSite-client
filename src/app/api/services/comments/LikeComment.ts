@@ -1,9 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
-import { useGraphQLClient } from "@/app/context/GraphQLContext/useGraphQLCLient";
+import { useMutation } from '@tanstack/react-query';
+import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient';
 
-
-import { graphql } from "@/gql/gql";
-
+import { graphql } from '@/gql/gql';
 
 export const likeComment = graphql(`
 	mutation LikeComment($commentId: String!) {
@@ -11,13 +9,12 @@ export const likeComment = graphql(`
 	}
 `);
 
-export const useLikeComment = ({functions}:{functions: (data:number)=>void}) => {
-    const {client} = useGraphQLClient();
-	return useMutation({	
+export const useLikeComment = ({ functions }: { functions: (data: number) => void }) => {
+	const { client } = useGraphQLClient();
+	return useMutation({
 		mutationFn: (commentId: string) => client.request(likeComment, { commentId }),
-        onSuccess: async(data, variables, context)=> {
-            functions(data.likeComment)
-        },
+		onSuccess: async (data, variables, context) => {
+			functions(data.likeComment);
+		}
 	});
 };
-

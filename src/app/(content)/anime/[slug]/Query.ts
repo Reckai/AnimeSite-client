@@ -35,27 +35,27 @@ export const GET_ANIME = graphql(`
 `);
 
 export const GET_COMMENTS = graphql(`
-query GetCommentsByAnimeId( $orderBy: SortOrder, $slug: String!) {
-  getCommentsByAnimeId( orderBy: $orderBy, slug: $slug) {
-	id
-	message
-	createdAt
-	parentId
-	userCanDelete
-    userCanUpdate
-	isUserLikeComment
-	animeId
-	anime{
-		slug
+	query GetCommentsByAnimeId($orderBy: SortOrder, $slug: String!) {
+		getCommentsByAnimeId(orderBy: $orderBy, slug: $slug) {
+			id
+			message
+			createdAt
+			parentId
+			userCanDelete
+			userCanUpdate
+			isUserLikeComment
+			animeId
+			anime {
+				slug
+			}
+			user {
+				id
+				name
+				image
+			}
+			likes {
+				userId
+			}
+		}
 	}
-    user {
-      id
-      name
-	  image
-	}
-	likes{
-	userId
-	}
-	}
-}
 `);

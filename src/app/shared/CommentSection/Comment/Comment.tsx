@@ -9,6 +9,7 @@ import CommentOptions from '../CommentOptions/CommentOptions';
 import CommentForm from '../../CommentForm/CommentForm';
 import { useCreateComment } from '@/app/api/services/comments/createComment';
 import { useUpdateComment } from '@/app/api/services/comments/updateComments';
+import { useDeleteComment } from '@/app/api/services/comments/deleteComment';
 
 interface CommentProps {
 	comment: Comment;
@@ -27,7 +28,7 @@ function ChildComments({
 	onToggle: () => void;
 }) {
 	const childCommentsRef = useRef<HTMLDivElement>(null);
-	console.log(isHidden);
+
 	return (
 		<>
 			<div ref={childCommentsRef} className={cn('ml-6 flex', isHidden && 'hidden')}>
@@ -85,7 +86,10 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 			})
 			.then(() => setIsEditing(false));
 	};
-
+	const deleteCommentMutation = useDeleteComment(comment.anime.slug);
+	const onDeleteComment = async () => {
+		deleteCommentMutation.mutateAsync(comment.id);
+	};
 	return (
 		<article className="mb-4">
 			<div>
@@ -115,7 +119,7 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 					>
 						<CommentOptions.LikeOption
 							isLiked={comment.isUserLikeComment}
-							likes={Boolean(comment.likes) ? comment.likes.length : 0}
+							likes={comment.likes ? comment.likes.length : 0}
 						/>
 						<CommentOptions.ReplyOption onClick={() => setIsReplying((prev) => !prev)} />
 						{comment.userCanUpdate && (
@@ -124,7 +128,9 @@ export function CommentComponent({ comment, getCommentsByParentId }: CommentProp
 								onClick={() => setIsEditing((prev) => !prev)}
 							/>
 						)}
-						{comment.userCanDelete && <CommentOptions.DeleteCommentOption />}
+						{comment.userCanDelete && (
+							<CommentOptions.DeleteCommentOption onClick={onDeleteComment} />
+						)}
 					</CommentOptions>
 				)}
 			</div>

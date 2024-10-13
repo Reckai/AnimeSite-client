@@ -14,5 +14,5 @@ export const fetchProfileData = async ({
 
 export const PrefetchProfileData = async () => {
 	const res = await getClientWithAuthorization().request(profileQuery);
-	return res.me;
+	return res; // Ensure the data is serializable
 };

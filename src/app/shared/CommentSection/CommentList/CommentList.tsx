@@ -7,7 +7,6 @@ interface CommentListProps {
 }
 
 const CommentList: React.FC<CommentListProps> = ({ comments, getCommentsByParentId }) => {
-	console.log(comments);
 	return (
 		<div className="space-y-4">
 			{comments.map((comment) => (

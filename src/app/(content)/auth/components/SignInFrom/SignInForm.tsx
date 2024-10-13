@@ -5,6 +5,8 @@ import { Label } from '@/app/shared/Label/Label';
 import { Input } from '@/app/shared/Input/input';
 import { PasswordInput } from '@/app/shared/PasswordInput/password-input';
 import { Button } from '@/app/shared/Button/Button';
+import { SpinnerIcon } from '@/app/shared/SpinnerIcon/SpinnerIcon';
+
 const SignInForm = () => {
 	const { form, functions, state } = useSignInForm();
 
@@ -61,7 +63,8 @@ const SignInForm = () => {
 							)}
 						/>
 						<Button type="submit" disabled={state.loading} className="w-full">
-							SignIn
+							{state.loading && <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />}
+							Sign In
 						</Button>
 					</form>
 				</Form>

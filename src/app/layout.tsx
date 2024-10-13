@@ -41,6 +41,7 @@ export default async function RootLayout({
 				</Provider>
 
 				<Footer />
+				<div id="modal-container" />
 			</body>
 		</html>
 	);

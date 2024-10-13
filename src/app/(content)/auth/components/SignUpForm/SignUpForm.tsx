@@ -97,10 +97,10 @@ export const SignUpForm = () => {
 											{...field}
 										/>
 									</FormControl>
-									{state.isPasswordEqueal && !!field.value && (
+									{state.isPasswordEqual && !!field.value && (
 										<FormDescription>passwords are equal 🔥</FormDescription>
 									)}
-									{!state.isPasswordEqueal && (
+									{!state.isPasswordEqual && (
 										<FormDescription>confirm your password</FormDescription>
 									)}
 									<FormMessage />

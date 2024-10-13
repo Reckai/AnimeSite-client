@@ -10,7 +10,7 @@ function CommentHeader({ date, name, image }: { date: string; name?: string; ima
 					width={32}
 					height={32}
 					alt={name || 'user avatar'}
-					className="mr-2 h-8 w-8 rounded-full"
+					className="mr-2 h-8 min-h-8 w-8 min-w-8 rounded-full"
 				/>
 			) : (
 				<AvatarPlug className="mr-2 h-8 w-8" name={name || 'user'} />

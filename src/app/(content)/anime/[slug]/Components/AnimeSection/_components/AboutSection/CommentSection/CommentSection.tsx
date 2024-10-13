@@ -35,7 +35,7 @@ const CommentSection = ({ slug }: { slug: string }) => {
 	return (
 		<>
 			<Suspense fallback={<div>Loading...</div>}>
-				{Boolean(rootComments.length) ? (
+				{rootComments.length ? (
 					<div>
 						<h2>Comments</h2>
 						<div className="mt-6 w-full md:w-1/2">
