@@ -1,4 +1,4 @@
-import { Anime } from '@/__generated__/graphql';
+import { Anime } from '@/gql/graphql';
 import React from 'react';
 
 export type AboutAnimeHeaderProps = {

@@ -2,24 +2,31 @@
 import React, { useEffect, useRef } from 'react';
 import AnimeCard from '@/app/_Components/MainContent/AnimeCard/AnimeCard';
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
-import { fetchAnimes } from './action';
+import { useFetchAnimes } from './action';
 
 function MainContent() {
 	const observerTarget = useRef<HTMLDivElement>(null);
+	const fetchAnimes = useFetchAnimes();
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
+		useSuspenseInfiniteQuery({
+			queryKey: ['animes'],
+			queryFn: async ({ pageParam }) => {
+				try {
+					return await fetchAnimes(pageParam);
+				} catch (e) {
+					throw e;
+				}
+			},
+			initialPageParam: 1,
 
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useSuspenseInfiniteQuery({
-		queryKey: ['animes'],
-		queryFn: ({ pageParam }) => fetchAnimes({ pageParam }),
-		initialPageParam: 1,
-		getNextPageParam: (lastPage, allPages) => {
-			return lastPage.hasNextPage ? allPages.length + 1 : null;
-		},
-		staleTime: 60000, // 1 minute
-		refetchOnWindowFocus: false,
-		refetchOnReconnect: false
-	});
+			getNextPageParam: (lastPage, allPages) => {
+				return lastPage?.hasNextPage ? allPages.length + 1 : null;
+			},
+			staleTime: 60000, // 1 minute
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: false
+		});
 
-	console.log('component rendered');
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -36,34 +43,23 @@ function MainContent() {
 	});
 
 	return (
-		// <div className=" grid md:grid-cols-4 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-		//   {data?.allAnimes.items.map((anime) => (
-		//     <AnimeCard
-		//       id={anime.id}
-		//       slug={anime.slug}
-		//       description={anime.genres}
-		//       poster={anime.poster[0]}
-		//       title={anime.licenseNameRu}
-		//       key={anime.id}
-		//     />
-		//   ))}
-		// </div>
 		<>
 			<section className="flex w-full flex-wrap">
-				{data?.pages.map((page, i) => (
-					<React.Fragment key={i}>
-						{page.items.map((anime) => (
-							<AnimeCard
-								id={anime.id}
-								slug={anime.slug}
-								description={anime.genres}
-								poster={anime.poster[0]}
-								title={anime.licenseNameRu}
-								key={anime.id}
-							/>
-						))}
-					</React.Fragment>
-				))}
+				{data &&
+					data?.pages.map((page, i) => (
+						<React.Fragment key={i}>
+							{page?.items.map((anime) => (
+								<AnimeCard
+									id={anime.id}
+									slug={anime.slug}
+									description={anime.genres}
+									poster={anime.poster?.[0] || null}
+									title={anime.licenseNameRu || ''}
+									key={anime.id}
+								/>
+							))}
+						</React.Fragment>
+					))}
 			</section>
 
 			{isFetchingNextPage && <div className="h-6 w-6 animate-pulse rounded-full bg-white"></div>}

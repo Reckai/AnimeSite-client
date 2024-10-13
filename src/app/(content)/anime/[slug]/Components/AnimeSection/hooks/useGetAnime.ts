@@ -17,7 +17,7 @@ function transformAnimeData(animeData: OneAnimeQuery) {
 		description: animeData?.anime.description,
 		genres: animeData?.anime.genres,
 		RuTitle: animeData?.anime.licenseNameRu,
-		poster: animeData?.anime.poster[0]
+		poster: animeData?.anime.poster?.[0]
 	};
 }
 
@@ -39,10 +39,11 @@ export function useGetAnime(slug: string) {
 	return {
 		posterProps: {
 			name: data.title,
-			url: data.poster.originalUrl,
+			url: data.poster?.originalUrl,
 			id: data.id
 		},
 		AboutSectionProps: {
+			id: data.id,
 			title: data.title,
 			RuTitle: data.RuTitle,
 			animeListInfo: data.animeListInfo,

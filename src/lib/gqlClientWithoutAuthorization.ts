@@ -7,6 +7,7 @@ export const getClientWithoutAuthorization = () => {
 	return new AwesomeGraphQLClient({
 		endpoint: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000',
 		formatQuery: (query: TypedDocumentNode) => print(query),
+
 		fetchOptions: {
 			credentials: 'include',
 			headers: {

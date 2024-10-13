@@ -1,4 +1,4 @@
-import { AnimeListStatusDistribution } from '@/__generated__/graphql';
+import { AnimeListStatusDistribution } from '@/gql/graphql';
 import React from 'react';
 
 type asdas = {

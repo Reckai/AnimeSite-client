@@ -20,23 +20,34 @@ export const useSignUpForm = () => {
 		resolver: zodResolver(signUpSchema)
 	});
 
-	const signIpUserMutation = useSignUpMutation();
+	const signUpUserMutation = useSignUpMutation();
 
 	const goToSignIn = () => setStage('signIn');
 	const onSubmit = signUpForm.handleSubmit(async (data) => {
 		const { passwordConfirmation, ...values } = signUpForm.getValues();
 
-		await signIpUserMutation.mutate({ ...values });
-		toast.success('User created successfully, check your email to verify.');
-		goToSignIn();
+		try {
+			await signUpUserMutation.mutateAsync({ ...values });
+			toast.success('User created successfully, check your email to verify.');
+			goToSignIn();
+		} catch (error) {
+			// Handle the error and show it in a toast
+			if (error instanceof Error) {
+				const errorMessage = error.message.includes('User already exists')
+					? 'User already exists'
+					: 'An error occurred during sign up';
+				toast.error(errorMessage);
+			} else {
+				toast.error('An unexpected error occurred');
+			}
+		}
 	});
-	const isPasswordEqueal =
-		signUpForm.watch('password') === signUpForm.watch('passwordConfirmation');
+	const isPasswordEqual = signUpForm.watch('password') === signUpForm.watch('passwordConfirmation');
 
 	return {
 		state: {
-			isLoading: signIpUserMutation.isPending,
-			isPasswordEqueal
+			isLoading: signUpUserMutation.isPending,
+			isPasswordEqual
 		},
 		form: signUpForm,
 		functions: {

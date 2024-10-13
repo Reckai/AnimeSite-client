@@ -1,3 +1,4 @@
+'use client';
 import { cn } from '@/app/utils';
 import { generateColorFromString } from '@/lib/generateColorFromString';
 import React from 'react';

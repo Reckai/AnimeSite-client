@@ -6,7 +6,7 @@ import AnimeWatchButtonHOC from './AnimeWatchButtonHOC/AnimeWatchButtonHOC';
 
 export type PosterSectionProps = {
 	url: string | undefined;
-	name: string | undefined;
+	name: string | undefined | null;
 	id: string;
 	slug: string;
 };
@@ -14,11 +14,11 @@ export function PosterSection({ url, name, id, slug }: PosterSectionProps) {
 	const { session } = useSession();
 	return (
 		<article className="mb-4">
-			<div className='before:contents-["s"] mb-4 flex h-fit w-auto items-center justify-center rounded-lg bg-default-bg before:mt-[138%]'>
+			<div className='before:contents-["s"] sm:w-50 mb-4 flex h-fit w-auto items-center justify-center rounded-lg transition-all before:mt-[138%] md:w-64'>
 				{url ? (
 					<Image
 						placeholder="empty"
-						className="rounded-md"
+						className="rounded-md bg-default-bg"
 						alt={name ? 'ds' : 'sad'}
 						src={url}
 						width={500}

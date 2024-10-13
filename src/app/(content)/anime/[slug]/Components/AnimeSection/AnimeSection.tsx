@@ -9,12 +9,12 @@ const AnimeSection = ({ slug }: { slug: string }) => {
 	const { AboutSectionProps, posterProps } = useGetAnime(slug);
 
 	return (
-		<section className="relative z-10">
-			<div className="mx-16 flex">
-				<aside className="mr-10 w-64 flex-none">
+		<section className="relative z-10 sm:flex md:flex">
+			<div className="mx-16 md:flex">
+				<aside className="mr-10 w-full flex-none transition-all sm:w-40 md:w-64">
 					<PosterSection {...posterProps} slug={slug} />
 				</aside>
-				<AboutSection {...AboutSectionProps} />
+				<AboutSection {...AboutSectionProps} slug={slug} />
 			</div>
 		</section>
 	);
