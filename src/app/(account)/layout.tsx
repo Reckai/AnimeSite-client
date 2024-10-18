@@ -1,5 +1,4 @@
 import React from 'react';
-import Banner from '@/app/(account)/_components/Banner';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { PrefetchProfileData } from '../api/preFetchProfile/prefetchProfieData';
 

@@ -51,7 +51,7 @@ export const GET_COMMENTS = graphql(`
 			user {
 				id
 				name
-				image
+				avatar
 			}
 			likes {
 				userId

@@ -11,7 +11,7 @@ const AvatarComponent = () => {
 		queryKey: ['profileData'],
 		queryFn: PrefetchProfileData
 	});
-	const image = data?.me.image;
+	const image = data?.me.avatar;
 	const name = data?.me.name;
 	return (
 		<div className="h-full w-full">

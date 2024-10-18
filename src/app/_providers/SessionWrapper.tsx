@@ -13,7 +13,7 @@ export const profileQuery = graphql(`
 			id
 			email
 			name
-			image
+			avatar
 			role
 			createdAt
 		}
@@ -43,7 +43,7 @@ async function SessionWrapper({ children }: React.PropsWithChildren) {
 				name: sessionResult.name as string,
 				createAt: sessionResult.createdAt as string,
 				email: sessionResult.email as string,
-				image: sessionResult.image as string
+				image: sessionResult.avatar as string
 			};
 		}
 	}
