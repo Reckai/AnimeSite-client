@@ -6,7 +6,6 @@ import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient';
 import { profileQuery } from '@/app/api/preFetchProfile/Query';
-import AvatarCrop from './_components/AvatarCrop';
 import MyAvatarCrop from './_components/MyAvatarCrop/MyAvatarCrop';
 const AvatarChanger = () => {
 	const { client } = useGraphQLClient();
@@ -21,7 +20,7 @@ const AvatarChanger = () => {
 				<div className="mx-4 w-full items-center sm:flex">
 					<section className="sm:flex:none flex h-full flex-col items-center sm:mr-4">
 						<AvatarHOC
-							imgURL={data?.me.image || ''}
+							imgURL={data?.me.avatar || ''}
 							name={data?.me.name || ''}
 							className="flex:none mb-2 h-32 w-32 rounded-full"
 						/>

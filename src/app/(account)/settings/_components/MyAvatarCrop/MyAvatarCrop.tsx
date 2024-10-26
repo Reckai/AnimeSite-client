@@ -17,12 +17,10 @@ const MyAvatarCrop = () => {
 		imageUrl,
 		error,
 		updatePreview,
-		MIN_WIDTH,
 		previewsRefs,
 		crop,
 		setCrop,
-		onImageLoad,
-		ASPECT_RATIO
+		onImageLoad
 	} = useMyAvatarCrop();
 	return (
 		<div>
@@ -75,7 +73,9 @@ const MyAvatarCrop = () => {
 						<Button onClick={closeModal} className="w-[48%]">
 							Закрыть
 						</Button>
-						<Button className="w-[48%]">Установить аватар</Button>
+						<Button onClick={() => console.log(crop)} className="w-[48%]">
+							Установить аватар
+						</Button>
 					</div>
 				</ModalContainer>
 			)}
