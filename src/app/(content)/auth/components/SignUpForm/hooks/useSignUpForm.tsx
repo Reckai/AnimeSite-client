@@ -23,8 +23,8 @@ export const useSignUpForm = () => {
 	const signUpUserMutation = useSignUpMutation();
 
 	const goToSignIn = () => setStage('signIn');
-	const onSubmit = signUpForm.handleSubmit(async (data) => {
-		const { passwordConfirmation, ...values } = signUpForm.getValues();
+	const onSubmit = signUpForm.handleSubmit(async () => {
+		const { ...values } = signUpForm.getValues();
 
 		try {
 			await signUpUserMutation.mutateAsync({ ...values });

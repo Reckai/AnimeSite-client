@@ -1,7 +1,7 @@
 'use client';
 import FileUpload from '@/app/shared/FileUpload/FileUpload';
 import React from 'react';
-import { useMyAvatarCrop } from './hooks/useMyAvatarCrop';
+import { useMyAvatarCrop } from '../hooks/useMyAvatarCrop';
 import ModalContainer from '@/app/shared/ModalWindow/ModalWindow';
 import Image from 'next/image';
 import { Button } from '@/app/shared/Button/Button';

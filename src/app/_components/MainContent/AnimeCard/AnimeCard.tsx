@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Katya from '@/../public/photo_2023-10-17_20-43-52.jpg';
+
 import Link from 'next/link';
 import { Genre, Maybe, Poster } from '@/gql/graphql';
 type AnimeCard = {

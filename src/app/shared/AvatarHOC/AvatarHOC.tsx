@@ -11,10 +11,10 @@ interface AvatarHOCProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const AvatarHOC: React.FC<AvatarHOCProps> = ({ imgURL, name, className }) => {
 	return (
-		<>
+		<div className={cn('avatar-wrapper', className)}>
 			{imgURL ? (
 				<Avatar
-					className={cn('relative overflow-hidden rounded-full', className)}
+					className="avatar-wrapper__img"
 					alt="avatar"
 					width="400"
 					height="400"
@@ -23,7 +23,7 @@ const AvatarHOC: React.FC<AvatarHOCProps> = ({ imgURL, name, className }) => {
 			) : (
 				<AvatarPlug className="text-4xl" name={name} />
 			)}
-		</>
+		</div>
 	);
 };
 

@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-const { fontFamily } = require('tailwindcss/defaultTheme');
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
 const config: Config = {
 	content: [
@@ -33,7 +33,7 @@ const config: Config = {
 				'color-text': '#71799b',
 				header: 'rgba(28,29,36,0.6)',
 				'form-color': '#2e2f3a',
-				'opacity-secondary': ' rgba(32,32,42)',
+				'opacity-secondary': 'rgba(32,32,42)',
 				'color-el-bg': '#191920'
 			},
 			backgroundImage: {
@@ -42,9 +42,17 @@ const config: Config = {
 			},
 			margin: {
 				16: '16px'
+			},
+			// Add custom avatar styles here
+			// You can also add any other custom styles you need
+			avatar: {
+				'wrapper': 'flex items-center bg-[rgba(var(--bg-secondary),1)] text-white font-normal text-[1.5rem] h-[4.8rem] justify-center overflow-hidden relative text-center select-none w-[4.8rem]',
+				'wrapper-img': 'h-full overflow-hidden relative w-full',
+				'wrapper-circle': 'rounded-full'
 			}
 		}
 	},
 	plugins: []
 };
+
 export default config;

@@ -36,7 +36,7 @@ export const useSignInForm = () => {
 					name: sessionData.user.name as string,
 					createAt: sessionData.user.createdAt as string,
 					email: sessionData.user.email as string,
-					image: sessionData.user.image as string
+					image: sessionData.user.avatar as string
 				};
 				setSession(session);
 				revalidate('/');

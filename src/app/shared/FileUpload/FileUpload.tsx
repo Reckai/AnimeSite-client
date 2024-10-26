@@ -41,8 +41,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect }) => {
 	return (
 		<div
 			onClick={handleClick}
-			className={`transition-300 flex h-44 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed py-2 transition-colors hover:border-info ${
-				dragActive ? 'border-blue-500' : 'border-gray-300'
+			className={`transition-300 flex h-44 cursor-pointer flex-col items-center justify-center rounded-lg border-[1px] border-dashed px-3 py-2 transition-colors hover:border-primary ${
+				dragActive ? 'border-primary' : 'border-color-text'
 			}`}
 			onDragEnter={handleDrag}
 			onDragLeave={handleDrag}

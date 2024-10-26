@@ -1,7 +1,7 @@
 'use client';
 import { profileQuery } from '@/app/api/preFetchProfile/Query';
 import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import React, { Suspense } from 'react';
 
 const Sds = () => {

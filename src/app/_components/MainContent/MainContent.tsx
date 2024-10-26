@@ -7,25 +7,20 @@ import { useFetchAnimes } from './action';
 function MainContent() {
 	const observerTarget = useRef<HTMLDivElement>(null);
 	const fetchAnimes = useFetchAnimes();
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isError } =
-		useSuspenseInfiniteQuery({
-			queryKey: ['animes'],
-			queryFn: async ({ pageParam }) => {
-				try {
-					return await fetchAnimes(pageParam);
-				} catch (e) {
-					throw e;
-				}
-			},
-			initialPageParam: 1,
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useSuspenseInfiniteQuery({
+		queryKey: ['animes'],
+		queryFn: async ({ pageParam }) => {
+			return await fetchAnimes(pageParam);
+		},
+		initialPageParam: 1,
 
-			getNextPageParam: (lastPage, allPages) => {
-				return lastPage?.hasNextPage ? allPages.length + 1 : null;
-			},
-			staleTime: 60000, // 1 minute
-			refetchOnWindowFocus: false,
-			refetchOnReconnect: false
-		});
+		getNextPageParam: (lastPage, allPages) => {
+			return lastPage?.hasNextPage ? allPages.length + 1 : null;
+		},
+		staleTime: 60000, // 1 minute
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false
+	});
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
