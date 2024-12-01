@@ -10,6 +10,17 @@ export interface SessionProviderProps {
 
 export const SessionProvider: React.FC<SessionProviderProps> = ({ defaultSession, children }) => {
 	const [session, setSession] = useState<session | undefined>(defaultSession!);
+
 	const value = useMemo(() => ({ session, setSession }), [session]);
-	return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
+
+	const updateSessionField = <K extends keyof session>(field: K, value: session[K]) => {
+		if (!session) return;
+		setSession({ ...session, [field]: value });
+	};
+
+	return (
+		<SessionContext.Provider value={{ ...value, updateSessionField }}>
+			{children}
+		</SessionContext.Provider>
+	);
 };

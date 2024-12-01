@@ -1,3 +1,9 @@
 node_modules
 .next
-.idea
+.git
+*.md
+.env*
+.dockerignore
+Dockerfile
+docker-compose*
+npm-debug.log*

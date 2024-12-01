@@ -33,7 +33,7 @@ const ModalContainer: React.FC<ModalContainerProps> = ({ children, isOpen, onClo
 	return createPortal(
 		<div className="fixed inset-0 z-50 flex items-center justify-center p-4">
 			<div className="absolute inset-0 bg-black bg-opacity-50" onClick={onClose} />
-			<div className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-white p-6 shadow-lg">
+			<div className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-white p-6 shadow-lg dark:bg-color-el-bg">
 				{children}
 			</div>
 		</div>,

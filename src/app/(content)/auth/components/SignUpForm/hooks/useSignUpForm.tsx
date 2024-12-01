@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '../constants/signUpSchema';
 import { toast } from 'sonner';
 import { useSignUpMutation } from './useSignUpMutation';
+import { isPasswordEqualCompare } from '@/utils/isPasswordEquelCompare';
 
 interface SignUpForm {
 	email: string;
@@ -42,8 +43,7 @@ export const useSignUpForm = () => {
 			}
 		}
 	});
-	const isPasswordEqual = signUpForm.watch('password') === signUpForm.watch('passwordConfirmation');
-
+	const isPasswordEqual = isPasswordEqualCompare(signUpForm, 'password', 'passwordConfirmation');
 	return {
 		state: {
 			isLoading: signUpUserMutation.isPending,

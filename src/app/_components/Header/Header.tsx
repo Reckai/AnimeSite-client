@@ -17,7 +17,7 @@ function Header({ styles = '' }: HeaderProp) {
 
 	return (
 		<header
-			className={`header fixed left-0 top-0 z-20 bg-slate-100 ${styles} w-full text-black dark:border-none dark:bg-header dark:text-white`}
+			className={`header fixed left-0 top-0 z-20 ${styles} w-full text-black dark:border-none dark:bg-header dark:text-white`}
 		>
 			<div className="relative mx-auto flex h-14 w-full max-w-[1532px] items-center justify-between px-2">
 				<nav className="font-sans text-2xl font-medium text-color-text dark:text-white">

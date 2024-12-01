@@ -6,15 +6,13 @@ import { VscAccount } from 'react-icons/vsc';
 import { CiHeart, CiLogout, CiSettings } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
 import DropDownItem from '@/app/_Components/Header/_components/DropDownItem/DropDownItem';
-import {
-	AvatarHOC,
-	AvatarImage
-} from '@/app/_Components/Header/_components/Avatar/AvaterComponent';
+
 import { useSession } from '@/app/context/SessionContext/useSession';
 import { Logout } from './logout';
 import { flushSync } from 'react-dom';
 import { googleLogout } from '@react-oauth/google';
 import AvatarPlug from '@/app/shared/AvatarPlug/AvatarPlug';
+import AvatarHOC from '@/app/shared/AvatarHOC/AvatarHOC';
 
 interface DropDownProps {
 	img: string | null | undefined;
@@ -50,9 +48,7 @@ function DropDownMenu({ img, name, id }: DropDownProps) {
 				onClick={() => setIsOpen(!isOpen)}
 			>
 				{img ? (
-					<AvatarHOC>
-						<AvatarImage href={img} className="" />
-					</AvatarHOC>
+					<AvatarHOC imgURL={img || ''} name={name || ''} className="h-[40px] w-[40px]" />
 				) : (
 					<AvatarPlug className="h-[40px] w-[40px]" name={name} />
 				)}

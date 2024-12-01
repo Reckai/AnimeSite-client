@@ -1,13 +1,21 @@
+# Frontend Dockerfile
 FROM node:18-alpine
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 
+# Add lockfile and package.json's
+COPY package.json package-lock.json* ./
+
+# Использование npm ci вместо npm install
+# Установка только production dependencies
+RUN npm ci --only=production
+
+# Добавляем dev dependencies только для development
+RUN if [ "$NODE_ENV" = "development" ]; then npm install --only=dev; fi
+
+# Копируем исходный код
 COPY . .
-RUN  npm run build
 
 EXPOSE 3000
 
-CMD npm start
-
+CMD ["npm", "run", "dev"]

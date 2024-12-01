@@ -1,5 +1,5 @@
 import React from 'react';
-import AvatarChanger from './AvatarChanger';
+import AvatarChanger from './_components/AvatarChanger';
 
 function Page() {
 	return (

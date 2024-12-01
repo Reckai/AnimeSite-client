@@ -31,10 +31,11 @@ const config: Config = {
 				'default-bg': '#26304b',
 				'color-text-accent': '#b0b7cb',
 				'color-text': '#71799b',
-				header: 'rgba(28,29,36,0.6)',
+				'header': 'rgba(28,29,36,0.6)',
 				'form-color': '#2e2f3a',
 				'opacity-secondary': 'rgba(32,32,42)',
-				'color-el-bg': '#191920'
+				'color-el-bg': '#191920',
+				'el-bg':'#f6f6f7'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -11,7 +11,7 @@ export const loginUserMutation = graphql(`
 				id
 				email
 				name
-				avatar
+				
 				role
 				createdAt
 			}

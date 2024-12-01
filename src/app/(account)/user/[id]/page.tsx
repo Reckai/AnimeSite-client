@@ -1,7 +1,7 @@
 import React from 'react';
 import UserInfo from './_components/userInfo/UserInfo';
 import Banner from '../../_components/Banner';
-import AvatarComponent from './_components/userAvatar/AvatarComponent';
+import AvatarComponent from './_components/userInfo/AvatarComponent';
 
 async function Page() {
 	return (

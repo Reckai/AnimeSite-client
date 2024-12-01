@@ -6,7 +6,8 @@ import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { useGraphQLClient } from '@/app/context/GraphQLContext/useGraphQLCLient';
 import { profileQuery } from '@/app/api/preFetchProfile/Query';
-import MyAvatarCrop from './_components/MyAvatarCrop/MyAvatarCrop';
+import MyAvatarCrop from './MyAvatarCrop/MyAvatarCrop';
+import { useDeleteAvatarMutation } from './MyAvatarCrop/hooks/useAvatarDelete';
 
 const AvatarChanger = () => {
 	const { client } = useGraphQLClient();
@@ -14,18 +15,22 @@ const AvatarChanger = () => {
 		queryKey: ['profileData'],
 		queryFn: () => client.request(profileQuery)
 	});
+	const { mutate } = useDeleteAvatarMutation();
+	const handleDeleteAvatar = () => {
+		mutate({ userId: data?.me.id });
 
+	};
 	return (
-		<section className="relative mb-6 mr-4 min-w-0 break-words rounded-md bg-[#dfdfdf8c] p-4 shadow-sm dark:bg-color-el-bg">
+		<section className="relative mb-6 mr-4 min-w-0 break-words rounded-md bg-[#f6f6f6] p-4 shadow-sm dark:bg-color-el-bg">
 			<div className="flex flex-col px-4 sm:flex-row">
 				<div className="mx-4 w-full items-center sm:flex">
 					<section className="flex h-full flex-col items-center sm:mr-4">
 						<AvatarHOC
-							imgURL={data?.me.avatar || ''}
+							imgURL={data?.me.currentAvatar?.url || ''}
 							name={data?.me.name || ''}
 							className="mx-4 mb-4 h-[128px] w-[128px] flex-none rounded-full"
 						/>
-						<Button className="button-error" variant={'destructive'}>
+						<Button onClick={handleDeleteAvatar} className="button-error" variant={'destructive'}>
 							<FaTrash />
 							Удалить аватар
 						</Button>

@@ -6,7 +6,12 @@ export const profileQuery = graphql(`
 			id
 			email
 			name
-			avatar
+			currentAvatar {
+      id
+      url
+      thumbnailUrl
+      blurhash
+    }
 			emailVerified
 			createdAt
 		}

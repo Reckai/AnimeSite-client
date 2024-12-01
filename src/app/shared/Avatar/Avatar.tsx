@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession } from '@/app/context/SessionContext/useSession';
 import React from 'react';
 import Image, { ImageProps } from 'next/image';
 import { cn } from '@/app/utils';

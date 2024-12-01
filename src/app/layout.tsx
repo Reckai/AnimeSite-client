@@ -7,12 +7,13 @@ import Header from '@/app/_Components/Header/Header';
 import Provider from '@/app/_providers/providers';
 import { cn } from './utils';
 import { Footer } from './_Components/Footer/FooterCompoent';
+import { Toaster } from 'sonner';
 
 const fontSans = FontSans({
 	subsets: ['latin'],
 	variable: '--font-sans'
 });
-
+const TOASTER_DURATION = 5000;
 export const metadata: Metadata = {
 	title: 'Anime Page',
 	description: 'made by @Reckai'
@@ -30,7 +31,7 @@ export default async function RootLayout({
 			</head>
 			<body
 				className={cn(
-					`bg-[#f6f6f6] font-sans font-[62.5%] text-black dark:bg-bg-color dark:text-white`,
+					`font-sans font-[62.5%] text-black dark:bg-bg-color dark:text-white`,
 					fontSans.className,
 					fontSans.variable
 				)}
@@ -42,6 +43,7 @@ export default async function RootLayout({
 
 				<Footer />
 				<div id="modal-container" />
+				<Toaster duration={TOASTER_DURATION} />
 			</body>
 		</html>
 	);

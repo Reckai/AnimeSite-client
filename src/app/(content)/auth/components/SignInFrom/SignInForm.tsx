@@ -1,6 +1,13 @@
 import React from 'react';
 import { useSignInForm } from './hooks/useSignInForm';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/app/shared/Form/form';
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage
+} from '@/app/shared/Form/form';
 import { Label } from '@/app/shared/Label/Label';
 import { Input } from '@/app/shared/Input/input';
 import { PasswordInput } from '@/app/shared/PasswordInput/password-input';
@@ -24,9 +31,9 @@ const SignInForm = () => {
 							name="email"
 							render={({ field }) => (
 								<FormItem>
-									<Label className="sr-only" htmlFor="email">
+									<FormLabel className="sr-only" htmlFor="email">
 										email
-									</Label>
+									</FormLabel>
 									<FormControl>
 										<Input
 											id="email"

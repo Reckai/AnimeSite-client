@@ -6,7 +6,7 @@ export const loginWiaGoogleMutation = graphql(`
 			email
 			name
 			createdAt
-			avatar
+			
 		}
 	}
 `);

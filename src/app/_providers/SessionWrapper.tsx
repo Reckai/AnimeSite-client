@@ -10,12 +10,30 @@ import { getClientWithAuthorization } from '@/lib/gqlClient';
 export const profileQuery = graphql(`
 	query Me {
 		me {
-			id
 			email
+			password
 			name
-			avatar
+			id
 			role
+			emailVerified
 			createdAt
+			currentAvatar {
+				id
+				filename
+				originalName
+				path
+				mimeType
+				size
+				width
+				height
+				type
+				url
+				thumbnailUrl
+				createdAt
+				updatedAt
+				userId
+				blurhash
+			}
 		}
 	}
 `);
@@ -43,7 +61,7 @@ async function SessionWrapper({ children }: React.PropsWithChildren) {
 				name: sessionResult.name as string,
 				createAt: sessionResult.createdAt as string,
 				email: sessionResult.email as string,
-				image: sessionResult.avatar as string
+				image: sessionResult.currentAvatar?.url as string
 			};
 		}
 	}
