@@ -77,7 +77,6 @@ export const useMyAvatarCrop = () => {
 			newImage.addEventListener('load', () => {
 				if (error) setError('');
 				const { naturalHeight, naturalWidth } = newImage;
-				console.log(naturalHeight, naturalWidth);
 				if (naturalHeight < MIN_WIDTH || naturalWidth < MIN_WIDTH) {
 					setError(TOO_SMALL_IMAGE_EM);
 					setImageUrl('');

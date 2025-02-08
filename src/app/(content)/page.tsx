@@ -7,7 +7,6 @@ import MainContent from '../_Components/MainContent/MainContent';
 export default async function Home() {
 	const queryClient = new QueryClient();
 	const fetchAnimes = useFetchAnimes();
-
 	await queryClient.prefetchInfiniteQuery({
 		queryKey: ['animes'],
 		queryFn: async ({ pageParam = 1 }) => {

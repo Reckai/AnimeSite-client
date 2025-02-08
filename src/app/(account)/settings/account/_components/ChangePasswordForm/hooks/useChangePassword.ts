@@ -34,7 +34,6 @@ const onSubmit = changePasswordForm.handleSubmit(async () => {
           
 
             const cleanedErrorMessage = removeGraphQLErrorPrefix(error.message);
-            console.log(cleanedErrorMessage);
             const errorMessage = cleanedErrorMessage.includes('Password isn`t right')
                 ? 'Неправильный пароль'
                 : 'Возникла ошибка в ходе изменения пароля';

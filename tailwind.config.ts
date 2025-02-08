@@ -35,7 +35,9 @@ const config: Config = {
 				'form-color': '#2e2f3a',
 				'opacity-secondary': 'rgba(32,32,42)',
 				'color-el-bg': '#191920',
-				'el-bg':'#f6f6f7'
+				'el-bg':'#f6f6f7',
+				'el-bg-hover':'#e6e6e7',
+				'el-border':'#23252f'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

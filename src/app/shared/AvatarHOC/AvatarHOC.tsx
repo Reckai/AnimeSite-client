@@ -11,7 +11,6 @@ interface AvatarHOCProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const AvatarHOC: React.FC<AvatarHOCProps> = ({ imgURL, name, className }) => {
-	console.log(formatBackendImageLinks(imgURL || ''));
 	return (
 		<div className={cn('avatar-wrapper', className)}>
 			{imgURL ? (

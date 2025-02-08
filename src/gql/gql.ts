@@ -24,6 +24,8 @@ const documents = {
     "\n\tmutation SignupUser($password: String!, $email: String!) {\n\t\tsignupUser(password: $password, email: $email)\n\t}\n": types.SignupUserDocument,
     "\n\tmutation LoginWiaGoogle($token: String!) {\n\t\tloginWiaGoogle(token: $token) {\n\t\t\tid\n\t\t\temail\n\t\t\tname\n\t\t\tcreatedAt\n\t\t\t\n\t\t}\n\t}\n": types.LoginWiaGoogleDocument,
     "\n\tmutation VerifyEmailByToken($token: String!) {\n\t\tVerifyEmailByToken(token: $token) {\n\t\t\tmessage\n\t\t\tsuccess\n\t\t}\n\t}\n": types.VerifyEmailByTokenDocument,
+    "\n\tquery FetchedFilters {\n\t\tfetchReleasesFilters {\n\t\t\tgenres {\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t}\n\t\t\t\tcount\n\t\t\t}\n\t\t\tstudios {\n\t\t\t\tcount\n\t\t\t\tstudios {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.FetchedFiltersDocument,
+    "\n\tquery AnimeWithFilters($filter: AnimeFilterParams!) {\n\t\tanimesWithFilter(filter: $filter) {\n\t\t\tanimes {\n\t\t\t\tid\n\t\t\t\tlicenseNameRu\n\t\t\t\tslug\n\t\t\t\tposter {\n\t\t\t\t\tid\n\t\t\t\t\toriginalUrl\n\t\t\t\t\tpreviewUrl\n\t\t\t\t}\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t}\n\t\t\t}\n\t\t\tcount\n\t\t\thasNextPage\n\t\t}\n\t}\n": types.AnimeWithFiltersDocument,
     "\n\tquery Items($page: Float!) {\n\t\tallAnimes(page: $page) {\n\t\t\titems {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tlicenseNameRu\n\t\t\t\tslug\n\t\t\t\tposter {\n\t\t\t\t\tid\n\t\t\t\t\toriginalUrl\n\t\t\t\t\tpreviewUrl\n\t\t\t\t}\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t\ttotalCount\n\t\t\thasNextPage\n\t\t}\n\t}\n": types.ItemsDocument,
     "\n\tmutation signInMutation($args: UserLoginInput!) {\n\t\tloginUser(args: $args) {\n\t\t\tuser {\n\t\t\t\tid\n\t\t\t}\n\t\t}\n\t}\n": types.SignInMutationDocument,
     "\n\tquery Me {\n\t\tme {\n\t\t\temail\n\t\t\tpassword\n\t\t\tname\n\t\t\tid\n\t\t\trole\n\t\t\temailVerified\n\t\t\tcreatedAt\n\t\t\tcurrentAvatar {\n\t\t\t\tid\n\t\t\t\tfilename\n\t\t\t\toriginalName\n\t\t\t\tpath\n\t\t\t\tmimeType\n\t\t\t\tsize\n\t\t\t\twidth\n\t\t\t\theight\n\t\t\t\ttype\n\t\t\t\turl\n\t\t\t\tthumbnailUrl\n\t\t\t\tcreatedAt\n\t\t\t\tupdatedAt\n\t\t\t\tuserId\n\t\t\t\tblurhash\n\t\t\t}\n\t\t}\n\t}\n": types.MeDocument,
@@ -92,6 +94,14 @@ export function graphql(source: "\n\tmutation LoginWiaGoogle($token: String!) {\
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tmutation VerifyEmailByToken($token: String!) {\n\t\tVerifyEmailByToken(token: $token) {\n\t\t\tmessage\n\t\t\tsuccess\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation VerifyEmailByToken($token: String!) {\n\t\tVerifyEmailByToken(token: $token) {\n\t\t\tmessage\n\t\t\tsuccess\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery FetchedFilters {\n\t\tfetchReleasesFilters {\n\t\t\tgenres {\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t}\n\t\t\t\tcount\n\t\t\t}\n\t\t\tstudios {\n\t\t\t\tcount\n\t\t\t\tstudios {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery FetchedFilters {\n\t\tfetchReleasesFilters {\n\t\t\tgenres {\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t}\n\t\t\t\tcount\n\t\t\t}\n\t\t\tstudios {\n\t\t\t\tcount\n\t\t\t\tstudios {\n\t\t\t\t\tid\n\t\t\t\t\tname\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery AnimeWithFilters($filter: AnimeFilterParams!) {\n\t\tanimesWithFilter(filter: $filter) {\n\t\t\tanimes {\n\t\t\t\tid\n\t\t\t\tlicenseNameRu\n\t\t\t\tslug\n\t\t\t\tposter {\n\t\t\t\t\tid\n\t\t\t\t\toriginalUrl\n\t\t\t\t\tpreviewUrl\n\t\t\t\t}\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t}\n\t\t\t}\n\t\t\tcount\n\t\t\thasNextPage\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery AnimeWithFilters($filter: AnimeFilterParams!) {\n\t\tanimesWithFilter(filter: $filter) {\n\t\t\tanimes {\n\t\t\t\tid\n\t\t\t\tlicenseNameRu\n\t\t\t\tslug\n\t\t\t\tposter {\n\t\t\t\t\tid\n\t\t\t\t\toriginalUrl\n\t\t\t\t\tpreviewUrl\n\t\t\t\t}\n\t\t\t\tgenres {\n\t\t\t\t\tid\n\t\t\t\t\trussian\n\t\t\t\t}\n\t\t\t}\n\t\t\tcount\n\t\t\thasNextPage\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

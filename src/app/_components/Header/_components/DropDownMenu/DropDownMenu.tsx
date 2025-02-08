@@ -22,16 +22,25 @@ interface DropDownProps {
 
 function DropDownMenu({ img, name, id }: DropDownProps) {
 	const router = useRouter();
-
+	const { setSession } = useSession();
 	const [isOpen, setIsOpen] = React.useState(false);
+
+	// Memoize the avatar component to prevent unnecessary rerenders
+	const avatar = React.useMemo(() => {
+		if (img) {
+			return <AvatarHOC imgURL={img} name={name} className="h-[40px] w-[40px]" />;
+		}
+		return <AvatarPlug className="h-[40px] w-[40px]" name={name} />;
+	}, [img, name]);
+
 	const { refs, context } = useFloating({
 		open: isOpen,
 		onOpenChange: setIsOpen
 	});
 	const dismiss = useDismiss(context);
-	const { setSession } = useSession();
 	const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
 	const { isMounted, styles } = useTransitionStyles(context);
+
 	const OnLogOutClick = () => {
 		Logout().then(() => {
 			googleLogout();
@@ -39,6 +48,7 @@ function DropDownMenu({ img, name, id }: DropDownProps) {
 			router.refresh();
 		});
 	};
+
 	return (
 		<div>
 			<button
@@ -47,11 +57,7 @@ function DropDownMenu({ img, name, id }: DropDownProps) {
 				type="button"
 				onClick={() => setIsOpen(!isOpen)}
 			>
-				{img ? (
-					<AvatarHOC imgURL={img || ''} name={name || ''} className="h-[40px] w-[40px]" />
-				) : (
-					<AvatarPlug className="h-[40px] w-[40px]" name={name} />
-				)}
+				{avatar}
 			</button>
 
 			{isMounted && (

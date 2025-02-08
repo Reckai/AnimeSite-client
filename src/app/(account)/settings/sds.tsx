@@ -10,7 +10,6 @@ const Sds = () => {
 		queryKey: ['profileData'],
 		queryFn: () => client.request(profileQuery)
 	});
-	console.log('profileQuery', data);
 	return (
 		<div>
 			asdsad
